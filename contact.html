@@ -23,7 +23,7 @@
       scroll-behavior: smooth;
     }
 
-    /* --- Header Styles (Copied from other pages) --- */
+    /* --- Header Styles --- */
     header {
       display: flex;
       justify-content: space-between;
@@ -31,18 +31,13 @@
       padding: 20px 40px;
       background: rgba(0, 0, 0, 0.8);
       backdrop-filter: blur(10px);
-      position: fixed;
+      position: fixed; /* Header is stagnant */
       width: 100%;
       z-index: 1000;
-      transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* For scroll effect */
-      opacity: 0; /* Hidden by default for scroll effect */
-      transform: translateY(-100%); /* Start off-screen for scroll effect */
+      /* REMOVED: opacity and transform for initial scroll effect to make it always visible */
     }
 
-    header.in-view {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    /* REMOVED: header.in-view as header is now always visible */
 
     .logo {
       font-size: 1.8rem;
@@ -81,7 +76,7 @@
       transform: translateY(-3px);
     }
 
-    /* --- Background Animations (Copied from other pages) --- */
+    /* --- Background Animations --- */
     .animated-bg {
       position: fixed;
       width: 100%;
@@ -105,7 +100,7 @@
       opacity: 0.8;
     }
 
-    /* --- General Scroll Fade-In/Slide-Up Effect (Copied from other pages) --- */
+    /* --- General Scroll Fade-In/Slide-Up Effect --- */
     .scroll-fade-in {
       opacity: 0;
       transform: translateY(40px);
@@ -281,10 +276,14 @@
         margin: 0 10px 5px;
         display: inline-block;
       }
-      .cta-button {
-        margin-left: 0;
-        margin-top: 10px;
+      /* Hide "Jay" and "Book a Call" at 768px and below */
+      .logo {
+          display: none; /* Hide the "Jay" logo */
       }
+      .cta-button {
+          display: none; /* Hide the "Book a Call" button */
+      }
+
       .contact-section h1 {
         font-size: 2.2rem;
       }
@@ -322,13 +321,14 @@
   <div class="animated-bg"></div>
   <canvas id="starfield"></canvas>
 
-  <header class="scroll-fade-in">
+  <header>
     <div class="logo">Jay</div>
     <nav>
       <a href="index.html">Home</a>
       <a href="About.html">About</a>
       <a href="services.html">Expertise</a>
-      <a href="contact.html">Contact</a> <a href="#" class="cta-button">Book a Call</a>
+      <a href="contact.html">Contact</a>
+      <a href="#" class="cta-button">Book a Call</a>
     </nav>
   </header>
 
@@ -465,10 +465,11 @@
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('in-view');
-            // For the header, if it's the first time it comes into view, snap it to position
-            if (entry.target.tagName === 'HEADER') {
-                entry.target.style.transform = 'translateY(0)';
-            }
+            // Header is no longer animated with scroll, so this specific check is effectively redundant
+            // because 'scroll-fade-in' is removed from the header's HTML class list.
+            // if (entry.target.tagName === 'HEADER') {
+            //     entry.target.style.transform = 'translateY(0)';
+            // }
             observer.unobserve(entry.target);
           }
         });
@@ -477,6 +478,5 @@
       scrollElements.forEach(el => observer.observe(el));
     });
   </script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0V4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7/KxQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </body>
 </html>

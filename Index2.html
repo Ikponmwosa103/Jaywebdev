@@ -6,7 +6,7 @@
   <title>JayWebDev</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    /* Minimal Base Styles (Reintroduced for readability/functionality of effects) */
+    /* Minimal Base Styles */
     * {
       margin: 0;
       padding: 0;
@@ -39,7 +39,7 @@
         color: #ccc;
     }
 
-    /* --- Header Styles (Reintroduced for functionality) --- */
+    /* --- Header Styles --- */
     header {
       display: flex;
       justify-content: space-between;
@@ -47,17 +47,10 @@
       padding: 20px 40px;
       background: rgba(0, 0, 0, 0.8);
       backdrop-filter: blur(10px);
-      position: fixed;
+      position: fixed; /* Header is stagnant */
       width: 100%;
       z-index: 1000;
-      transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* For scroll effect */
-      opacity: 0; /* Hidden by default for scroll effect */
-      transform: translateY(-100%); /* Start off-screen for scroll effect */
-    }
-
-    header.in-view {
-        opacity: 1;
-        transform: translateY(0);
+      /* Removed opacity/transform for initial scroll effect to make it always visible */
     }
 
     .logo {
@@ -97,7 +90,7 @@
       transform: translateY(-3px);
     }
 
-    /* --- Hero Section Styles (Reintroduced for functionality) --- */
+    /* --- Hero Section Styles --- */
     .hero {
       display: flex;
       flex-direction: column;
@@ -120,7 +113,6 @@
       max-width: 800px;
       margin-bottom: 20px;
       text-shadow: 0 0 15px #00aaff;
-      /* Original hero animation removed to allow scroll effect */
       opacity: 0;
       transform: translateY(20px);
       transition: opacity 1s ease-out, transform 1s ease-out;
@@ -187,8 +179,7 @@
       transform: translateY(0);
     }
 
-
-    /* --- Background Animations (Reintroduced for functionality) --- */
+    /* --- Background Animations --- */
     .animated-bg {
       position: fixed;
       width: 100%;
@@ -204,7 +195,7 @@
       50% { transform: scale(1.1); opacity: 1; }
     }
 
-    /* --- Starfield Canvas (Reintroduced for functionality) --- */
+    /* --- Starfield Canvas --- */
     canvas {
       position: fixed;
       top: 0;
@@ -213,7 +204,7 @@
       opacity: 0.8;
     }
 
-    /* --- Shattered Glass Effect (Reintroduced for functionality) --- */
+    /* --- Shattered Glass Effect --- */
     #shattered-overlay {
       position: fixed;
       top: 0;
@@ -249,11 +240,10 @@
       100% {
         opacity: 0;
         transform: translate(var(--end-x), var(--end-y)) rotate(var(--end-rotate)) scale(var(--end-scale));
-   
       }
     }
 
-    /* --- Services Section (Reintroduced & Adjusted for scroll effect) --- */
+    /* --- Services Section (Adjusted for scroll effect) --- */
     .services h2 {
       font-size: 2.5rem;
       margin-bottom: 40px;
@@ -274,7 +264,7 @@
         transition-delay: 0.2s;
     }
 
-    /* --- Skills Section Styles (Your existing styles, with minimal adjustments for context) --- */
+    /* --- Skills Section Styles --- */
     .skills-container {
         max-width: 900px;
         margin: 0 auto;
@@ -342,13 +332,12 @@
         box-shadow: 0 0 8px #00aaff;
     }
 
-    /* When the skill is in view, apply the width (existing) */
+    /* When the skill is in view, apply the width */
     .skill-item.in-view .progress-bar {
         width: var(--progress-width);
     }
 
-
-    /* --- Media Queries (Reintroduced for responsiveness) --- */
+    /* --- Media Queries --- */
     @media (max-width: 768px) {
         header {
             padding: 15px 20px;
@@ -363,10 +352,6 @@
         nav a {
             margin: 0 10px 5px;
             display: inline-block;
-        }
-        .cta-button {
-            margin-left: 0;
-            margin-top: 10px;
         }
         .hero h1 {
             font-size: 2.2rem;
@@ -387,6 +372,14 @@
         .skills-grid {
             grid-template-columns: 1fr; /* Stack columns on small screens */
         }
+
+        /* Hide "Jay" and "Book a Call" at 768px and below */
+        .logo {
+            display: none; /* Hide the "Jay" logo */
+        }
+        .cta-button {
+            display: none; /* Hide the "Book a Call" button */
+        }
     }
 
     @media (max-width: 480px) {
@@ -406,7 +399,8 @@
   <canvas id="starfield"></canvas>
   <div id="shattered-overlay"></div>
 
-  <header class="scroll-fade-in"> <div class="logo">Jay</div>
+  <header>
+    <div class="logo">Jay</div>
     <nav>
       <a href="#">Home</a>
       <a href="About.html">About</a>
@@ -417,12 +411,13 @@
   </header>
 
   <section class="hero">
-    <h1 class="scroll-fade-in">Hey!<br> I'm Jay Ikponmwosa</h1> <p class="scroll-fade-in">Passionate Web Developer dedicated to building responsive, user-friendly, and high-performance web experiences. I bring ideas to life with clean code and a focus on intuitive design.</p> <div class="buttons scroll-fade-in"> <a href="#" class="primary-btn">Get in touch &rarr;</a>
+    <h1 class="scroll-fade-in">Hey!<br> I'm Jay Ikponmwosa</h1>
+    <p class="scroll-fade-in">Passionate Web Developer dedicated to building responsive, user-friendly, and high-performance web experiences. I bring ideas to life with clean code and a focus on intuitive design.</p>
+    <div class="buttons scroll-fade-in">
+      <a href="#" class="primary-btn">Get in touch &rarr;</a>
       <a href="services.html" class="secondary-btn">View Experties</a>
     </div>
   </section>
-
-  
 
   <script>
     const canvas = document.getElementById('starfield');
