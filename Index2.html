@@ -91,22 +91,22 @@
     }
 
     /* --- Hero Section Styles --- */
-    .hero {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      height: 100vh;
-      padding: 0 20px;
-      position: relative;
-      z-index: 1;
-      overflow: hidden;
-      background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('Asset/Image/Image1.jpg');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+  padding: 0 20px;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  background: linear-gradient(rgba(0, 0, 0, 0.90), rgba(0, 0, 0, 0.90)), url('Asset/Image/Image1.jpg');
+  background-size: cover;
+  background-position: top; /* <--- CHANGE THIS LINE */
+  background-repeat: no-repeat;
+}
 
     .hero h1 {
       font-size: 3rem;
@@ -414,7 +414,7 @@
     <h1 class="scroll-fade-in">Hey!<br> I'm Jay Ikponmwosa</h1>
     <p class="scroll-fade-in">Passionate Web Developer dedicated to building responsive, user-friendly, and high-performance web experiences. I bring ideas to life with clean code and a focus on intuitive design.</p>
     <div class="buttons scroll-fade-in">
-      <a href="#" class="primary-btn">Get in touch &rarr;</a>
+      <a href="contact.html" class="primary-btn">Get in touch &rarr;</a>
       <a href="services.html" class="secondary-btn">View Experties</a>
     </div>
   </section>

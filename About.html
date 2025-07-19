@@ -5,258 +5,266 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>About Me</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-  /* Minimal Base Styles */
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  html, body {
-    height: 100%;
-    background-color: #000;
-    font-family: 'Inter', sans-serif;
-    color: #fff;
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-  }
-
-  /* --- Header Styles --- */
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 40px;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
-    position: fixed; /* Header is stagnant */
-    width: 100%;
-    z-index: 1000;
-    /* REMOVED: opacity and transform for initial scroll effect to make it always visible */
-  }
-
-  /* REMOVED: header.in-view as header is now always visible */
-
-  .logo {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #00aaff;
-    text-shadow: 0 0 10px #00aaff;
-  }
-
-  nav a {
-    color: #ccc;
-    margin-left: 25px;
-    text-decoration: none;
-    transition: color 0.3s ease, transform 0.2s ease-out;
-  }
-
-  nav a:hover {
-    color: #fff;
-    transform: translateY(-2px);
-  }
-
-  .cta-button {
-    background: #00aaff;
-    color: #000;
-    padding: 10px 20px;
-    border-radius: 6px;
-    font-weight: bold;
-    margin-left: 20px;
-    text-decoration: none;
-    box-shadow: 0 0 15px #00aaff;
-    transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease-out;
-  }
-
-  .cta-button:hover {
-    background: #00bfff;
-    box-shadow: 0 0 20px #00bfff;
-    transform: translateY(-3px);
-  }
-
-  /* --- Background Animations --- */
-  .animated-bg {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background: radial-gradient(circle at center, rgba(0, 170, 255, 0.1) 0%, transparent 80%);
-    animation: pulse 5s infinite ease-in-out;
-    transform: translateZ(0);
-  }
-
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 0.7; }
-    50% { transform: scale(1.1); opacity: 1; }
-  }
-
-  canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -2;
-    opacity: 0.8;
-  }
-
-  /* About Page Specific Styles */
-  .about-section {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 0rem; /* Adjusted padding for better desktop spacing */
-    max-width: 1100px;
-    margin: auto;
-    margin-top: 100px; /* Add margin-top to account for fixed header */
-  }
-
-  .about-text {
-    flex: 1;
-    min-width: 300px;
-    padding-right: 2rem;
-  }
-
-  .about-text h1 {
-    font-size: 2.5rem;
-    text-shadow: 0 0 10px #00aaff;
-    margin-bottom: 1rem;
-  }
-
-  .about-text p {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: #ccc;
-  }
-
-  .about-img {
-    flex: 1;
-    min-width: 280px;
-    text-align: center;
-  }
-
-  /* New styles for the abstract graphic */
-  .about-graphic {
-    width: 350px;
-    height: 350px;
-    border-radius: 50%;
-    position: relative;
-    margin: 40px 0px 40px 200px; /* Shifted to the right */
-    box-shadow: 0 0 30px rgba(0, 170, 255, 0.7);
-    animation: pulse-glow 3s infinite alternate ease-in-out;
-    transform: rotate(0deg); /* Initial state for rotation */
-    transition: transform 0.5s ease-out; /* Smooth hover transition */
-  }
-
-  .about-graphic::before {
-    content: '';
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    right: 20px;
-    bottom: 20px;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-  }
-
-  @keyframes pulse-glow {
-    0% {
-      box-shadow: 0 0 30px rgba(0, 170, 255, 0.7), 0 0 10px rgba(0, 170, 255, 0.3) inset;
-      transform: scale(1);
-    }
-    100% {
-      box-shadow: 0 0 50px rgba(0, 170, 255, 0.9), 0 0 20px rgba(0, 170, 255, 0.5) inset;
-      transform: scale(1.05);
-    }
-  }
-
-  .about-graphic:hover {
-    transform: rotate(15deg);
-  }
-
-  /* Scroll Fade-In/Slide-Up Effect (Already present) */
-  .scroll-fade-in {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 1s ease-out;
-  }
-
-  .scroll-fade-in.in-view {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* --- Media Queries --- */
-  @media (max-width: 768px) {
-    header {
-      padding: 15px 20px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    nav {
-      margin-top: 10px;
-      width: 100%;
-      text-align: center;
-    }
-    nav a {
-      margin: 0 10px 5px;
-      display: inline-block;
-    }
-    .hero h1 {
-      font-size: 2.2rem;
-    }
-    .hero p {
-      font-size: 0.9rem;
-    }
-    .buttons a {
-      padding: 10px 20px;
-      margin: 0 5px;
-    }
-    .services h2 {
-      font-size: 2rem;
-    }
-    .skills-container {
-      padding: 20px;
-    }
-    .skills-grid {
-      grid-template-columns: 1fr; /* Stack columns on small screens */
-    }
-
-    /* Hide "Jay" and "Book a Call" at 768px and below */
-    .logo {
-        display: none; /* Hide the "Jay" logo */
-    }
-    .cta-button {
-        display: none; /* Hide the "Book a Call" button */
-    }
-
-    /* About page specific responsive adjustments */
-    .about-section {
-      flex-direction: column;
-      text-align: center;
-      padding: 3rem 1rem; /* Adjust padding for smaller screens */
-    }
-    .about-text {
+  <style>
+    /* Minimal Base Styles */
+    * {
+      margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
-    .about-graphic {
-      width: 250px; /* Reduce size for mobile */
-      height: 250px; /* Reduce size for mobile */
-      margin: 30px auto; /* Center on mobile */
-    }
-  }
 
-  @media (max-width: 480px) {
-      .hero h1 { /* Note: .hero is not on this page, but keeping for consistency if you copy the whole block */
-          font-size: 1.8rem;
+    html, body {
+      height: 100%;
+  background: linear-gradient(rgba(0, 0, 0, 0.90), rgba(0, 0, 0, 0.90)), url('Asset/Image/Image1.jpg');
+      background-size: cover;
+      background-position: top;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      font-family: 'Inter', sans-serif;
+      color: #fff;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* Header Styles */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      position: fixed;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #00aaff;
+      text-shadow: 0 0 10px #00aaff;
+    }
+
+    nav a {
+      color: #ccc;
+      margin-left: 25px;
+      text-decoration: none;
+      transition: color 0.3s ease, transform 0.2s ease-out;
+    }
+
+    nav a:hover {
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .cta-button {
+      background: #00aaff;
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: bold;
+      margin-left: 20px;
+      text-decoration: none;
+      box-shadow: 0 0 15px #00aaff;
+      transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease-out;
+    }
+
+    .cta-button:hover {
+      background: #00bfff;
+      box-shadow: 0 0 20px #00bfff;
+      transform: translateY(-3px);
+    }
+
+    /* Background Animations */
+    .animated-bg {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: radial-gradient(circle at center, rgba(0, 170, 255, 0.1) 0%, transparent 80%);
+      animation: pulse 5s infinite ease-in-out;
+      transform: translateZ(0);
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.1); opacity: 1; }
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -2;
+      opacity: 0.8;
+    }
+
+    /* About Page Specific Styles */
+    .about-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0rem;
+      max-width: 1100px;
+      margin: auto;
+      margin-top: 100px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .about-text {
+      flex: 1;
+      min-width: 300px;
+      padding-right: 2rem;
+    }
+
+    .about-text h1 {
+      font-size: 2.5rem;
+      text-shadow: 0 0 10px #00aaff;
+      margin-bottom: 1rem;
+    }
+
+    .about-text p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #ccc;
+    }
+
+    .about-img {
+      flex: 1;
+      min-width: 280px;
+      text-align: center;
+    }
+
+    .about-graphic-wrapper {
+      position: relative;
+    }
+
+    .about-graphic {
+      width: 350px;
+      height: 350px;
+      border-radius: 50%;
+      position: relative;
+      margin: 40px 0px 40px 200px;
+      box-shadow: 0 0 30px rgba(0, 170, 255, 0.7);
+      animation: pulse-glow 3s infinite alternate ease-in-out;
+      transform: rotate(0deg);
+      transition: transform 0.5s ease-out;
+    }
+
+    .about-graphic::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      right: 20px;
+      bottom: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+    }
+
+    @keyframes pulse-glow {
+      0% {
+        box-shadow: 0 0 30px rgba(0, 170, 255, 0.7), 0 0 10px rgba(0, 170, 255, 0.3) inset;
+        transform: scale(1);
       }
-      .buttons { /* Note: .buttons is not on this page */
-          flex-direction: column;
-          gap: 15px;
+      100% {
+        box-shadow: 0 0 50px rgba(0, 170, 255, 0.9), 0 0 20px rgba(0, 170, 255, 0.5) inset;
+        transform: scale(1.05);
       }
-  }
-</style>
+    }
+
+    .about-graphic:hover {
+      transform: rotate(15deg);
+    }
+
+    /* Scroll Fade-In/Slide-Up Effect */
+    .scroll-fade-in {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s ease-out;
+    }
+
+    .scroll-fade-in.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Media Queries */
+    @media (max-width: 768px) {
+      header {
+        padding: 15px 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      nav {
+        margin-top: 10px;
+        width: 100%;
+        text-align: center;
+      }
+
+      nav a {
+        margin: 0 10px 5px;
+        display: inline-block;
+      }
+
+      .logo {
+        display: none;
+      }
+
+      .cta-button {
+        display: none;
+      }
+
+      .about-section {
+        flex-direction: column;
+        text-align: center;
+        padding: 3rem 1rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .about-text {
+        padding: 0;
+      }
+
+      .about-img {
+        display: none;
+      }
+
+      .about-graphic-wrapper {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 0;
+        opacity: 0.1;
+        pointer-events: none;
+      }
+
+      .about-graphic {
+        width: 250px;
+        height: 250px;
+        margin: 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+
+      .buttons {
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+  </style>
 </head>
+
 <body>
   <div class="animated-bg"></div>
   <canvas id="starfield"></canvas>
@@ -282,7 +290,9 @@
       </p>
     </div>
     <div class="about-img">
-      <div class="about-graphic"></div>
+      <div class="about-graphic-wrapper">
+        <div class="about-graphic"></div>
+      </div>
     </div>
   </section>
 
@@ -351,7 +361,7 @@
     animate();
     window.addEventListener('resize', resizeCanvas);
 
-    // Parallax background for animated-bg
+    // Parallax background
     window.addEventListener('scroll', () => {
       const scrollY = window.scrollY;
       const animatedBg = document.querySelector('.animated-bg');
@@ -361,26 +371,18 @@
     });
 
     document.addEventListener('DOMContentLoaded', () => {
-      // --- Intersection Observer for Scroll Effects ---
       const scrollElements = document.querySelectorAll('.scroll-fade-in');
-
       const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('in-view');
-            // For the header, if it's the first time it comes into view, snap it to position
-            // This part is now effectively removed for the header because 'scroll-fade-in' class is removed from header HTML
-            // if (entry.target.tagName === 'HEADER') {
-            //     entry.target.style.transform = 'translateY(0)';
-            // }
             observer.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.1 }); /* Adjusted threshold to 0.1 for general elements */
+      }, { threshold: 0.1 });
 
       scrollElements.forEach(el => observer.observe(el));
     });
   </script>
-
 </body>
 </html>

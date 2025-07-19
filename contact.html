@@ -16,7 +16,13 @@
 
     html, body {
       height: 100%;
-      background-color: #000;
+      /* APPLY THE BACKGROUND HERE */
+  background: linear-gradient(rgba(0, 0, 0, 0.90), rgba(0, 0, 0, 0.90)), url('Asset/Image/Image1.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed; /* Optional: Makes the background static while content scrolls */
+
       font-family: 'Inter', sans-serif;
       color: #fff;
       overflow-x: hidden;
@@ -36,8 +42,6 @@
       z-index: 1000;
       /* REMOVED: opacity and transform for initial scroll effect to make it always visible */
     }
-
-    /* REMOVED: header.in-view as header is now always visible */
 
     .logo {
       font-size: 1.8rem;
@@ -120,8 +124,12 @@
       text-align: center;
       position: relative;
       z-index: 1;
-      background: linear-gradient(to bottom, #000, #0a0a0a);
+      background: linear-gradient(rgba(0, 0, 0, 0.90), rgba(0, 0, 0, 0.90)), url('Asset/Image/Image1.jpg');
+      background-size: cover;
+      background-position: top;
+      background-repeat: no-repeat;
     }
+
 
     .contact-section h1 {
       font-size: 3rem;
@@ -468,7 +476,7 @@
             // Header is no longer animated with scroll, so this specific check is effectively redundant
             // because 'scroll-fade-in' is removed from the header's HTML class list.
             // if (entry.target.tagName === 'HEADER') {
-            //     entry.target.style.transform = 'translateY(0)';
+            //    entry.target.style.transform = 'translateY(0)';
             // }
             observer.unobserve(entry.target);
           }
