@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Expertise</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Minimal Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      background: #000;
+      font-family: 'Inter', sans-serif; /* Changed to Inter for consistency with header */
+      color: #fff;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* --- Header Styles --- */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      position: fixed;
+      width: 100%;
+      z-index: 1000;
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* For scroll effect */
+      opacity: 0; /* Hidden by default for scroll effect */
+      transform: translateY(-100%); /* Start off-screen for scroll effect */
+    }
+
+    header.in-view {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #00aaff;
+      text-shadow: 0 0 10px #00aaff;
+    }
+
+    nav a {
+      color: #ccc;
+      margin-left: 25px;
+      text-decoration: none;
+      transition: color 0.3s ease, transform 0.2s ease-out;
+    }
+
+    nav a:hover {
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .cta-button {
+      background: #00aaff;
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: bold;
+      margin-left: 20px;
+      text-decoration: none;
+      box-shadow: 0 0 15px #00aaff;
+      transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease-out;
+    }
+
+    .cta-button:hover {
+      background: #00bfff;
+      box-shadow: 0 0 20px #00bfff;
+      transform: translateY(-3px);
+    }
+
+    /* ✨ Floating Particle Animation */
+    .particle-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .particle-bg span {
+      position: absolute;
+      display: block;
+      width: 20px;
+      height: 20px;
+      background: rgba(0, 170, 255, 0.3);
+      box-shadow: 0 0 15px rgba(0, 170, 255, 0.6);
+      border-radius: 50%;
+      animation: float 20s linear infinite;
+    }
+
+    .particle-bg span:nth-child(1) { left: 5%; animation-delay: 0s; }
+    .particle-bg span:nth-child(2) { left: 20%; width: 15px; height: 15px; animation-delay: 4s; }
+    .particle-bg span:nth-child(3) { left: 40%; width: 25px; height: 25px; animation-delay: 8s; }
+    .particle-bg span:nth-child(4) { left: 60%; animation-delay: 2s; }
+    .particle-bg span:nth-child(5) { left: 80%; width: 12px; height: 12px; animation-delay: 6s; }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) scale(1);
+        opacity: 0;
+      }
+      50% {
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    .services {
+      padding: 5rem 2rem;
+      text-align: center;
+      position: relative;
+      margin-top: 100px; /* Added margin-top to clear fixed header */
+    }
+
+    h2, p, h3 {
+      color: #fff;
+      text-shadow: 0 0 10px #00aaff, 0 0 20px #00aaff;
+    }
+
+    .scroll-fade-in {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s ease-out;
+    }
+
+    .scroll-fade-in.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .skills-container {
+      margin-top: 3rem;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      justify-content: center;
+      padding: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .skill-item {
+      background: #111;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 0 25px #00aaff33;
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 30px #00f0ffaa, 0 0 10px #00aaff;
+    }
+
+    .skill-item h3 {
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+      font-weight: 600;
+      text-shadow: 0 0 10px #00f0ff;
+    }
+
+    .percentage {
+      float: right;
+      color: #00f0ff;
+      text-shadow: 0 0 5px #00f0ff;
+    }
+
+    .progress-bar-container {
+      background: #222;
+      border-radius: 10px;
+      height: 10px;
+      overflow: hidden;
+      box-shadow: inset 0 0 8px #000;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #00aaff, #00f0ff);
+      box-shadow: 0 0 15px #00f0ff;
+      transition: width 1.5s ease-in-out;
+    }
+
+    .skill-item.in-view .progress-bar {
+      width: var(--progress-width, 0%);
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 15px 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      nav {
+        margin-top: 10px;
+        width: 100%;
+        text-align: center;
+      }
+      nav a {
+        margin: 0 10px 5px;
+        display: inline-block;
+      }
+      .cta-button {
+        margin-left: 0;
+        margin-top: 10px;
+      }
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="particle-bg">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <header class="scroll-fade-in">
+    <div class="logo">Jay</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="About.html">About</a>
+      <a href="services.html">Expertise</a>
+      <a href="contact.html">Contact</a>
+      <a href="contact.html" class="cta-button">Book a Call</a>
+    </nav>
+  </header>
+
+  <section class="services">
+    <h2 style="font-size: 40px;" class="scroll-fade-in">My Expertise</h2>
+    <p class="scroll-fade-in">
+      As a full-stack web developer, I build robust, engaging, and highly functional web solutions.
+      My skills span a wide range of technologies to ensure exceptional results.
+    </p>
+
+    <div class="skills-container scroll-fade-in">
+      <div class="skills-grid">
+        <div class="skill-item" data-skill-percent="90">
+          <h3>HTML <span class="percentage">90%</span></h3>
+          <div class="progress-bar-container">
+            <div class="progress-bar"></div>
+          </div>
+        </div>
+        <div class="skill-item" data-skill-percent="85">
+          <h3>CSS <span class="percentage">85%</span></h3>
+          <div class="progress-bar-container">
+            <div class="progress-bar"></div>
+          </div>
+        </div>
+        <div class="skill-item" data-skill-percent="75">
+          <h3>JavaScript <span class="percentage">75%</span></h3>
+          <div class="progress-bar-container">
+            <div class="progress-bar"></div>
+          </div>
+        </div>
+        <div class="skill-item" data-skill-percent="65">
+          <h3>PHP <span class="percentage">65%</span></h3>
+          <div class="progress-bar-container">
+            <div class="progress-bar"></div>
+          </div>
+        </div>
+        <div class="skill-item" data-skill-percent="50">
+          <h3>Python <span class="percentage">50%</span></h3>
+          <div class="progress-bar-container">
+            <div class="progress-bar"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const scrollElements = document.querySelectorAll('.scroll-fade-in');
+      const skillItems = document.querySelectorAll('.skill-item');
+
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            el.classList.add('in-view');
+
+            // Handle header specific transformation on first view
+            if (el.tagName === 'HEADER') {
+                el.style.transform = 'translateY(0)';
+            }
+
+            if (el.classList.contains('skill-item')) {
+              const percent = el.getAttribute('data-skill-percent');
+              const bar = el.querySelector('.progress-bar');
+              bar.style.setProperty('--progress-width', `${percent}%`);
+            }
+
+            observer.unobserve(el);
+          }
+        });
+      }, { threshold: 0.3 }); // Threshold adjusted for general elements and skills
+
+      scrollElements.forEach(el => observer.observe(el));
+      skillItems.forEach(el => observer.observe(el));
+    });
+  </script>
+
+</body>
+</html>

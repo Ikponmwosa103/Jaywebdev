@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JayWebDev</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      background: #000000;
+      font-family: 'Poppins', sans-serif;
+      color: white;
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+    .overlay {
+      position: relative;
+      z-index: 10;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.4);
+    }
+    .overlay h1 {
+      font-size: 4rem;
+      color: #ffffff;
+    }
+    .overlay p {
+      font-size: 1.5rem;
+      color: #ffffff;
+    }
+    .buttons {
+      margin-top: 20px;
+      display: flex;
+      gap: 2rem;
+    }
+    .buttons a {
+      border: 1px solid #ffffff;
+      padding: 1rem 2rem;
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+    .buttons a:hover {
+      background: #ffffff;
+      color: #000000;
+    }
+  </style>
+</head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JayWebDev Portfolio</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #000000;
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      scroll-behavior: smooth;
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+    .overlay {
+      position: relative;
+      z-index: 10;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.4);
+    }
+    .overlay h1 {
+      font-size: 4rem;
+      color: #ffffff;
+    }
+    .overlay p {
+      font-size: 1.5rem;
+      color: #ffffff;
+    }
+    .get-started {
+      margin-top: 20px;
+      border: 1px solid #ffffff;
+      padding: 1rem 2rem;
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+    .get-started:hover {
+      background: #ffffff;
+      color: #000000;
+    }
+
+    section.hero {
+      padding: 8rem 2rem;
+      background: #000000;
+      color: #ffffff;
+      text-align: center;
+    }
+    .hero h2 {
+      font-size: 3rem;
+      font-weight: 400;
+    }
+    .hero h2 span {
+      font-style: italic;
+      font-weight: 300;
+      color: #ccc;
+    }
+    .hero p {
+      color: #999;
+      margin-top: 1rem;
+    }
+    .clients {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    .services {
+      display: flex;
+      justify-content: space-around;
+      background: #111;
+      padding: 4rem 2rem;
+    }
+    .service-box {
+      flex: 1;
+      max-width: 300px;
+      background: #000;
+      color: #fff;
+      padding: 2rem;
+      margin: 0 1rem;
+      border: 1px solid #333;
+    }
+    .service-box h3 {
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <h1>JayWebDev</h1>
+    <p>Crafting exceptional web experiences</p>
+    <a href="index2.html" class="get-started">Get Started</a>
+
+  </div>
+
+  <script type="module">
+    import * as THREE from 'https://cdn.skypack.dev/three@0.150.1';
+    import gsap from 'https://cdn.skypack.dev/gsap';
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, innerWidth / innerHeight, 0.1, 1000);
+    camera.position.z = 5;
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(innerWidth, innerHeight);
+    renderer.setClearColor(0x000000, 1);
+    document.body.appendChild(renderer.domElement);
+
+    const light = new THREE.PointLight(0xffffff, 1);
+    light.position.set(5, 5, 5);
+    scene.add(light);
+    scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+
+    const baseGeo = new THREE.IcosahedronGeometry(1.5, 1);
+    const material = new THREE.MeshStandardMaterial({
+      color: 0xffffff,
+      emissive: 0x222222,
+      metalness: 0.6,
+      roughness: 0.2,
+      flatShading: true,
+    });
+
+    const geo = baseGeo.toNonIndexed();
+    const pos = geo.attributes.position;
+    const fragments = [];
+
+    for (let i = 0; i < pos.count; i += 3) {
+      const geometry = new THREE.BufferGeometry();
+      const verts = [];
+      for (let j = 0; j < 3; j++) {
+        verts.push(pos.getX(i + j), pos.getY(i + j), pos.getZ(i + j));
+      }
+      geometry.setAttribute('position', new THREE.Float32BufferAttribute(verts, 3));
+      geometry.computeVertexNormals();
+
+      const mesh = new THREE.Mesh(geometry, material.clone());
+
+      mesh.position.set(
+        (Math.random() - 0.5) * 10,
+        (Math.random() - 0.5) * 10,
+        (Math.random() - 0.5) * 10
+      );
+      mesh.rotation.set(
+        Math.random() * Math.PI,
+        Math.random() * Math.PI,
+        Math.random() * Math.PI
+      );
+
+      scene.add(mesh);
+      fragments.push(mesh);
+    }
+
+    fragments.forEach((frag, i) => {
+      gsap.to(frag.position, {
+        x: 0,
+        y: 0,
+        z: 0,
+        duration: 2,
+        delay: i * 0.01,
+        ease: 'power2.out'
+      });
+
+      gsap.to(frag.rotation, {
+        x: 0,
+        y: 0,
+        z: 0,
+        duration: 2,
+        delay: i * 0.01,
+        ease: 'power2.out'
+      });
+    });
+
+    function animate() {
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+
+  <!-- Portfolio Section -->
+  <section id="hero-section" class="hero">
+    <h2>Web Designer <span>& Developer</span></h2>
+    <p>Premium web design, development, and SEO services to help your business stand out.</p>
+    <div class="clients">
+      <span>Logo1</span>
+      <span>Logo2</span>
+      <span>Logo3</span>
+      <span>Logo4</span>
+    </div>
+  </section>
+
+  <section class="services">
+    <div class="service-box">
+      <h3>01 Web Design</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+    </div>
+    <div class="service-box">
+      <h3>02 Development</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+    </div>
+    <div class="service-box">
+      <h3>03 Content & SEO</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+    </div>
+  </section>
+</body>
+</html>
+<body>
+  <div class="overlay">
+    <h1>JayWebDev</h1>
+    <p>Born to Build Beautiful Web</p>
+    <div class="buttons">
+      <a href="#">About</a>
+      <a href="#">Works</a>
+    </div>
+  </div>
+
+<script type="module">
+  import * as THREE from 'https://cdn.skypack.dev/three@0.150.1';
+  import gsap from 'https://cdn.skypack.dev/gsap';
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, innerWidth / innerHeight, 0.1, 1000);
+  camera.position.z = 5;
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(innerWidth, innerHeight);
+  renderer.setClearColor(0x000000, 1);
+  document.body.appendChild(renderer.domElement);
+
+  const light = new THREE.PointLight(0xffffff, 1);
+  light.position.set(5, 5, 5);
+  scene.add(light);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+
+  // Increase detail for more fragments
+  const baseGeo = new THREE.IcosahedronGeometry(1.5, 3);
+  const material = new THREE.MeshStandardMaterial({
+    color: 0xffffff,
+    emissive: 0x222222,
+    metalness: 0.6,
+    roughness: 0.2,
+    flatShading: true,
+  });
+
+  const geo = baseGeo.toNonIndexed();
+  const pos = geo.attributes.position;
+  const fragments = [];
+
+  for (let i = 0; i < pos.count; i += 3) {
+    const geometry = new THREE.BufferGeometry();
+    const verts = [];
+    for (let j = 0; j < 3; j++) {
+      verts.push(pos.getX(i + j), pos.getY(i + j), pos.getZ(i + j));
+    }
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(verts, 3));
+    geometry.computeVertexNormals();
+
+    const mesh = new THREE.Mesh(geometry, material.clone());
+
+    // Start from a very far position (off-screen)
+    mesh.position.set(
+      (Math.random() - 0.5) * 50,
+      (Math.random() - 0.5) * 50,
+      (Math.random() - 0.5) * 50
+    );
+    mesh.rotation.set(
+      Math.random() * Math.PI,
+      Math.random() * Math.PI,
+      Math.random() * Math.PI
+    );
+
+    scene.add(mesh);
+    fragments.push(mesh);
+  }
+
+  // Animate them in
+  fragments.forEach((frag, i) => {
+    gsap.to(frag.position, {
+      x: 0,
+      y: 0,
+      z: 0,
+      duration: 2,
+      delay: i * 0.005,
+      ease: 'power4.out'
+    });
+
+    gsap.to(frag.rotation, {
+      x: 0,
+      y: 0,
+      z: 0,
+      duration: 2,
+      delay: i * 0.005,
+      ease: 'power4.out'
+    });
+  });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera);
+  }
+
+  animate();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+</script>
