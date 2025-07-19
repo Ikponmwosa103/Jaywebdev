@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact JayWebDev</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Minimal Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      background-color: #000;
+      font-family: 'Inter', sans-serif;
+      color: #fff;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* --- Header Styles (Copied from other pages) --- */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      position: fixed;
+      width: 100%;
+      z-index: 1000;
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* For scroll effect */
+      opacity: 0; /* Hidden by default for scroll effect */
+      transform: translateY(-100%); /* Start off-screen for scroll effect */
+    }
+
+    header.in-view {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #00aaff;
+      text-shadow: 0 0 10px #00aaff;
+    }
+
+    nav a {
+      color: #ccc;
+      margin-left: 25px;
+      text-decoration: none;
+      transition: color 0.3s ease, transform 0.2s ease-out;
+    }
+
+    nav a:hover {
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .cta-button {
+      background: #00aaff;
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: bold;
+      margin-left: 20px;
+      text-decoration: none;
+      box-shadow: 0 0 15px #00aaff;
+      transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease-out;
+    }
+
+    .cta-button:hover {
+      background: #00bfff;
+      box-shadow: 0 0 20px #00bfff;
+      transform: translateY(-3px);
+    }
+
+    /* --- Background Animations (Copied from other pages) --- */
+    .animated-bg {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: radial-gradient(circle at center, rgba(0, 170, 255, 0.1) 0%, transparent 80%);
+      animation: pulse 5s infinite ease-in-out;
+      transform: translateZ(0);
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.1); opacity: 1; }
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -2;
+      opacity: 0.8;
+    }
+
+    /* --- General Scroll Fade-In/Slide-Up Effect (Copied from other pages) --- */
+    .scroll-fade-in {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s ease-out;
+    }
+
+    .scroll-fade-in.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* --- Contact Page Specific Styles --- */
+    .contact-section {
+      padding: 120px 20px; /* Adjust padding to account for fixed header */
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      background: linear-gradient(to bottom, #000, #0a0a0a);
+    }
+
+    .contact-section h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      text-shadow: 0 0 15px #00aaff;
+    }
+
+    .contact-section p {
+      max-width: 700px;
+      margin: 0 auto 40px;
+      line-height: 1.6;
+      color: #bbb;
+    }
+
+    .contact-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      justify-content: center;
+      margin-top: 40px;
+    }
+
+    .contact-form-container,
+    .contact-info-container {
+      flex: 1;
+      min-width: 300px;
+      background: rgba(10, 10, 10, 0.8);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 170, 255, 0.15);
+      border: 1px solid rgba(0, 170, 255, 0.2);
+    }
+
+    .contact-form-container h2,
+    .contact-info-container h2 {
+        font-size: 1.8rem;
+        margin-bottom: 25px;
+        color: #00aaff;
+        text-shadow: 0 0 10px #00aaff;
+    }
+
+    .contact-form label {
+      display: block;
+      text-align: left;
+      margin-bottom: 8px;
+      color: #eee;
+      font-weight: 600;
+    }
+
+    .contact-form input[type="text"],
+    .contact-form input[type="email"],
+    .contact-form textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #333;
+      border-radius: 6px;
+      background: #222;
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .contact-form input[type="text"]:focus,
+    .contact-form input[type="email"]:focus,
+    .contact-form textarea:focus {
+      border-color: #00aaff;
+      box-shadow: 0 0 10px rgba(0, 170, 255, 0.5);
+    }
+
+    .contact-form textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .contact-form button {
+      background: #00aaff;
+      color: #000;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 15px #00aaff;
+      transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease-out;
+      width: 100%;
+    }
+
+    .contact-form button:hover {
+      background: #00bfff;
+      box-shadow: 0 0 20px #00bfff;
+      transform: translateY(-2px);
+    }
+
+    .contact-info-item {
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    .contact-info-item h3 {
+      font-size: 1.2rem;
+      color: #00aaff;
+      margin-bottom: 8px;
+      text-shadow: none; /* Remove extra text-shadow */
+    }
+
+    .contact-info-item p,
+    .contact-info-item a {
+      color: #ccc;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-info-item a:hover {
+      color: #00aaff;
+    }
+
+    .social-links {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .social-links a {
+      color: #00aaff;
+      font-size: 1.8rem;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .social-links a:hover {
+      transform: translateY(-5px) scale(1.1);
+      color: #00bfff;
+    }
+
+    /* Media Queries for responsiveness */
+    @media (max-width: 768px) {
+      header {
+        padding: 15px 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      nav {
+        margin-top: 10px;
+        width: 100%;
+        text-align: center;
+      }
+      nav a {
+        margin: 0 10px 5px;
+        display: inline-block;
+      }
+      .cta-button {
+        margin-left: 0;
+        margin-top: 10px;
+      }
+      .contact-section h1 {
+        font-size: 2.2rem;
+      }
+      .contact-section p {
+        font-size: 0.9rem;
+      }
+      .contact-content {
+        flex-direction: column;
+        gap: 30px;
+      }
+      .contact-form-container,
+      .contact-info-container {
+        padding: 20px;
+      }
+      .contact-form-container h2,
+      .contact-info-container h2 {
+        font-size: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .contact-section h1 {
+        font-size: 1.8rem;
+      }
+      header {
+        padding: 10px 15px;
+      }
+      nav a {
+        margin: 0 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="animated-bg"></div>
+  <canvas id="starfield"></canvas>
+
+  <header class="scroll-fade-in">
+    <div class="logo">Jay</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="About.html">About</a>
+      <a href="services.html">Expertise</a>
+      <a href="contact.html">Contact</a> <a href="#" class="cta-button">Book a Call</a>
+    </nav>
+  </header>
+
+  <section class="contact-section">
+    <h1 class="scroll-fade-in">Let's Connect!</h1>
+    <p class="scroll-fade-in">
+      Have a project in mind, a question, or just want to say hello?
+      I'd love to hear from you. Fill out the form below or reach out through my contact details.
+    </p>
+
+    <div class="contact-content">
+      <div class="contact-form-container scroll-fade-in">
+        <h2>Send Me a Message</h2>
+        <form class="contact-form" action="https://formspree.io/f/manbyero" method="POST">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required placeholder="Your Name">
+
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" name="subject" required placeholder="Project Inquiry / General Question">
+          <input type="hidden" name="_subject" value="New message from your portfolio contact form!">
+
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required placeholder="Tell me about your project or inquiry..."></textarea>
+
+          <button type="submit">Send Message</button>
+        </form>
+      </div>
+
+      <div class="contact-info-container scroll-fade-in">
+        <h2>My Contact Details</h2>
+        <div class="contact-info-item">
+          <h3>Email</h3>
+          <p><a href="mailto:jaywebdeveloper3@gmail.com">jaywebdeveloper3@gmail.com</a></p>
+        </div>
+        <div class="contact-info-item">
+          <h3>Phone</h3>
+          <p><a href="tel:+2349011194641">+234 901 119 4641</a></p>
+        </div>
+        <div class="contact-info-item">
+          <h3>Location</h3>
+          <p>Edo state, Nigeria</p>
+        </div>
+        <div class="social-links">
+          <a href="https://wa.me/2349011194641" ><i class="fab fa-whatsapp"></i></a>
+          <a href="#" ><i class="fab fa-facebook-f"></i></a>
+          <a href="#" ><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Starfield animation script (copied from main page)
+    const canvas = document.getElementById('starfield');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+    let w, h;
+    const STAR_COUNT = 500;
+
+    function resizeCanvas() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+      createStars(STAR_COUNT);
+    }
+
+    function createStars(count) {
+      stars = [];
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          z: Math.random() * w,
+          speed: 1 + Math.random() * 2
+        });
+      }
+    }
+
+    function drawStars() {
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = '#00aaff';
+      for (let i = 0; i < stars.length; i++) {
+        const star = stars[i];
+        const k = 128.0 / star.z;
+        const x = (star.x - w / 2) * k + w / 2;
+        const y = (star.y - h / 2) * k + h / 2;
+
+        if (x < 0 || x >= w || y < 0 || y >= h || star.z <= 0) {
+          stars[i] = {
+            x: Math.random() * w,
+            y: Math.random() * h,
+            z: w,
+            speed: 1 + Math.random() * 2
+          };
+          continue;
+        }
+
+        const size = (1 - star.z / w) * 2;
+        const opacity = (1 - star.z / w);
+        ctx.globalAlpha = opacity;
+        ctx.beginPath();
+        ctx.arc(x, y, size, 0, Math.PI * 2);
+        ctx.fill();
+        star.z -= star.speed;
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    function animate() {
+      drawStars();
+      requestAnimationFrame(animate);
+    }
+
+    resizeCanvas();
+    animate();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Parallax background for animated-bg
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      const animatedBg = document.querySelector('.animated-bg');
+      if (animatedBg) {
+        animatedBg.style.transform = `translateY(${scrollY * 0.1}px) translateZ(0)`;
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // --- Intersection Observer for Scroll Effects ---
+      const scrollElements = document.querySelectorAll('.scroll-fade-in');
+
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            // For the header, if it's the first time it comes into view, snap it to position
+            if (entry.target.tagName === 'HEADER') {
+                entry.target.style.transform = 'translateY(0)';
+            }
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 }); /* Adjusted threshold to 0.1 for general elements */
+
+      scrollElements.forEach(el => observer.observe(el));
+    });
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0V4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7/KxQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</body>
+</html>

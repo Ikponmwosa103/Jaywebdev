@@ -1,0 +1,677 @@
+    /* Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      background-color: #000;
+      font-family: 'Inter', sans-serif;
+      color: #fff;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* Global Animations */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      position: fixed;
+      width: 100%;
+      z-index: 1000;
+      opacity: 0;
+      animation: fadeIn 1s ease 3.5s forwards;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #00aaff;
+      text-shadow: 0 0 10px #00aaff;
+      width: 10%;
+    }
+
+    nav a {
+      color: #ccc;
+      margin-left: 25px;
+      text-decoration: none;
+      transition: color 0.3s ease, transform 0.2s ease-out;
+    }
+
+    nav a:hover {
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .cta-button {
+      background: #00aaff;
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: bold;
+      margin-left: 20px;
+      text-decoration: none;
+      /* box-shadow: 0 0 15px #00aaff; */
+      transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease-out;
+    }
+
+    .cta-button:hover {
+      background: #00bfff;
+      box-shadow: 0 0 20px #00bfff;
+      transform: translateY(-3px);
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      height: 100vh;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
+      perspective: 800px;
+      opacity: 0;
+      animation: fadeIn 1s ease 3.5s forwards;
+      overflow: hidden;
+      background-image: url('Image/Image1.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    /* DARK OVERLAY ADDED HERE */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+    background-color: rgba(0, 0, 0, 0.87);
+      z-index: 0;
+    }
+
+    .hero > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 150px;
+      background-repeat: repeat-x;
+      background-size: 1000px 150px;
+      background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1000 150" xmlns="http://www.w3.org/2000/svg"><path fill="%2300aaff" fill-opacity="0.05" d="M0 100 Q 250 0 500 100 T 1000 100 L 1000 150 L 0 150 Z"></path></svg>');
+      animation: wave 25s linear infinite reverse;
+      opacity: 0;
+      animation-delay: 4.2s;
+      animation-fill-mode: forwards;
+      z-index: 0;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      max-width: 800px;
+      margin-bottom: 20px;
+      text-shadow: 0 0 15px #00aaff;
+      animation: float 4s ease-in-out infinite;
+      transform: translateZ(0);
+    }
+
+    .hero p {
+      color: #ccc;
+      max-width: 600px;
+      margin-bottom: 30px;
+      animation: fadeIn 1.5s ease 4.5s forwards;
+      opacity: 0;
+      animation-fill-mode: forwards;
+    }
+
+    .buttons a {
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-weight: 600;
+      text-decoration: none;
+      margin: 0 10px;
+      transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    }
+
+    .primary-btn {
+      background: #00aaff;
+      color: #000;
+      box-shadow: 0 0 15px #00aaff;
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 25px #00aaff;
+    }
+
+    .secondary-btn {
+      border: 1px solid #00aaff;
+      color: #00aaff;
+      background: transparent;
+    }
+
+    .secondary-btn:hover {
+      transform: translateY(-3px);
+      background: rgba(0, 170, 255, 0.1);
+      box-shadow: 0 0 25px rgba(0, 170, 255, 0.5);
+    }
+
+    .animated-bg {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: radial-gradient(circle at center, rgba(0, 170, 255, 0.1) 0%, transparent 80%);
+      animation: pulse 5s infinite ease-in-out;
+      transform: translateZ(0);
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.1); opacity: 1; }
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -2;
+      opacity: 0.8;
+    }
+
+    .services {
+      padding: 120px 20px 100px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      background: linear-gradient(to bottom, #000, #0a0a0a);
+    }
+
+    .services h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #00aaff;
+    }
+
+    .services p {
+      color: #bbb;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    #shattered-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 9999;
+      pointer-events: none;
+      overflow: hidden;
+      background-color: #000;
+    }
+
+    .shattered-shard {
+      position: absolute;
+      background-color: rgba(0, 170, 255, 0.2);
+      border: 1px solid rgba(0, 170, 255, 0.4);
+      box-shadow: 0 0 10px rgba(0, 170, 255, 0.3);
+      border-radius: 2px;
+      animation: shatter 3s ease-out forwards;
+      animation-delay: var(--shatter-delay);
+      opacity: 0;
+    }
+
+    @keyframes shatter {
+      0% { opacity: 1; transform: translate(0, 0) rotate(0deg) scale(1); }
+      15%, 100% { opacity: 0; transform: translate(var(--end-x), var(--end-y)) rotate(var(--end-rotate)) scale(var(--end-scale)); visibility: hidden; }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 15px 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      nav {
+        margin-top: 10px;
+        width: 100%;
+        text-align: center;
+      }
+      nav a {
+        margin: 0 10px 5px;
+        display: inline-block;
+      }
+      .cta-button {
+        margin-left: 0;
+        margin-top: 10px;
+      }
+      .hero h1 { font-size: 2.2rem; }
+      .hero p { font-size: 0.9rem; }
+      .buttons a {
+        padding: 10px 20px;
+        margin: 0 5px;
+      }
+      .services h2 { font-size: 2rem; }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 1.8rem; }
+      .buttons { flex-direction: column; gap: 15px; }
+    }
+
+* {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      background-color: #000;
+      font-family: 'Inter', sans-serif;
+      color: #fff;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* General Section Padding */
+    section {
+        padding: 120px 20px;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+        background: linear-gradient(to bottom, #000, #0a0a0a);
+    }
+
+    h1, h2 {
+        color: #fff;
+    }
+
+    p {
+        color: #ccc;
+    }
+
+    /* --- Header Styles (Reintroduced for functionality) --- */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      position: fixed;
+      width: 100%;
+      z-index: 1000;
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* For scroll effect */
+      opacity: 0; /* Hidden by default for scroll effect */
+      transform: translateY(-100%); /* Start off-screen for scroll effect */
+    }
+
+    header.in-view {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #00aaff;
+      text-shadow: 0 0 10px #00aaff;
+    }
+
+    nav a {
+      color: #ccc;
+      margin-left: 25px;
+      text-decoration: none;
+      transition: color 0.3s ease, transform 0.2s ease-out;
+    }
+
+    nav a:hover {
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .cta-button {
+      background: #00aaff;
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: bold;
+      margin-left: 20px;
+      text-decoration: none;
+      box-shadow: 0 0 15px #00aaff;
+      transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease-out;
+    }
+
+    .cta-button:hover {
+      background: #00bfff;
+      box-shadow: 0 0 20px #00bfff;
+      transform: translateY(-3px);
+    }
+
+    /* --- Hero Section Styles (Reintroduced for functionality) --- */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      height: 100vh;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+      background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('Image1.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      max-width: 800px;
+      margin-bottom: 20px;
+      text-shadow: 0 0 15px #00aaff;
+      /* Original hero animation removed to allow scroll effect */
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease-out, transform 1s ease-out;
+    }
+
+    .hero p {
+      color: #ccc;
+      max-width: 600px;
+      margin-bottom: 30px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease-out, transform 1s ease-out;
+      transition-delay: 0.2s; /* Delay relative to h1 */
+    }
+
+    .hero .buttons {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 1s ease-out, transform 1s ease-out;
+        transition-delay: 0.4s; /* Delay relative to h1 */
+    }
+
+    .buttons a {
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-weight: 600;
+      text-decoration: none;
+      margin: 0 10px;
+      transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    }
+
+    .primary-btn {
+        background: #00aaff;
+        color: #000;
+        box-shadow: 0 0 15px #00aaff;
+    }
+
+    .primary-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0 25px #00aaff;
+    }
+
+    .secondary-btn {
+        border: 1px solid #00aaff;
+        color: #00aaff;
+        background: transparent;
+    }
+
+    .secondary-btn:hover {
+        transform: translateY(-3px);
+        background: rgba(0, 170, 255, 0.1);
+        box-shadow: 0 0 25px rgba(0, 170, 255, 0.5);
+    }
+
+    /* --- General Scroll Fade-In/Slide-Up Effect --- */
+    .scroll-fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease-out, transform 1s ease-out;
+    }
+
+    .scroll-fade-in.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+
+    /* --- Background Animations (Reintroduced for functionality) --- */
+    .animated-bg {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: radial-gradient(circle at center, rgba(0, 170, 255, 0.1) 0%, transparent 80%);
+      animation: pulse 5s infinite ease-in-out;
+      transform: translateZ(0);
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.1); opacity: 1; }
+    }
+
+    /* --- Starfield Canvas (Reintroduced for functionality) --- */
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -2;
+      opacity: 0.8;
+    }
+
+    /* --- Shattered Glass Effect (Reintroduced for functionality) --- */
+    #shattered-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 9999;
+      pointer-events: none;
+      overflow: hidden;
+      background-color: #000;
+    }
+
+    .shattered-shard {
+      position: absolute;
+      background-color: rgba(0, 170, 255, 0.2);
+      border: 1px solid rgba(0, 170, 255, 0.4);
+      box-shadow: 0 0 10px rgba(0, 170, 255, 0.3);
+      border-radius: 2px;
+      animation: shatter 3s ease-out forwards;
+      animation-delay: var(--shatter-delay);
+      opacity: 0;
+    }
+
+    @keyframes shatter {
+      0% {
+        opacity: 1;
+        transform: translate(0, 0) rotate(0deg) scale(1);
+      }
+      15% {
+        opacity: 0.8;
+        transform: translate(var(--end-x), var(--end-y)) rotate(var(--end-rotate)) scale(var(--end-scale));
+      }
+      100% {
+        opacity: 0;
+        transform: translate(var(--end-x), var(--end-y)) rotate(var(--end-rotate)) scale(var(--end-scale));
+        visibility: hidden;
+      }
+    }
+
+    /* --- Services Section (Reintroduced & Adjusted for scroll effect) --- */
+    .services h2 {
+      font-size: 2.5rem;
+      margin-bottom: 40px;
+      text-shadow: 0 0 10px #00aaff;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease-out, transform 1s ease-out;
+    }
+
+    .services > p {
+        color: #bbb;
+        max-width: 700px;
+        margin: 0 auto 60px;
+        line-height: 1.6;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 1s ease-out, transform 1s ease-out;
+        transition-delay: 0.2s;
+    }
+
+    /* --- Skills Section Styles (Your existing styles, with minimal adjustments for context) --- */
+    .skills-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 30px;
+        background: rgba(10, 10, 10, 0.8);
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 170, 255, 0.15);
+        border: 1px solid rgba(0, 170, 255, 0.2);
+        opacity: 0; /* Start hidden for scroll effect */
+        transform: translateY(20px);
+        transition: opacity 1s ease-out, transform 1s ease-out;
+        transition-delay: 0.4s; /* Delay relative to section title/p */
+    }
+
+    .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        margin-top: 30px;
+    }
+
+    .skill-item {
+        background: #1a1a1a;
+        padding: 25px;
+        border-radius: 8px;
+        text-align: left;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        border: 1px solid #333;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .skill-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 170, 255, 0.2);
+    }
+
+    .skill-item h3 {
+        font-size: 1.4rem;
+        margin-bottom: 15px;
+        color: #00aaff;
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+    }
+
+    .skill-item .percentage {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #ccc;
+    }
+
+    .progress-bar-container {
+        background: #333;
+        height: 10px;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .progress-bar {
+        height: 100%;
+        background: linear-gradient(to right, #00aaff, #00e0ff);
+        width: 0%; /* Initial width for animation */
+        border-radius: 5px;
+        transition: width 1.5s ease-out; /* Animation for the bar fill */
+        box-shadow: 0 0 8px #00aaff;
+    }
+
+    /* When the skill is in view, apply the width (existing) */
+    .skill-item.in-view .progress-bar {
+        width: var(--progress-width);
+    }
+
+
+    /* --- Media Queries (Reintroduced for responsiveness) --- */
+    @media (max-width: 768px) {
+        header {
+            padding: 15px 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        nav {
+            margin-top: 10px;
+            width: 100%;
+            text-align: center;
+        }
+        nav a {
+            margin: 0 10px 5px;
+            display: inline-block;
+        }
+        .cta-button {
+            margin-left: 0;
+            margin-top: 10px;
+        }
+        .hero h1 {
+            font-size: 2.2rem;
+        }
+        .hero p {
+            font-size: 0.9rem;
+        }
+        .buttons a {
+            padding: 10px 20px;
+            margin: 0 5px;
+        }
+        .services h2 {
+            font-size: 2rem;
+        }
+        .skills-container {
+            padding: 20px;
+        }
+        .skills-grid {
+            grid-template-columns: 1fr; /* Stack columns on small screens */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .hero h1 {
+            font-size: 1.8rem;
+        }
+        .buttons {
+            flex-direction: column;
+            gap: 15px;
+        }
+    }
+
+    

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Me</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Minimal Base Styles */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html, body {
+    height: 100%;
+    background-color: #000;
+    font-family: 'Inter', sans-serif; /* Changed to Inter for consistency with header */
+    color: #fff;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+
+  /* --- Header Styles --- */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* For scroll effect */
+    opacity: 0; /* Hidden by default for scroll effect */
+    transform: translateY(-100%); /* Start off-screen for scroll effect */
+  }
+
+  header.in-view {
+      opacity: 1;
+      transform: translateY(0);
+  }
+
+  .logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #00aaff;
+    text-shadow: 0 0 10px #00aaff;
+  }
+
+  nav a {
+    color: #ccc;
+    margin-left: 25px;
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.2s ease-out;
+  }
+
+  nav a:hover {
+    color: #fff;
+    transform: translateY(-2px);
+  }
+
+  .cta-button {
+    background: #00aaff;
+    color: #000;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    margin-left: 20px;
+    text-decoration: none;
+    box-shadow: 0 0 15px #00aaff;
+    transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease-out;
+  }
+
+  .cta-button:hover {
+    background: #00bfff;
+    box-shadow: 0 0 20px #00bfff;
+    transform: translateY(-3px);
+  }
+
+  /* --- Background Animations --- */
+  .animated-bg {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: radial-gradient(circle at center, rgba(0, 170, 255, 0.1) 0%, transparent 80%);
+    animation: pulse 5s infinite ease-in-out;
+    transform: translateZ(0);
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.1); opacity: 1; }
+  }
+
+  canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -2;
+    opacity: 0.8;
+  }
+
+  /* About Page Specific Styles */
+  .about-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0rem; /* Adjusted padding for better desktop spacing */
+    max-width: 1100px;
+    margin: auto;
+    margin-top: 100px; /* Add margin-top to account for fixed header */
+  }
+
+  .about-text {
+    flex: 1;
+    min-width: 300px;
+    padding-right: 2rem;
+  }
+
+  .about-text h1 {
+    font-size: 2.5rem;
+    text-shadow: 0 0 10px #00aaff;
+    margin-bottom: 1rem;
+  }
+
+  .about-text p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #ccc;
+  }
+
+  .about-img {
+    flex: 1;
+    min-width: 280px;
+    text-align: center;
+  }
+
+  /* New styles for the abstract graphic */
+  .about-graphic {
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    position: relative;
+    margin: 40px 0px 40px 200px; /* Shifted to the right */
+    box-shadow: 0 0 30px rgba(0, 170, 255, 0.7);
+    animation: pulse-glow 3s infinite alternate ease-in-out;
+    transform: rotate(0deg); /* Initial state for rotation */
+    transition: transform 0.5s ease-out; /* Smooth hover transition */
+  }
+
+  .about-graphic::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+  }
+
+  @keyframes pulse-glow {
+    0% {
+      box-shadow: 0 0 30px rgba(0, 170, 255, 0.7), 0 0 10px rgba(0, 170, 255, 0.3) inset;
+      transform: scale(1);
+    }
+    100% {
+      box-shadow: 0 0 50px rgba(0, 170, 255, 0.9), 0 0 20px rgba(0, 170, 255, 0.5) inset;
+      transform: scale(1.05);
+    }
+  }
+
+  .about-graphic:hover {
+    transform: rotate(15deg);
+  }
+
+  /* Scroll Fade-In/Slide-Up Effect (Already present) */
+  .scroll-fade-in {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 1s ease-out;
+  }
+
+  .scroll-fade-in.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* --- Media Queries --- */
+  @media (max-width: 768px) {
+    header {
+      padding: 15px 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    nav {
+      margin-top: 10px;
+      width: 100%;
+      text-align: center;
+    }
+    nav a {
+      margin: 0 10px 5px;
+      display: inline-block;
+    }
+    .cta-button {
+      margin-left: 0;
+      margin-top: 10px;
+    }
+    .about-section {
+      flex-direction: column;
+      text-align: center;
+      padding: 3rem 1rem; /* Adjust padding for smaller screens */
+    }
+    .about-text {
+      padding: 0;
+    }
+    .about-graphic {
+      width: 250px; /* Reduce size for mobile */
+      height: 250px; /* Reduce size for mobile */
+      margin: 30px auto; /* Center on mobile */
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="animated-bg"></div>
+  <canvas id="starfield"></canvas>
+
+  <header class="scroll-fade-in">
+    <div class="logo">Jay</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="About.html">About</a>
+      <a href="services.html">Expertise</a>
+      <a href="contact.html">Contact</a>
+      <a href="contact.html" class="cta-button">Book a Call</a>
+    </nav>
+  </header>
+
+  <section class="about-section scroll-fade-in">
+    <div class="about-text">
+      <h1>Hello! I'm Jay, a passionate web developer.</h1>
+      <p>
+        I specialize in creating beautiful, interactive, and functional websites with modern technologies. My focus is on delivering responsive design, clean code, and engaging user experiences. With a strong grasp of HTML, CSS, JavaScript, and backend tools like PHP and Python, I turn ideas into fully functional websites. I love working on challenging projects and continuously learning new tech.
+
+        My approach to web development is holistic, ensuring that every project, from concept to deployment, is handled with meticulous attention to detail. I am adept at translating client visions into tangible web solutions that not only meet but exceed expectations. Whether it's crafting a visually stunning front-end or architecting a robust back-end, my goal is always to build high-performance, scalable applications. I thrive in dynamic environments, constantly embracing new challenges and expanding my skill set to stay at the forefront of web innovation. My commitment to elegant solutions and efficient workflows ensures that each website I develop is optimized for both users and search engines, providing a seamless and memorable digital experience. Let's collaborate to bring your next great idea to life on the web.
+      </p>
+    </div>
+    <div class="about-img">
+      <div class="about-graphic"></div>
+    </div>
+  </section>
+
+  <script>
+    // Starfield animation script
+    const canvas = document.getElementById('starfield');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+    let w, h;
+    const STAR_COUNT = 500;
+
+    function resizeCanvas() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+      createStars(STAR_COUNT);
+    }
+
+    function createStars(count) {
+      stars = [];
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          z: Math.random() * w,
+          speed: 1 + Math.random() * 2
+        });
+      }
+    }
+
+    function drawStars() {
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = '#00aaff';
+      for (let i = 0; i < stars.length; i++) {
+        const star = stars[i];
+        const k = 128.0 / star.z;
+        const x = (star.x - w / 2) * k + w / 2;
+        const y = (star.y - h / 2) * k + h / 2;
+
+        if (x < 0 || x >= w || y < 0 || y >= h || star.z <= 0) {
+          stars[i] = {
+            x: Math.random() * w,
+            y: Math.random() * h,
+            z: w,
+            speed: 1 + Math.random() * 2
+          };
+          continue;
+        }
+
+        const size = (1 - star.z / w) * 2;
+        const opacity = (1 - star.z / w);
+        ctx.globalAlpha = opacity;
+        ctx.beginPath();
+        ctx.arc(x, y, size, 0, Math.PI * 2);
+        ctx.fill();
+        star.z -= star.speed;
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    function animate() {
+      drawStars();
+      requestAnimationFrame(animate);
+    }
+
+    resizeCanvas();
+    animate();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Parallax background for animated-bg
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      const animatedBg = document.querySelector('.animated-bg');
+      if (animatedBg) {
+        animatedBg.style.transform = `translateY(${scrollY * 0.1}px) translateZ(0)`;
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // --- Intersection Observer for Scroll Effects ---
+      const scrollElements = document.querySelectorAll('.scroll-fade-in');
+
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            // For the header, if it's the first time it comes into view, snap it to position
+            if (entry.target.tagName === 'HEADER') {
+                entry.target.style.transform = 'translateY(0)';
+            }
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 }); /* Adjusted threshold to 0.1 for general elements */
+
+      scrollElements.forEach(el => observer.observe(el));
+    });
+  </script>
+
+</body>
+</html>
