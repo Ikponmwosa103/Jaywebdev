@@ -6,7 +6,6 @@
   <title>JayWebDev</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    /* Minimal Base Styles */
     * {
       margin: 0;
       padding: 0;
@@ -22,24 +21,17 @@
       scroll-behavior: smooth;
     }
 
-    /* General Section Padding */
     section {
-        padding: 120px 20px;
-        text-align: center;
-        position: relative;
-        z-index: 1;
-        background: linear-gradient(to bottom, #000, #0a0a0a);
+      padding: 120px 20px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      background: linear-gradient(to bottom, #000, #0a0a0a);
     }
 
-    h1, h2 {
-        color: #fff;
-    }
+    h1, h2 { color: #fff; }
+    p { color: #ccc; }
 
-    p {
-        color: #ccc;
-    }
-
-    /* --- Header Styles --- */
     header {
       display: flex;
       justify-content: space-between;
@@ -47,17 +39,16 @@
       padding: 20px 40px;
       background: rgba(0, 0, 0, 0.8);
       backdrop-filter: blur(10px);
-      position: fixed; /* Header is stagnant */
+      position: fixed;
       width: 100%;
       z-index: 1000;
-      /* Removed opacity/transform for initial scroll effect to make it always visible */
     }
 
     .logo {
       font-size: 1.8rem;
       font-weight: 700;
-      color: #2ECC71; /* Changed from blue to green */
-      text-shadow: 0 0 10px #2ECC71; /* Changed from blue to green */
+      color: #2ECC71;
+      text-shadow: 0 0 10px #2ECC71;
     }
 
     nav a {
@@ -73,46 +64,45 @@
     }
 
     .cta-button {
-      background: #2ECC71; /* Changed from blue to green */
+      background: #2ECC71;
       color: #000;
       padding: 10px 20px;
       border-radius: 6px;
       font-weight: bold;
       margin-left: 20px;
       text-decoration: none;
-      box-shadow: 0 0 15px #2ECC71; /* Changed from blue to green */
-      transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease-out;
+      box-shadow: 0 0 15px #2ECC71;
+      transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease-out;
     }
 
     .cta-button:hover {
-      background: #27AE60; /* Changed from blue to green */
-      box-shadow: 0 0 20px #27AE60; /* Changed from blue to green */
+      background: #27AE60;
+      box-shadow: 0 0 20px #27AE60;
       transform: translateY(-3px);
     }
 
-    /* --- Hero Section Styles --- */
-.hero {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  height: 100vh;
-  padding: 0 20px;
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
-  background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('Asset/Image/Image12.jpg');
-  background-size: cover;
-  background-position: top; /* <--- CHANGE THIS LINE */
-  background-repeat: no-repeat;
-}
+    .hero {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      height: 100vh;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+      background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('Asset/Image/Image12.jpg');
+      background-size: cover;
+      background-position: top;
+      background-repeat: no-repeat;
+    }
 
     .hero h1 {
       font-size: 3rem;
       max-width: 800px;
       margin-bottom: 20px;
-      text-shadow: 0 0 15px #2ECC71; /* Changed from blue to green */
+      text-shadow: 0 0 15px #2ECC71;
       opacity: 0;
       transform: translateY(20px);
       transition: opacity 1s ease-out, transform 1s ease-out;
@@ -125,49 +115,56 @@
       opacity: 0;
       transform: translateY(20px);
       transition: opacity 1s ease-out, transform 1s ease-out;
-      transition-delay: 0.2s; /* Delay relative to h1 */
+      transition-delay: 0.2s;
     }
 
-    .hero .buttons {
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 1s ease-out, transform 1s ease-out;
-        transition-delay: 0.4s; /* Delay relative to h1 */
+    .buttons {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease-out, transform 1s ease-out;
+      transition-delay: 0.4s;
     }
 
     .buttons a {
       padding: 12px 24px;
       border-radius: 6px;
       font-weight: 600;
+      font-size: 1rem;
       text-decoration: none;
-      margin: 0 10px;
+      white-space: nowrap;
+      line-height: 1.4;
       transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
     }
 
     .primary-btn {
-        background: #2ECC71; /* Changed from blue to green */
-        color: #000;
-        box-shadow: 0 0 15px #2ECC71; /* Changed from blue to green */
+      background: #2ECC71;
+      color: #000;
+      box-shadow: 0 0 15px #2ECC71;
+      border: none;
     }
 
     .primary-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 0 25px #2ECC71; /* Changed from blue to green */
+      transform: translateY(-3px);
+      box-shadow: 0 0 25px #2ECC71;
     }
 
     .secondary-btn {
-        border: 1px solid #2ECC71; /* Changed from blue to green */
-        color: #2ECC71; /* Changed from blue to green */
-        background: transparent;
+      border: 1px solid #2ECC71;
+      color: #2ECC71;
+      background: transparent;
     }
 
     .secondary-btn:hover {
-        transform: translateY(-3px);
-        background: rgba(46, 204, 113, 0.1); /* Changed from blue to green */
-        box-shadow: 0 0 25px rgba(46, 204, 113, 0.5); /* Changed from blue to green */
+      transform: translateY(-3px);
+      background: rgba(46, 204, 113, 0.1);
+      box-shadow: 0 0 25px rgba(46, 204, 113, 0.5);
     }
 
-    /* --- General Scroll Fade-In/Slide-Up Effect --- */
     .scroll-fade-in {
       opacity: 0;
       transform: translateY(20px);
@@ -179,13 +176,12 @@
       transform: translateY(0);
     }
 
-    /* --- Background Animations --- */
     .animated-bg {
       position: fixed;
       width: 100%;
       height: 100%;
       z-index: -1;
-      background: radial-gradient(circle at center, rgba(46, 204, 113, 0.1) 0%, transparent 80%); /* Changed from blue to green */
+      background: radial-gradient(circle at center, rgba(46, 204, 113, 0.1) 0%, transparent 80%);
       animation: pulse 5s infinite ease-in-out;
       transform: translateZ(0);
     }
@@ -195,7 +191,6 @@
       50% { transform: scale(1.1); opacity: 1; }
     }
 
-    /* --- Starfield Canvas --- */
     canvas {
       position: fixed;
       top: 0;
@@ -204,7 +199,6 @@
       opacity: 0.8;
     }
 
-    /* --- Shattered Glass Effect --- */
     #shattered-overlay {
       position: fixed;
       top: 0;
@@ -219,9 +213,9 @@
 
     .shattered-shard {
       position: absolute;
-      background-color: rgba(46, 204, 113, 0.2); /* Changed from blue to green */
-      border: 1px solid rgba(46, 204, 113, 0.4); /* Changed from blue to green */
-      box-shadow: 0 0 10px rgba(46, 204, 113, 0.3); /* Changed from blue to green */
+      background-color: rgba(46, 204, 113, 0.2);
+      border: 1px solid rgba(46, 204, 113, 0.4);
+      box-shadow: 0 0 10px rgba(46, 204, 113, 0.3);
       border-radius: 2px;
       animation: shatter 3s ease-out forwards;
       animation-delay: var(--shatter-delay);
@@ -243,157 +237,52 @@
       }
     }
 
-    /* --- Services Section (Adjusted for scroll effect) --- */
-    .services h2 {
-      font-size: 2.5rem;
-      margin-bottom: 40px;
-      text-shadow: 0 0 10px #2ECC71; /* Changed from blue to green */
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 1s ease-out, transform 1s ease-out;
-    }
-
-    .services > p {
-        color: #bbb;
-        max-width: 700px;
-        margin: 0 auto 60px;
-        line-height: 1.6;
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 1s ease-out, transform 1s ease-out;
-        transition-delay: 0.2s;
-    }
-
-    /* --- Skills Section Styles --- */
-    .skills-container {
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 30px;
-        background: rgba(10, 10, 10, 0.8);
-        border-radius: 10px;
-        box-shadow: 0 0 20px rgba(46, 204, 113, 0.15); /* Changed from blue to green */
-        border: 1px solid rgba(46, 204, 113, 0.2); /* Changed from blue to green */
-        opacity: 0; /* Start hidden for scroll effect */
-        transform: translateY(20px);
-        transition: opacity 1s ease-out, transform 1s ease-out;
-        transition-delay: 0.4s; /* Delay relative to section title/p */
-    }
-
-    .skills-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 30px;
-        margin-top: 30px;
-    }
-
-    .skill-item {
-        background: #1a1a1a;
-        padding: 25px;
-        border-radius: 8px;
-        text-align: left;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-        border: 1px solid #333;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .skill-item:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 5px 15px rgba(46, 204, 113, 0.2); /* Changed from blue to green */
-    }
-
-    .skill-item h3 {
-        font-size: 1.4rem;
-        margin-bottom: 15px;
-        color: #2ECC71; /* Changed from blue to green */
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-    }
-
-    .skill-item .percentage {
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: #ccc;
-    }
-
-    .progress-bar-container {
-        background: #333;
-        height: 10px;
-        border-radius: 5px;
-        overflow: hidden;
-    }
-
-    .progress-bar {
-        height: 100%;
-        background: linear-gradient(to right, #2ECC71, #27AE60); /* Changed from blue to green */
-        width: 0%; /* Initial width for animation */
-        border-radius: 5px;
-        transition: width 1.5s ease-out; /* Animation for the bar fill */
-        box-shadow: 0 0 8px #2ECC71; /* Changed from blue to green */
-    }
-
-    /* When the skill is in view, apply the width */
-    .skill-item.in-view .progress-bar {
-        width: var(--progress-width);
-    }
-
-    /* --- Media Queries --- */
     @media (max-width: 768px) {
-        header {
-            padding: 15px 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        nav {
-            margin-top: 10px;
-            width: 100%;
-            text-align: center;
-        }
-        nav a {
-            margin: 0 10px 5px;
-            display: inline-block;
-        }
-        .hero h1 {
-            font-size: 2.2rem;
-        }
-        .hero p {
-            font-size: 0.9rem;
-        }
-        .buttons a {
-            padding: 10px 20px;
-            margin: 0 5px;
-        }
-        .services h2 {
-            font-size: 2rem;
-        }
-        .skills-container {
-            padding: 20px;
-        }
-        .skills-grid {
-            grid-template-columns: 1fr; /* Stack columns on small screens */
-        }
-
-        /* Hide "Jay" and "Book a Call" at 768px and below */
-        .logo {
-            display: none; /* Hide the "Jay" logo */
-        }
-        .cta-button {
-            display: none; /* Hide the "Book a Call" button */
-        }
+      header {
+        padding: 15px 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      nav {
+        margin-top: 10px;
+        width: 100%;
+        text-align: center;
+      }
+      nav a {
+        margin: 0 10px 5px;
+        display: inline-block;
+      }
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      .hero p {
+        font-size: 0.9rem;
+      }
+      .buttons a {
+        padding: 10px 20px;
+        margin: 0 5px;
+      }
+      .logo, .cta-button {
+        display: none;
+      }
     }
 
     @media (max-width: 480px) {
-        .hero h1 {
-            font-size: 1.8rem;
-        }
-        .buttons {
-            flex-direction: column;
-            gap: 15px;
-        }
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+      .buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      .buttons a {
+        width: 90%;
+        max-width: 300px;
+        text-align: center;
+      }
     }
   </style>
 </head>
-
 <body>
   <div class="animated-bg"></div>
   <canvas id="starfield"></canvas>
@@ -415,7 +304,7 @@
     <p class="scroll-fade-in">Passionate Web Developer dedicated to building responsive, user-friendly, and high-performance web experiences. I bring ideas to life with clean code and a focus on intuitive design.</p>
     <div class="buttons scroll-fade-in">
       <a href="contact.html" class="primary-btn">Get in touch &rarr;</a>
-      <a href="services.html" class="secondary-btn">View Experties</a>
+      <a href="services.html" class="secondary-btn">View Expertise</a>
     </div>
   </section>
 
@@ -424,35 +313,25 @@
     const ctx = canvas.getContext('2d');
     let stars = [];
     let w, h;
-    const STAR_COUNT = 500;
 
     function resizeCanvas() {
       w = canvas.width = window.innerWidth;
       h = canvas.height = window.innerHeight;
-      createStars(STAR_COUNT);
-    }
-
-    function createStars(count) {
-      stars = [];
-      for (let i = 0; i < count; i++) {
-        stars.push({
-          x: Math.random() * w,
-          y: Math.random() * h,
-          z: Math.random() * w,
-          speed: 1 + Math.random() * 2
-        });
-      }
+      stars = Array.from({ length: 500 }, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        z: Math.random() * w,
+        speed: 1 + Math.random() * 2
+      }));
     }
 
     function drawStars() {
       ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = '#2ECC71'; // Changed from blue to green
-      for (let i = 0; i < stars.length; i++) {
-        const star = stars[i];
+      ctx.fillStyle = '#2ECC71';
+      stars.forEach((star, i) => {
         const k = 128.0 / star.z;
         const x = (star.x - w / 2) * k + w / 2;
         const y = (star.y - h / 2) * k + h / 2;
-
         if (x < 0 || x >= w || y < 0 || y >= h || star.z <= 0) {
           stars[i] = {
             x: Math.random() * w,
@@ -460,9 +339,8 @@
             z: w,
             speed: 1 + Math.random() * 2
           };
-          continue;
+          return;
         }
-
         const size = (1 - star.z / w) * 2;
         const opacity = (1 - star.z / w);
         ctx.globalAlpha = opacity;
@@ -470,7 +348,7 @@
         ctx.arc(x, y, size, 0, Math.PI * 2);
         ctx.fill();
         star.z -= star.speed;
-      }
+      });
       ctx.globalAlpha = 1;
     }
 
@@ -484,95 +362,45 @@
     window.addEventListener('resize', resizeCanvas);
 
     window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      document.querySelector('.animated-bg').style.transform = `translateY(${scrollY * 0.1}px) translateZ(0)`;
+      document.querySelector('.animated-bg').style.transform = `translateY(${window.scrollY * 0.1}px) translateZ(0)`;
     });
 
     document.addEventListener('DOMContentLoaded', () => {
-      const shatteredOverlay = document.getElementById('shattered-overlay');
-      const numberOfShards = 150;
-
-      for (let i = 0; i < numberOfShards; i++) {
+      const overlay = document.getElementById('shattered-overlay');
+      for (let i = 0; i < 150; i++) {
         const shard = document.createElement('div');
-        shard.classList.add('shattered-shard');
-
+        shard.className = 'shattered-shard';
         const size = Math.random() * 40 + 20;
+        const [x, y] = [window.innerWidth / 2 - size / 2, window.innerHeight / 2 - size / 2];
         shard.style.width = `${size}px`;
         shard.style.height = `${size}px`;
-
-        const initialX = window.innerWidth / 2 - size / 2;
-        const initialY = window.innerHeight / 2 - size / 2;
-        shard.style.left = `${initialX}px`;
-        shard.style.top = `${initialY}px`;
+        shard.style.left = `${x}px`;
+        shard.style.top = `${y}px`;
 
         const angle = Math.random() * Math.PI * 2;
-        const distance = Math.random() * window.innerWidth * 0.9 + 150;
-        const endX = initialX + distance * Math.cos(angle) - window.innerWidth / 2;
-        const endY = initialY + distance * Math.sin(angle) - window.innerHeight / 2;
-        const endRotate = Math.random() * 1080 - 540;
-        const endScale = Math.random() * 0.5 + 0.5;
+        const dist = Math.random() * window.innerWidth * 0.9 + 150;
+        const endX = x + dist * Math.cos(angle) - window.innerWidth / 2;
+        const endY = y + dist * Math.sin(angle) - window.innerHeight / 2;
 
         shard.style.setProperty('--end-x', `${endX}px`);
         shard.style.setProperty('--end-y', `${endY}px`);
-        shard.style.setProperty('--end-rotate', `${endRotate}deg`);
-        shard.style.setProperty('--end-scale', `${endScale}`);
-
-        const delay = Math.random() * 1.0;
-        shard.style.setProperty('--shatter-delay', `${delay}s`);
-        shatteredOverlay.appendChild(shard);
+        shard.style.setProperty('--end-rotate', `${Math.random() * 1080 - 540}deg`);
+        shard.style.setProperty('--end-scale', `${Math.random() * 0.5 + 0.5}`);
+        shard.style.setProperty('--shatter-delay', `${Math.random()}s`);
+        overlay.appendChild(shard);
       }
+      setTimeout(() => overlay.remove(), 4000);
 
-      setTimeout(() => {
-        shatteredOverlay.remove();
-      }, 4000);
-
-      // --- Intersection Observer for Scroll Effects ---
-      const scrollAnimatedElements = document.querySelectorAll('.scroll-fade-in');
-      const skillItems = document.querySelectorAll('.skill-item'); // Your existing skill bar animation
-
-      const observerOptions = {
-        root: null, // viewport
-        rootMargin: '0px',
-        threshold: 0.1 // Trigger when 10% of the element is visible
-      };
-
-      const scrollObserver = new IntersectionObserver((entries, observer) => {
+      const observer = new IntersectionObserver((entries, obs) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('in-view');
-            observer.unobserve(entry.target); // Stop observing once animated
+            obs.unobserve(entry.target);
           }
         });
-      }, observerOptions);
+      }, { threshold: 0.1 });
 
-      // Observe all elements with 'scroll-fade-in' class
-      scrollAnimatedElements.forEach(element => {
-        scrollObserver.observe(element);
-      });
-
-      // Existing skill bar observer (slightly adjusted threshold for consistency)
-      const skillObserverOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.5
-      };
-
-      const skillObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const skillItem = entry.target;
-            const progressBar = skillItem.querySelector('.progress-bar');
-            const percentage = skillItem.dataset.skillPercent;
-            progressBar.style.setProperty('--progress-width', `${percentage}%`);
-            skillItem.classList.add('in-view');
-            observer.unobserve(skillItem);
-          }
-        });
-      }, skillObserverOptions);
-
-      skillItems.forEach(item => {
-        skillObserver.observe(item);
-      });
+      document.querySelectorAll('.scroll-fade-in').forEach(el => observer.observe(el));
     });
   </script>
 </body>
