@@ -19,16 +19,24 @@
     html, body {
       height: 100%;
       font-family: 'Inter', sans-serif;
-      margin: 0;
-      padding: 0;
       overflow-x: hidden;
     }
 
     body {
-      background: url('Asset/Image/download.jpg') no-repeat center center;
+      background-image: url('Asset/Image/download.jpg');
+      background-position: center center;
+      background-repeat: no-repeat;
       background-size: cover;
+      background-attachment: fixed;
       color: #fff;
       position: relative;
+    }
+
+    /* Fix background shift on mobile */
+    @media (max-width: 768px) {
+      body {
+        background-attachment: scroll;
+      }
     }
 
     body::before {
@@ -96,7 +104,6 @@
       width: 100%;
       padding-top: 100px;
       padding-bottom: 40px;
-      background: transparent;
       justify-content: center;
       align-items: center;
       text-align: center;
@@ -128,16 +135,16 @@
       color: #aaa;
       font-size: 1.2rem;
       margin-bottom: 30px;
-      min-height: 1.5em;
       white-space: nowrap;
       overflow: hidden;
       border-right: 2px solid #2ECC71;
-      animation: blink 0.8s infinite;
+      animation: blink 1s steps(2, start) infinite;
+      min-height: 1.5em;
     }
 
     @keyframes blink {
-      0%, 100% { border-color: transparent; }
-      50% { border-color: #2ECC71; }
+      0%, 100% { border-color: #2ECC71; }
+      50% { border-color: transparent; }
     }
 
     .buttons {
@@ -197,8 +204,12 @@
       color: #2ECC71;
     }
 
-    /* Responsive Fixes */
+    /* Responsive adjustments */
     @media (max-width: 768px) {
+      .hide-sm {
+        display: none !important;
+      }
+
       header {
         flex-direction: column;
         align-items: flex-start;
@@ -206,7 +217,7 @@
       }
 
       header .logo {
-        display: none; /* Hide logo on small screens */
+        display: none;
       }
 
       header nav {
@@ -278,11 +289,11 @@
         <a href="services.html" class="secondary-btn">View Expertise</a>
       </div>
       <div class="socials">
-        <a href="#"><i class="fab fa-behance"></i></a>
+        <a href="#" class="hide-sm"><i class="fab fa-behance"></i></a>
         <a href="#"><i class="fab fa-facebook-f"></i></a>
-        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" class="hide-sm"><i class="fab fa-linkedin-in"></i></a>
         <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-pinterest"></i></a>
+        <a href="#" class="hide-sm"><i class="fab fa-pinterest"></i></a>
         <a href="#"><i class="fab fa-twitter"></i></a>
         <a href="#"><i class="fab fa-whatsapp"></i></a>
       </div>
@@ -296,7 +307,7 @@
 
     function typeEffect() {
       const target = document.querySelector('.hero-text p');
-      target.textContent = "";
+      // Do NOT clear text here — no flicker or delay
 
       const interval = setInterval(() => {
         if (index < text.length) {
