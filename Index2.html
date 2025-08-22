@@ -3,266 +3,284 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jay Ikponmwosa - Graphic Designer</title>
+  <title>Jay Ikponmwosa - Web developer/design</title>
 
   <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-    html, body {
-      height: 100%;
-      font-family: 'Inter', sans-serif;
-      overflow-x: hidden;
+  html, body {
+    height: 100%;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+  .ji{
+    color: #2ECC71;
+  }
+
+  body {
+    background-image: url('Asset/Image/download.jpg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    color: #fff;
+    position: relative;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  header, .hero {
+    position: relative;
+    z-index: 2;
+  }
+
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: blur(10px);
+    flex-wrap: wrap;
+    z-index: 1000;
+  }
+
+  header .logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #2ECC71;
+    text-shadow: 0 0 10px #2ECC71;
+  }
+
+  header nav {
+    flex: 1;
+    text-align: center;
+  }
+
+  header nav a {
+    color: #ccc;
+    margin: 0 12px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    display: inline-block;
+  }
+
+  header nav a:hover {
+    color: #fff;
+  }
+
+  header .phone {
+    color: #ccc;
+    font-size: 0.9rem;
+  }
+
+  .hero {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    padding-top: 100px;
+    padding-bottom: 40px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-shadow: 0 0 5px rgba(0,0,0,0.7);
+    padding: 0 20px;
+    max-width: 800px;
+  }
+
+  .hero-text h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+
+  .hero-text h1 span {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #2ECC71;
+    text-shadow: 0 0 20px #2ECC71;
+  }
+
+  .hero-text p {
+    color: #aaa;
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid #2ECC71;
+    animation: blink 1s steps(2, start) infinite;
+    min-height: 1.5em;
+  }
+
+  @keyframes blink {
+    0%, 100% { border-color: #2ECC71; }
+    50% { border-color: transparent; }
+  }
+
+  .buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .secondary-btn {
+    border: 1px solid #fff;
+    color: #fff;
+    padding: 12px 24px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .secondary-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    transition: left 0.4s ease;
+    z-index: 0;
+  }
+
+  .secondary-btn:hover::before {
+    left: 0;
+  }
+
+  .secondary-btn:hover {
+    color: #2ECC71;
+    border-color: #2ECC71;
+  }
+
+  .socials {
+    margin-top: 40px;
+    display: flex;
+    gap: 25px;
+    font-size: 1.2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .socials a {
+    color: #ccc;
+    transition: color 0.3s ease;
+  }
+
+  .socials a:hover {
+    color: #2ECC71;
+  }
+
+  /* === Responsive Media Queries === */
+/* Tablet and smaller: show only WhatsApp, Facebook, Instagram, X, and Linktree icons */
+@media (max-width: 1024px) {
+  .socials a {
+    display: none; /* Hide all icons */
+  }
+
+  /* Show only the key 5 icons */
+  .socials a.social-facebook,
+  .socials a.social-instagram,
+  .socials a.social-x,
+  .socials a.social-whatsapp,
+  .socials a.social-linktree {
+    display: inline-block;
+  }
+}
+
+
+  @media (max-width: 768px) {
+    .hide-sm {
+      display: none !important;
     }
 
     body {
-      background-image: url('Asset/Image/download.jpg');
-      background-position: center center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-attachment: fixed;
-      color: #fff;
-      position: relative;
-    }
-
-    /* Fix background shift on mobile */
-    @media (max-width: 768px) {
-      body {
-        background-attachment: scroll;
-      }
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.5);
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    header, .hero {
-      position: relative;
-      z-index: 2;
+      background-attachment: scroll;
     }
 
     header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      padding: 20px 40px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      backdrop-filter: blur(10px);
-      flex-wrap: wrap;
-      z-index: 1000;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 15px 20px;
     }
 
     header .logo {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: #2ECC71;
-      text-shadow: 0 0 10px #2ECC71;
+      display: none;
     }
 
     header nav {
-      flex: 1;
+      width: 100%;
       text-align: center;
+      margin-top: 10px;
     }
 
     header nav a {
-      color: #ccc;
-      margin: 0 12px;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s ease;
-      display: inline-block;
+      margin: 0 8px;
     }
 
-    header nav a:hover {
-      color: #fff;
-    }
-
-    header .phone {
-      color: #ccc;
-      font-size: 0.9rem;
+    .phone {
+      display: none;
     }
 
     .hero {
-      display: flex;
-      min-height: 100vh;
-      width: 100%;
-      padding-top: 100px;
-      padding-bottom: 40px;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-
-    .hero-text {
-      display: flex;
       flex-direction: column;
-      align-items: center;
-      text-shadow: 0 0 5px rgba(0,0,0,0.7);
-      padding: 0 20px;
-      max-width: 800px;
+      padding-top: 140px;
+      padding-left: 20px;
+      padding-right: 20px;
     }
 
     .hero-text h1 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-      line-height: 1.2;
+      font-size: 1.8rem;
     }
 
     .hero-text h1 span {
-      font-size: 3.5rem;
-      font-weight: 800;
-      color: #2ECC71;
-      text-shadow: 0 0 20px #2ECC71;
+      font-size: 2.4rem;
     }
 
     .hero-text p {
-      color: #aaa;
-      font-size: 1.2rem;
-      margin-bottom: 30px;
-      white-space: nowrap;
-      overflow: hidden;
-      border-right: 2px solid #2ECC71;
-      animation: blink 1s steps(2, start) infinite;
-      min-height: 1.5em;
-    }
-
-    @keyframes blink {
-      0%, 100% { border-color: #2ECC71; }
-      50% { border-color: transparent; }
+      font-size: 1rem;
     }
 
     .buttons {
-      display: flex;
-      gap: 15px;
-      justify-content: center;
-      flex-wrap: wrap;
+      flex-direction: column;
+      gap: 10px;
     }
 
     .secondary-btn {
-      border: 1px solid #fff;
-      color: #fff;
-      padding: 12px 24px;
-      text-decoration: none;
-      border-radius: 5px;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .secondary-btn::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -100%;
       width: 100%;
-      height: 100%;
-      background: rgba(255, 255, 255, 0.1);
-      transition: left 0.4s ease;
-      z-index: 0;
+      text-align: center;
     }
+  }
+</style>
 
-    .secondary-btn:hover::before {
-      left: 0;
-    }
-
-    .secondary-btn:hover {
-      color: #2ECC71;
-      border-color: #2ECC71;
-    }
-
-    .socials {
-      margin-top: 40px;
-      display: flex;
-      gap: 15px;
-      font-size: 1.2rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .socials a {
-      color: #ccc;
-      transition: color 0.3s ease;
-    }
-
-    .socials a:hover {
-      color: #2ECC71;
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-      .hide-sm {
-        display: none !important;
-      }
-
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 15px 20px;
-      }
-
-      header .logo {
-        display: none;
-      }
-
-      header nav {
-        width: 100%;
-        text-align: center;
-        margin-top: 10px;
-      }
-
-      header nav a {
-        margin: 0 8px;
-      }
-
-      .phone {
-        display: none;
-      }
-
-      .hero {
-        flex-direction: column;
-        padding-top: 140px;
-        padding-left: 20px;
-        padding-right: 20px;
-      }
-
-      .hero-text h1 {
-        font-size: 1.8rem;
-      }
-
-      .hero-text h1 span {
-        font-size: 2.4rem;
-      }
-
-      .hero-text p {
-        font-size: 1rem;
-      }
-
-      .buttons {
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      .secondary-btn {
-        width: 100%;
-        text-align: center;
-      }
-    }
-  </style>
 </head>
 
 <body>
@@ -275,7 +293,7 @@
       <a href="services.html">Expertise</a>
       <a href="contact.html">Contact</a>
     </nav>
-    <div class="phone"><i class="fas fa-phone-alt"></i> 09011194641</div>
+    <div class="phone"><i class="fas fa-phone-alt ji"></i> 09011194641</div>
   </header>
 
   <!-- Hero Section -->
@@ -287,15 +305,24 @@
         <a href="contact.html" class="secondary-btn">Get in Touch</a>
         <a href="services.html" class="secondary-btn">View Expertise</a>
       </div>
-      <div class="socials">
-        <a href="#" class="hide-sm"><i class="fab fa-behance"></i></a>
-        <a href="#"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" class="hide-sm"><i class="fab fa-linkedin-in"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#" class="hide-sm"><i class="fab fa-pinterest"></i></a>
-        <a href="#"><i class="fab fa-twitter"></i></a>
-        <a href="#"><i class="fab fa-whatsapp"></i></a>
-      </div>
+<div class="socials">
+  <a href="https://www.facebook.com/profile.php?id=61576399941363" class="social-facebook" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
+
+  <a href="https://www.linkedin.com/in/jaythewebdev" class="social-linkedin hide-sm" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
+
+  <a href="https://www.instagram.com/jaythewebdev" class="social-instagram" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+
+  <a href="https://www.pinterest.com/jaythewebdev" class="social-pinterest hide-sm" target="_blank" rel="noopener"><i class="fab fa-pinterest"></i></a>
+
+  <a href="https://x.com/JayTheWebDev3" class="social-x" target="_blank" rel="noopener"><i class="fa-brands fa-twitter"></i></a>
+
+  <a href="https://wa.me/2349011194641" class="social-whatsapp" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+
+  <a href="https://linktr.ee/Jaythewebdev" class="social-linktree" target="_blank" rel="noopener"><i class="fas fa-link"></i></a>
+</div>
+
+
+
     </div>
   </section>
 
