@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jay Ikponmwosa</title>
+
+  <!-- Favicon -->
+<link rel="icon" type="image/png" sizes="32x32" href="Asset/Image/favicon.webp">
+<link rel="icon" type="image/png" sizes="192x192" href="Asset/Image/favicon.webp"> <!-- for Android -->
+<link rel="apple-touch-icon" sizes="180x180" href="Asset/Image/favicon.webp"> <!-- for iOS -->
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html, body {
+    height: 100%;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+  .ji{
+    color: #2ECC71;
+  }
+
+  body {
+    background-image: url('Asset/Image/download.jpg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    color: #fff;
+    position: relative;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  header, .hero {
+    position: relative;
+    z-index: 2;
+  }
+
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: blur(10px);
+    flex-wrap: wrap;
+    z-index: 1000;
+  }
+
+  header .logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #2ECC71;
+    text-shadow: 0 0 10px #2ECC71;
+  }
+
+  header nav {
+    flex: 1;
+    text-align: center;
+  }
+
+  header nav a {
+    color: #ccc;
+    margin: 0 12px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    display: inline-block;
+  }
+
+  header nav a:hover {
+    color: #fff;
+  }
+
+  header .phone {
+    color: #ccc;
+    font-size: 0.9rem;
+  }
+
+  .hero {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    padding-top: 100px;
+    padding-bottom: 40px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-shadow: 0 0 5px rgba(0,0,0,0.7);
+    padding: 0 20px;
+    max-width: 800px;
+  }
+
+  .hero-text h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+
+  .hero-text h1 span {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #2ECC71;
+    text-shadow: 0 0 20px #2ECC71;
+  }
+
+  .hero-text p {
+    color: #aaa;
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid #2ECC71;
+    animation: blink 1s steps(2, start) infinite;
+    min-height: 1.5em;
+  }
+
+  @keyframes blink {
+    0%, 100% { border-color: #2ECC71; }
+    50% { border-color: transparent; }
+  }
+
+  .buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .secondary-btn {
+    border: 1px solid #fff;
+    color: #fff;
+    padding: 12px 24px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .secondary-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    transition: left 0.4s ease;
+    z-index: 0;
+  }
+
+  .secondary-btn:hover::before {
+    left: 0;
+  }
+
+  .secondary-btn:hover {
+    color: #2ECC71;
+    border-color: #2ECC71;
+  }
+
+  .socials {
+    margin-top: 40px;
+    display: flex;
+    gap: 25px;
+    font-size: 1.2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .socials a {
+    color: #ccc;
+    transition: color 0.3s ease;
+  }
+
+  .socials a:hover {
+    color: #2ECC71;
+  }
+
+  /* === Responsive Media Queries === */
+/* Tablet and smaller: show only WhatsApp, Facebook, Instagram, X, and Linktree icons */
+@media (max-width: 1024px) {
+  .socials a {
+    display: none; /* Hide all icons */
+  }
+
+.socials a.social-facebook,
+.socials a.social-instagram,
+.socials a.social-x,
+.socials a.social-whatsapp,
+.socials a.social-linktree {
+  display: inline-block;
+  margin: 0 5px; /* spacing between icons */
+}
+
+}
+
+  @media (max-width: 768px) {
+    .hide-sm {
+      display: none !important;
+    }
+
+    body {
+      background-attachment: scroll;
+    }
+
+    header {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 15px 20px;
+    }
+
+    header .logo {
+      display: none;
+    }
+
+    header nav {
+      width: 100%;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    header nav a {
+      margin: 0 8px;
+    }
+
+    .phone {
+      display: none;
+    }
+
+    .hero {
+      flex-direction: column;
+      padding-top: 140px;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .hero-text h1 {
+      font-size: 1.8rem;
+    }
+
+    .hero-text h1 span {
+      font-size: 2.4rem;
+    }
+
+    .hero-text p {
+      font-size: 1rem;
+    }
+
+    .buttons {
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .secondary-btn {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
+
+</head>
+
+<body>
+  <!-- AI Chatbot Widget -->
+
+  <div id="ai-chat" style="position: fixed; bottom: 20px; right: 20px;">
+  <button id="ai-open" style="padding: 12px 20px; background:#2ECC71; color:white; border:none; border-radius:8px;">
+    Chat with Jay's AI
+  </button>
+
+  <div id="ai-box" style="display:none; width:300px; height:380px; background:#111; color:white; padding:10px; border-radius:10px; margin-top:10px;">
+    <div id="chat-log" style="height:300px; overflow-y:auto; padding:8px; border:1px solid #333;"></div>
+    <input id="chat-input" placeholder="Ask something..." style="width:100%; padding:8px; margin-top:8px; border-radius:6px; border:1px solid #444;">
+  </div>
+</div>
+
+
+    ...
+
+  <!-- Header -->
+  <header>
+    <div class="logo">Jay</div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="About.html">About</a>
+      <a href="services.html">Expertise</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="phone"><i class="fas fa-phone-alt ji"></i> 09011194641</div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1>JAY<br><span>IKPONMWOSA</span></h1>
+      <p></p>
+      <div class="buttons">
+        <a href="contact.html" class="secondary-btn">Get in Touch</a>
+        <a href="services.html" class="secondary-btn">View Expertise</a>
+      </div>
+<div class="socials">
+  <a href="https://www.facebook.com/profile.php?id=61576399941363" class="social-facebook" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
+
+  <a href="https://www.linkedin.com/in/jaythewebdev" class="social-linkedin hide-sm" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
+
+  <a href="https://www.instagram.com/jaythewebdev" class="social-instagram" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+
+  <a href="https://www.pinterest.com/jaythewebdev" class="social-pinterest hide-sm" target="_blank" rel="noopener"><i class="fab fa-pinterest"></i></a>
+
+  <a href="https://x.com/JayTheWebDev3" class="social-x" target="_blank" rel="noopener"><i class="fa-brands fa-twitter"></i></a>
+
+  <a href="https://wa.me/2349011194641" class="social-whatsapp" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+
+  <a href="https://linktr.ee/Jaythewebdev" class="social-linktree" target="_blank" rel="noopener"><i class="fas fa-link"></i></a>
+</div>
+
+
+
+    </div>
+  </section>
+
+  <!-- Typing Effect Script -->
+  <script>
+    const text = "Web developer/app developer and Ai intern";
+    let index = 0;
+
+    function typeEffect() {
+      const target = document.querySelector('.hero-text p');
+      // Do NOT clear text here — no flicker or delay
+
+      const interval = setInterval(() => {
+        if (index < text.length) {
+          target.textContent += text.charAt(index);
+          index++;
+        } else {
+          clearInterval(interval);
+        }
+      }, 100);
+    }
+
+    document.addEventListener("DOMContentLoaded", typeEffect);
+  </script>
+
+  <script>
+const chatBox = document.getElementById("ai-box");
+const chatLog = document.getElementById("chat-log");
+const chatInput = document.getElementById("chat-input");
+const openBtn = document.getElementById("ai-open");
+
+openBtn.onclick = () => {
+  chatBox.style.display = chatBox.style.display === "none" ? "block" : "none";
+};
+
+chatInput.addEventListener("keypress", async (e) => {
+  if (e.key === "Enter") {
+    const userMessage = chatInput.value;
+    chatInput.value = "";
+
+    chatLog.innerHTML += `<p><strong>You:</strong> ${userMessage}</p>`;
+
+    const res = await fetch("/.netlify/functions/ask-ai", {
+      method: "POST",
+      body: JSON.stringify({ message: userMessage })
+    });
+
+    const data = await res.json();
+
+    chatLog.innerHTML += `<p><strong>AI:</strong> ${data.reply}</p>`;
+    chatLog.scrollTop = chatLog.scrollHeight;
+  }
+});
+</script>
+
+</body>
+</html>
