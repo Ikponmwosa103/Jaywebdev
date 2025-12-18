@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Me</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Minimal Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      /* REMOVED: background-color: #000; from here */
+      font-family: 'Inter', sans-serif;
+      color: #fff;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* Header Styles */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      position: fixed;
+      width: 100%;
+      z-index: 1000;
+      top: 0; /* Ensure header stays at the top */
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #2ECC71;
+      text-shadow: 0 0 10px #2ECC71;
+    }
+
+    nav a {
+      color: #ccc;
+      margin-left: 25px;
+      text-decoration: none;
+      transition: color 0.3s ease, transform 0.2s ease-out;
+    }
+
+    nav a:hover {
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .cta-button {
+      background: #2ECC71;
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: bold;
+      margin-left: 20px;
+      text-decoration: none;
+      box-shadow: 0 0 15px #2ECC71;
+      transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease-out;
+    }
+
+    .cta-button:hover {
+      background: #27AE60;
+      box-shadow: 0 0 20px #27AE60;
+      transform: translateY(-3px);
+    }
+
+    /* ✨ Floating Particle Animation (RE-ADDED & FIXED) */
+    .particle-bg {
+      position: fixed; /* Fixed so it stays behind content as you scroll */
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1; /* Ensures it's behind everything */
+      overflow: hidden;
+      background-color: #000; /* ADDED: Solid black background is now here */
+    }
+
+    .particle-bg span {
+      position: absolute;
+      display: block;
+      width: 20px;
+      height: 20px;
+      background: rgba(46, 204, 113, 0.3); /* Green with transparency */
+      box-shadow: 0 0 15px rgba(46, 204, 113, 0.6); /* Green shadow */
+      border-radius: 50%;
+      animation: float 20s linear infinite;
+    }
+
+    .particle-bg span:nth-child(1) { left: 5%; animation-delay: 0s; }
+    .particle-bg span:nth-child(2) { left: 20%; width: 15px; height: 15px; animation-delay: 4s; }
+    .particle-bg span:nth-child(3) { left: 40%; width: 25px; height: 25px; animation-delay: 8s; }
+    .particle-bg span:nth-child(4) { left: 60%; animation-delay: 2s; }
+    .particle-bg span:nth-child(5) { left: 80%; width: 12px; height: 12px; animation-delay: 6s; }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) scale(1);
+        opacity: 0;
+      }
+      50% {
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    /* About Page Specific Styles */
+    .about-section {
+      display: flex;
+      flex-direction: column; /* Stack text and graphic vertically if needed */
+      justify-content: center; /* Center content within the about section box */
+      align-items: center; /* Center content within the about section box */
+      padding: 2rem; /* Adjusted padding for better fit in the box */
+      max-width: 800px; /* Reduced max-width for the box */
+      margin: 150px auto 50px auto; /* Add top margin to push content below header, auto for horizontal centering */
+      position: relative;
+      z-index: 1;
+
+      /* Box styling with glowing shadow */
+      background: rgba(10, 10, 10, 0.9); /* Darker background for the box (allows slight transparency) */
+      border-radius: 12px;
+      box-shadow: 0 0 30px rgba(46, 204, 113, 0.8); /* Green glowing shadow */
+      border: 1px solid rgba(46, 204, 113, 0.5); /* Green border */
+      text-align: center; /* Center text inside the box */
+    }
+
+    .about-text {
+      flex: none; /* No flex growth */
+      min-width: unset; /* Remove min-width constraint */
+      padding-right: 0; /* Remove right padding */
+    }
+
+    .about-text h1 {
+      font-size: 2.5rem;
+      text-shadow: 0 0 10px #2ECC71;
+      margin-bottom: 1rem;
+    }
+
+    .about-text p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #ccc;
+    }
+
+    .about-img {
+      display: none; /* Removed the ball animation and its container */
+    }
+
+    /* Scroll Fade-In/Slide-Up Effect - Kept for potential other elements if added */
+    .scroll-fade-in {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s ease-out;
+    }
+
+    .scroll-fade-in.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Media Queries */
+    @media (max-width: 768px) {
+      header {
+        padding: 15px 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      nav {
+        margin-top: 10px;
+        width: 100%;
+        text-align: center;
+      }
+
+      nav a {
+        margin: 0 10px 5px;
+        display: inline-block;
+      }
+
+      .logo {
+        display: none;
+      }
+
+      .cta-button {
+        display: none;
+      }
+
+      .about-section {
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem 1rem; /* Adjusted padding for smaller screens */
+        margin-top: 120px; /* Adjust top margin for mobile header */
+        justify-content: flex-start; /* Adjust centering for smaller screens */
+        margin-bottom: 40px; /* Add some bottom margin for mobile */
+      }
+
+      .about-text {
+        padding: 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .about-text h1 {
+        font-size: 1.8rem;
+      }
+      .about-section {
+        padding: 1.5rem 0.8rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="particle-bg">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <header>
+    <div class="logo">Jay</div>
+    <nav>
+      <a href="index2.html">Home</a>
+      <a href="About.html">About</a>
+      <a href="services.html">Expertise</a>
+      <a href="contact.html">Contact</a>
+      <a href="contact.html" class="cta-button">Book a Call</a>
+    </nav>
+  </header>
+
+  <section class="about-section scroll-fade-in">
+    <div class="about-text">
+      <h1>Hello! I'm Jay, a passionate web developer.</h1>
+      <p>
+        I specialize in creating beautiful, interactive, and functional websites with modern technologies. My focus is on delivering responsive design, clean code, and engaging user experiences. With a strong grasp of HTML, CSS, JavaScript, and backend tools like PHP and Python, I turn ideas into fully functional websites. I love working on challenging projects and continuously learning new tech.
+
+        My approach to web development is holistic, ensuring that every project, from concept to deployment, is handled with meticulous attention to detail. I am adept at translating client visions into tangible web solutions that not only meet but exceed expectations. Whether it's crafting a visually stunning front-end or architecting a robust back-end, my goal is always to build high-performance, scalable applications. I thrive in dynamic environments, constantly embracing new challenges and expanding my skill set to stay at the forefront of web innovation. My commitment to elegant solutions and efficient workflows ensures that each website I develop is optimized for both users and search engines, providing a seamless and memorable digital experience. Let's collaborate to bring your next great idea to life on the web.
+      </p>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const scrollElements = document.querySelectorAll('.scroll-fade-in');
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      scrollElements.forEach(el => observer.observe(el));
+    });
+  </script>
+</body>
+</html>

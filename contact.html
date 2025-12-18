@@ -6,6 +6,10 @@
   <title>Contact JayWebDev</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="Asset/Image/favicon.webp">
+<link rel="icon" type="image/png" sizes="192x192" href="Asset/Image/favicon.webp"> <!-- for Android -->
+<link rel="apple-touch-icon" sizes="180x180" href="Asset/Image/favicon.webp"> <!-- for iOS -->
+
   <style>
     /* Minimal Base Styles */
     * {
@@ -16,7 +20,8 @@
 
     html, body {
       height: 100%;
-      background-color: #000;
+      /* Solid black background, removing background image and gradient */
+      background: #000;
       font-family: 'Inter', sans-serif;
       color: #fff;
       overflow-x: hidden;
@@ -34,16 +39,13 @@
       position: fixed; /* Header is stagnant */
       width: 100%;
       z-index: 1000;
-      /* REMOVED: opacity and transform for initial scroll effect to make it always visible */
     }
-
-    /* REMOVED: header.in-view as header is now always visible */
 
     .logo {
       font-size: 1.8rem;
       font-weight: 700;
-      color: #00aaff;
-      text-shadow: 0 0 10px #00aaff;
+      color: #2ECC71; /* Green */
+      text-shadow: 0 0 10px #2ECC71; /* Green shadow */
     }
 
     nav a {
@@ -59,45 +61,64 @@
     }
 
     .cta-button {
-      background: #00aaff;
+      background: #2ECC71; /* Green */
       color: #000;
       padding: 10px 20px;
       border-radius: 6px;
       font-weight: bold;
       margin-left: 20px;
       text-decoration: none;
-      box-shadow: 0 0 15px #00aaff;
+      box-shadow: 0 0 15px #2ECC71; /* Green shadow */
       transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease-out;
     }
 
     .cta-button:hover {
-      background: #00bfff;
-      box-shadow: 0 0 20px #00bfff;
+      background: #27AE60; /* Darker green */
+      box-shadow: 0 0 20px #27AE60; /* Darker green shadow */
       transform: translateY(-3px);
     }
 
-    /* --- Background Animations --- */
-    .animated-bg {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      background: radial-gradient(circle at center, rgba(0, 170, 255, 0.1) 0%, transparent 80%);
-      animation: pulse 5s infinite ease-in-out;
-      transform: translateZ(0);
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 0.7; }
-      50% { transform: scale(1.1); opacity: 1; }
-    }
-
-    canvas {
+    /* --- Particle Background Animation (replaced existing animated-bg/canvas) --- */
+    /* Renamed canvas to particle-bg to use the same particle effect from expertise page */
+    .particle-bg {
       position: fixed;
       top: 0;
       left: 0;
-      z-index: -2;
-      opacity: 0.8;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .particle-bg span {
+      position: absolute;
+      display: block;
+      width: 20px;
+      height: 20px;
+      background: rgba(46, 204, 113, 0.3); /* Green with transparency */
+      box-shadow: 0 0 15px rgba(46, 204, 113, 0.6); /* Green shadow */
+      border-radius: 50%;
+      animation: float 20s linear infinite;
+    }
+
+    .particle-bg span:nth-child(1) { left: 5%; animation-delay: 0s; }
+    .particle-bg span:nth-child(2) { left: 20%; width: 15px; height: 15px; animation-delay: 4s; }
+    .particle-bg span:nth-child(3) { left: 40%; width: 25px; height: 25px; animation-delay: 8s; }
+    .particle-bg span:nth-child(4) { left: 60%; animation-delay: 2s; }
+    .particle-bg span:nth-child(5) { left: 80%; width: 12px; height: 12px; animation-delay: 6s; }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) scale(1);
+        opacity: 0;
+      }
+      50% {
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1.5);
+        opacity: 0;
+      }
     }
 
     /* --- General Scroll Fade-In/Slide-Up Effect --- */
@@ -120,13 +141,14 @@
       text-align: center;
       position: relative;
       z-index: 1;
-      background: linear-gradient(to bottom, #000, #0a0a0a);
+      /* Removed background image and gradient from section */
+      background: transparent; /* Allow particle background to show through */
     }
 
     .contact-section h1 {
       font-size: 3rem;
       margin-bottom: 20px;
-      text-shadow: 0 0 15px #00aaff;
+      text-shadow: 0 0 15px #2ECC71; /* Green shadow */
     }
 
     .contact-section p {
@@ -148,19 +170,28 @@
     .contact-info-container {
       flex: 1;
       min-width: 300px;
-      background: rgba(10, 10, 10, 0.8);
+      background: rgba(10, 10, 10, 0.8); /* Darker background for the boxes */
       padding: 30px;
       border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 170, 255, 0.15);
-      border: 1px solid rgba(0, 170, 255, 0.2);
+      /* Glowing green shadow */
+      box-shadow: 0 0 25px rgba(46, 204, 113, 0.2), 0 0 50px rgba(46, 204, 113, 0.1);
+      border: 1px solid rgba(46, 204, 113, 0.4); /* Green border */
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
+
+    .contact-form-container:hover,
+    .contact-info-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0 30px rgba(46, 204, 113, 0.5), 0 0 60px rgba(46, 204, 113, 0.3);
+    }
+
 
     .contact-form-container h2,
     .contact-info-container h2 {
-        font-size: 1.8rem;
-        margin-bottom: 25px;
-        color: #00aaff;
-        text-shadow: 0 0 10px #00aaff;
+      font-size: 1.8rem;
+      margin-bottom: 25px;
+      color: #2ECC71; /* Green */
+      text-shadow: 0 0 10px #2ECC71; /* Green shadow */
     }
 
     .contact-form label {
@@ -173,6 +204,7 @@
 
     .contact-form input[type="text"],
     .contact-form input[type="email"],
+    .contact-form input[type="subject"], /* Added subject input type for consistency */
     .contact-form textarea {
       width: 100%;
       padding: 12px;
@@ -188,9 +220,10 @@
 
     .contact-form input[type="text"]:focus,
     .contact-form input[type="email"]:focus,
+    .contact-form input[type="subject"]:focus, /* Added subject input type for consistency */
     .contact-form textarea:focus {
-      border-color: #00aaff;
-      box-shadow: 0 0 10px rgba(0, 170, 255, 0.5);
+      border-color: #2ECC71; /* Green focus border */
+      box-shadow: 0 0 10px rgba(46, 204, 113, 0.5); /* Green focus shadow */
     }
 
     .contact-form textarea {
@@ -199,7 +232,7 @@
     }
 
     .contact-form button {
-      background: #00aaff;
+      background: #2ECC71; /* Green */
       color: #000;
       padding: 12px 25px;
       border: none;
@@ -207,14 +240,14 @@
       font-size: 1.1rem;
       font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 0 15px #00aaff;
+      box-shadow: 0 0 15px #2ECC71; /* Green shadow */
       transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease-out;
       width: 100%;
     }
 
     .contact-form button:hover {
-      background: #00bfff;
-      box-shadow: 0 0 20px #00bfff;
+      background: #27AE60; /* Darker green */
+      box-shadow: 0 0 20px #27AE60; /* Darker green shadow */
       transform: translateY(-2px);
     }
 
@@ -225,9 +258,9 @@
 
     .contact-info-item h3 {
       font-size: 1.2rem;
-      color: #00aaff;
+      color: #2ECC71; /* Green */
       margin-bottom: 8px;
-      text-shadow: none; /* Remove extra text-shadow */
+      text-shadow: none; /* Removed extra text-shadow as it's set on h2 */
     }
 
     .contact-info-item p,
@@ -239,7 +272,7 @@
     }
 
     .contact-info-item a:hover {
-      color: #00aaff;
+      color: #2ECC71; /* Green hover for links */
     }
 
     .social-links {
@@ -250,14 +283,14 @@
     }
 
     .social-links a {
-      color: #00aaff;
+      color: #2ECC71; /* Green for social icons */
       font-size: 1.8rem;
       transition: transform 0.3s ease, color 0.3s ease;
     }
 
     .social-links a:hover {
       transform: translateY(-5px) scale(1.1);
-      color: #00bfff;
+      color: #27AE60; /* Darker green on hover */
     }
 
     /* Media Queries for responsiveness */
@@ -278,10 +311,10 @@
       }
       /* Hide "Jay" and "Book a Call" at 768px and below */
       .logo {
-          display: none; /* Hide the "Jay" logo */
+          display: none;
       }
       .cta-button {
-          display: none; /* Hide the "Book a Call" button */
+          display: none;
       }
 
       .contact-section h1 {
@@ -318,13 +351,18 @@
   </style>
 </head>
 <body>
-  <div class="animated-bg"></div>
-  <canvas id="starfield"></canvas>
+  <div class="particle-bg">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
 
   <header>
     <div class="logo">Jay</div>
     <nav>
-      <a href="index.html">Home</a>
+      <a href="index2.html">Home</a>
       <a href="About.html">About</a>
       <a href="services.html">Expertise</a>
       <a href="contact.html">Contact</a>
@@ -375,105 +413,28 @@
           <p>Edo state, Nigeria</p>
         </div>
         <div class="social-links">
-          <a href="https://wa.me/2349011194641" ><i class="fab fa-whatsapp"></i></a>
-          <a href="#" ><i class="fab fa-facebook-f"></i></a>
-          <a href="#" ><i class="fab fa-tiktok"></i></a>
+          <a href="https://wa.me/2349011194641" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-tiktok"></i></a>
         </div>
       </div>
     </div>
   </section>
 
   <script>
-    // Starfield animation script (copied from main page)
-    const canvas = document.getElementById('starfield');
-    const ctx = canvas.getContext('2d');
-    let stars = [];
-    let w, h;
-    const STAR_COUNT = 500;
-
-    function resizeCanvas() {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
-      createStars(STAR_COUNT);
-    }
-
-    function createStars(count) {
-      stars = [];
-      for (let i = 0; i < count; i++) {
-        stars.push({
-          x: Math.random() * w,
-          y: Math.random() * h,
-          z: Math.random() * w,
-          speed: 1 + Math.random() * 2
-        });
-      }
-    }
-
-    function drawStars() {
-      ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = '#00aaff';
-      for (let i = 0; i < stars.length; i++) {
-        const star = stars[i];
-        const k = 128.0 / star.z;
-        const x = (star.x - w / 2) * k + w / 2;
-        const y = (star.y - h / 2) * k + h / 2;
-
-        if (x < 0 || x >= w || y < 0 || y >= h || star.z <= 0) {
-          stars[i] = {
-            x: Math.random() * w,
-            y: Math.random() * h,
-            z: w,
-            speed: 1 + Math.random() * 2
-          };
-          continue;
-        }
-
-        const size = (1 - star.z / w) * 2;
-        const opacity = (1 - star.z / w);
-        ctx.globalAlpha = opacity;
-        ctx.beginPath();
-        ctx.arc(x, y, size, 0, Math.PI * 2);
-        ctx.fill();
-        star.z -= star.speed;
-      }
-      ctx.globalAlpha = 1;
-    }
-
-    function animate() {
-      drawStars();
-      requestAnimationFrame(animate);
-    }
-
-    resizeCanvas();
-    animate();
-    window.addEventListener('resize', resizeCanvas);
-
-    // Parallax background for animated-bg
-    window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      const animatedBg = document.querySelector('.animated-bg');
-      if (animatedBg) {
-        animatedBg.style.transform = `translateY(${scrollY * 0.1}px) translateZ(0)`;
-      }
-    });
-
+    // Removed old starfield and animated-bg scripts
+    // Re-implemented particle background logic as per 'Expertise' page
     document.addEventListener('DOMContentLoaded', () => {
-      // --- Intersection Observer for Scroll Effects ---
       const scrollElements = document.querySelectorAll('.scroll-fade-in');
 
       const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('in-view');
-            // Header is no longer animated with scroll, so this specific check is effectively redundant
-            // because 'scroll-fade-in' is removed from the header's HTML class list.
-            // if (entry.target.tagName === 'HEADER') {
-            //     entry.target.style.transform = 'translateY(0)';
-            // }
             observer.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.1 }); /* Adjusted threshold to 0.1 for general elements */
+      }, { threshold: 0.1 });
 
       scrollElements.forEach(el => observer.observe(el));
     });

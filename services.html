@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>My Expertise</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="Asset/Image/favicon.webp">
+<link rel="icon" type="image/png" sizes="192x192" href="Asset/Image/favicon.webp"> <!-- for Android -->
+<link rel="apple-touch-icon" sizes="180x180" href="Asset/Image/favicon.webp"> <!-- for iOS -->
+
   <style>
     /* Minimal Base Styles */
     * {
@@ -15,7 +19,7 @@
 
     html, body {
       height: 100%;
-      background: #000;
+      /* REMOVED: background: #000; from here */
       font-family: 'Inter', sans-serif;
       color: #fff;
       overflow-x: hidden;
@@ -33,16 +37,13 @@
       position: fixed; /* Header is stagnant */
       width: 100%;
       z-index: 1000;
-      /* REMOVED: opacity and transform for initial scroll effect to make it always visible */
     }
-
-    /* REMOVED: header.in-view as header is now always visible */
 
     .logo {
       font-size: 1.8rem;
       font-weight: 700;
-      color: #00aaff;
-      text-shadow: 0 0 10px #00aaff;
+      color: #2ECC71; /* Green */
+      text-shadow: 0 0 10px #2ECC71; /* Green shadow */
     }
 
     nav a {
@@ -58,24 +59,24 @@
     }
 
     .cta-button {
-      background: #00aaff;
+      background: #2ECC71; /* Green */
       color: #000;
       padding: 10px 20px;
       border-radius: 6px;
       font-weight: bold;
       margin-left: 20px;
       text-decoration: none;
-      box-shadow: 0 0 15px #00aaff;
+      box-shadow: 0 0 15px #2ECC71; /* Green shadow */
       transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease-out;
     }
 
     .cta-button:hover {
-      background: #00bfff;
-      box-shadow: 0 0 20px #00bfff;
+      background: #27AE60; /* Darker green */
+      box-shadow: 0 0 20px #27AE60; /* Darker green shadow */
       transform: translateY(-3px);
     }
 
-    /* ✨ Floating Particle Animation */
+    /* ✨ Floating Particle Animation (FIXED) */
     .particle-bg {
       position: fixed;
       top: 0;
@@ -84,6 +85,7 @@
       height: 100%;
       z-index: -1;
       overflow: hidden;
+      background-color: #000; /* ADDED: Solid black background is now here */
     }
 
     .particle-bg span {
@@ -91,8 +93,8 @@
       display: block;
       width: 20px;
       height: 20px;
-      background: rgba(0, 170, 255, 0.3);
-      box-shadow: 0 0 15px rgba(0, 170, 255, 0.6);
+      background: rgba(46, 204, 113, 0.3); /* Green with transparency */
+      box-shadow: 0 0 15px rgba(46, 204, 113, 0.6); /* Green shadow */
       border-radius: 50%;
       animation: float 20s linear infinite;
     }
@@ -121,12 +123,18 @@
       padding: 5rem 2rem;
       text-align: center;
       position: relative;
-      margin-top: 100px; /* Added margin-top to clear fixed header */
+      margin-top: 100px; /* Space for fixed header */
+      background: transparent; /* Allows particle-bg to show through */
+      z-index: 1;
     }
 
-    h2, p, h3 {
+    h2, p {
       color: #fff;
-      text-shadow: 0 0 10px #00aaff, 0 0 20px #00aaff;
+      text-shadow: 0 0 10px #2ECC71, 0 0 20px #2ECC71; /* Green shadow */
+    }
+
+    h3 {
+      color: #fff; /* Keep h3 color white */
     }
 
     .scroll-fade-in {
@@ -151,14 +159,14 @@
       justify-content: center;
       padding: 2rem;
       max-width: 900px;
-      margin: 0 auto;
+      margin: 0 auto; /* Center the grid */
     }
 
     .skill-item {
       background: #111;
       padding: 1.5rem;
       border-radius: 12px;
-      box-shadow: 0 0 25px #00aaff33;
+      box-shadow: 0 0 25px rgba(46, 204, 113, 0.2); /* Green shadow with transparency */
       transition: transform 0.3s, box-shadow 0.3s;
       position: relative;
       overflow: hidden;
@@ -166,20 +174,20 @@
 
     .skill-item:hover {
       transform: translateY(-6px);
-      box-shadow: 0 0 30px #00f0ffaa, 0 0 10px #00aaff;
+      box-shadow: 0 0 30px rgba(46, 204, 113, 0.7), 0 0 10px rgba(46, 204, 113, 0.9); /* More intense green glow on hover */
     }
 
     .skill-item h3 {
       margin-bottom: 1rem;
       font-size: 1.3rem;
       font-weight: 600;
-      text-shadow: 0 0 10px #00f0ff;
+      text-shadow: 0 0 10px #2ECC71; /* Green shadow */
     }
 
     .percentage {
       float: right;
-      color: #00f0ff;
-      text-shadow: 0 0 5px #00f0ff;
+      color: #2ECC71; /* Green */
+      text-shadow: 0 0 5px #2ECC71; /* Green shadow */
     }
 
     .progress-bar-container {
@@ -193,8 +201,8 @@
     .progress-bar {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, #00aaff, #00f0ff);
-      box-shadow: 0 0 15px #00f0ff;
+      background: linear-gradient(90deg, #2ECC71, #27AE60); /* Green gradient */
+      box-shadow: 0 0 15px #2ECC71; /* Green shadow */
       transition: width 1.5s ease-in-out;
     }
 
@@ -218,14 +226,12 @@
         margin: 0 10px 5px;
         display: inline-block;
       }
-      /* REMOVED .cta-button margin-top and margin-left adjustments as it will be hidden */
-
       /* Hide "Jay" and "Book a Call" at 768px and below */
       .logo {
-          display: none; /* Hide the "Jay" logo */
+        display: none;
       }
       .cta-button {
-          display: none; /* Hide the "Book a Call" button */
+        display: none;
       }
 
       .skills-grid {
@@ -247,7 +253,7 @@
   <header>
     <div class="logo">Jay</div>
     <nav>
-      <a href="index.html">Home</a>
+      <a href="index2.html">Home</a>
       <a href="About.html">About</a>
       <a href="services.html">Expertise</a>
       <a href="contact.html">Contact</a>
@@ -256,7 +262,7 @@
   </header>
 
   <section class="services">
-    <h2 style="font-size: 40px;" class="scroll-fade-in">My Expertise</h2>
+    <h2 style="font-size: 40px;" class="scroll-fade-in">My Expertise</h2><br>
     <p class="scroll-fade-in">
       As a full-stack web developer, I build robust, engaging, and highly functional web solutions.
       My skills span a wide range of technologies to ensure exceptional results.
@@ -276,6 +282,18 @@
             <div class="progress-bar"></div>
           </div>
         </div>
+        <div class="skill-item" data-skill-percent="85">
+          <h3>React Native <span class="percentage">85%</span></h3>
+          <div class="progress-bar-container">
+            <div class="progress-bar"></div>
+          </div>
+        </div>
+        <div class="skill-item" data-skill-percent="80">
+          <h3>SQL <span class="percentage">80%</span></h3>
+          <div class="progress-bar-container">
+            <div class="progress-bar"></div>
+          </div>
+        </div>
         <div class="skill-item" data-skill-percent="75">
           <h3>JavaScript <span class="percentage">75%</span></h3>
           <div class="progress-bar-container">
@@ -288,8 +306,8 @@
             <div class="progress-bar"></div>
           </div>
         </div>
-        <div class="skill-item" data-skill-percent="50">
-          <h3>Python <span class="percentage">50%</span></h3>
+        <div class="skill-item" data-skill-percent="80">
+          <h3>Python <span class="percentage">80%</span></h3>
           <div class="progress-bar-container">
             <div class="progress-bar"></div>
           </div>
@@ -309,19 +327,23 @@
             const el = entry.target;
             el.classList.add('in-view');
 
-            // Header is no longer animated with scroll, so this specific check is effectively redundant
-            // because 'scroll-fade-in' is removed from the header's HTML class list.
-            // if (el.tagName === 'HEADER') {
-            //     el.style.transform = 'translateY(0)';
-            // }
-
             if (el.classList.contains('skill-item')) {
               const percent = el.getAttribute('data-skill-percent');
               const bar = el.querySelector('.progress-bar');
+              // Ensure the custom property is set before the transition
               bar.style.setProperty('--progress-width', `${percent}%`);
             }
 
+            // Only unobserve if you want the animation to run once
+            // If you want it to re-run on scroll-out then scroll-in, remove this line
             observer.unobserve(el);
+          } else {
+            // Optional: If you want the progress bars to reset when out of view
+            // if (entry.target.classList.contains('skill-item')) {
+            //   const bar = entry.target.querySelector('.progress-bar');
+            //   bar.style.setProperty('--progress-width', '0%');
+            //   entry.target.classList.remove('in-view');
+            // }
           }
         });
       }, { threshold: 0.3 }); // Threshold adjusted for general elements and skills

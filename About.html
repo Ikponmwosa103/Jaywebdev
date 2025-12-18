@@ -2,269 +2,343 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>About Me</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-  /* Minimal Base Styles */
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About Me | Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" sizes="32x32" href="Asset/Image/favicon.webp">
+<link rel="icon" type="image/png" sizes="192x192" href="Asset/Image/favicon.webp"> <!-- for Android -->
+<link rel="apple-touch-icon" sizes="180x180" href="Asset/Image/favicon.webp"> <!-- for iOS -->
 
-  html, body {
-    height: 100%;
-    background-color: #000;
-    font-family: 'Inter', sans-serif;
-    color: #fff;
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-  }
-
-  /* --- Header Styles --- */
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 40px;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
-    position: fixed; /* Header is stagnant */
-    width: 100%;
-    z-index: 1000;
-    /* REMOVED: opacity and transform for initial scroll effect to make it always visible */
-  }
-
-  /* REMOVED: header.in-view as header is now always visible */
-
-  .logo {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #00aaff;
-    text-shadow: 0 0 10px #00aaff;
-  }
-
-  nav a {
-    color: #ccc;
-    margin-left: 25px;
-    text-decoration: none;
-    transition: color 0.3s ease, transform 0.2s ease-out;
-  }
-
-  nav a:hover {
-    color: #fff;
-    transform: translateY(-2px);
-  }
-
-  .cta-button {
-    background: #00aaff;
-    color: #000;
-    padding: 10px 20px;
-    border-radius: 6px;
-    font-weight: bold;
-    margin-left: 20px;
-    text-decoration: none;
-    box-shadow: 0 0 15px #00aaff;
-    transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease-out;
-  }
-
-  .cta-button:hover {
-    background: #00bfff;
-    box-shadow: 0 0 20px #00bfff;
-    transform: translateY(-3px);
-  }
-
-  /* --- Background Animations --- */
-  .animated-bg {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background: radial-gradient(circle at center, rgba(0, 170, 255, 0.1) 0%, transparent 80%);
-    animation: pulse 5s infinite ease-in-out;
-    transform: translateZ(0);
-  }
-
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 0.7; }
-    50% { transform: scale(1.1); opacity: 1; }
-  }
-
-  canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -2;
-    opacity: 0.8;
-  }
-
-  /* About Page Specific Styles */
-  .about-section {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 0rem; /* Adjusted padding for better desktop spacing */
-    max-width: 1100px;
-    margin: auto;
-    margin-top: 100px; /* Add margin-top to account for fixed header */
-  }
-
-  .about-text {
-    flex: 1;
-    min-width: 300px;
-    padding-right: 2rem;
-  }
-
-  .about-text h1 {
-    font-size: 2.5rem;
-    text-shadow: 0 0 10px #00aaff;
-    margin-bottom: 1rem;
-  }
-
-  .about-text p {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: #ccc;
-  }
-
-  .about-img {
-    flex: 1;
-    min-width: 280px;
-    text-align: center;
-  }
-
-  /* New styles for the abstract graphic */
-  .about-graphic {
-    width: 350px;
-    height: 350px;
-    border-radius: 50%;
-    position: relative;
-    margin: 40px 0px 40px 200px; /* Shifted to the right */
-    box-shadow: 0 0 30px rgba(0, 170, 255, 0.7);
-    animation: pulse-glow 3s infinite alternate ease-in-out;
-    transform: rotate(0deg); /* Initial state for rotation */
-    transition: transform 0.5s ease-out; /* Smooth hover transition */
-  }
-
-  .about-graphic::before {
-    content: '';
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    right: 20px;
-    bottom: 20px;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-  }
-
-  @keyframes pulse-glow {
-    0% {
-      box-shadow: 0 0 30px rgba(0, 170, 255, 0.7), 0 0 10px rgba(0, 170, 255, 0.3) inset;
-      transform: scale(1);
+  <style>
+    /* Reset & Base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      scroll-behavior: smooth;
     }
-    100% {
-      box-shadow: 0 0 50px rgba(0, 170, 255, 0.9), 0 0 20px rgba(0, 170, 255, 0.5) inset;
+
+    :root {
+      --primary: #2ECC71;
+      --secondary: #27AE60;
+      --bg-color: #121212;
+      --text-color: #e0e0e0;
+      --skill-bg: #1f1f1f;
+      --skill-fill: var(--primary);
+    }
+
+    body {
+      background: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      padding: 40px 20px;
+      max-width: 900px;
+      margin: auto;
+      padding-top: 120px; /* Space for fixed header */
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 20px;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-shadow: 0 0 10px var(--primary);
+    }
+
+    nav a {
+      color: #ccc;
+      margin-left: 25px;
+      text-decoration: none;
+      transition: color 0.3s ease, transform 0.2s ease-out;
+    }
+
+    nav a:hover {
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .cta-button {
+      background: var(--primary);
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: bold;
+      margin-left: 20px;
+      text-decoration: none;
+      box-shadow: 0 0 15px var(--primary);
+      transition: all 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background: var(--secondary);
+      box-shadow: 0 0 20px var(--secondary);
+      transform: translateY(-3px);
+    }
+
+    /* Hero Section */
+    .hero {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      margin-bottom: 50px;
+      flex-wrap: wrap;
+    }
+
+    .hero img {
+      border-radius: 50%;
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+      transform: translateY(20px);
+      opacity: 0;
+      transition: transform 0.6s ease, opacity 0.6s ease;
+    }
+
+    .hero img.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .hero-text {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .hero-text h1 {
+      font-size: 3.2rem;
+      color: var(--primary);
+      margin-bottom: 10px;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .hero-text h1.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .hero-text h2 {
+      font-weight: 500;
+      color: var(--secondary);
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: opacity 0.6s ease 0.15s, transform 0.6s ease 0.15s;
+    }
+
+    .hero-text h2.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .hero-text p {
+      font-size: 1.25rem;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+    }
+
+    .hero-text p.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    section {
+      margin-bottom: 50px;
+    }
+
+    h3 {
+      color: var(--primary);
+      margin-bottom: 25px;
+      border-bottom: 3px solid var(--secondary);
+      padding-bottom: 10px;
+      width: fit-content;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    h3.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Skills */
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .skill {
+      flex: 1 1 120px;
+      background: var(--skill-bg);
+      border-radius: 30px;
+      padding: 10px 20px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--primary);
+      box-shadow: 0 5px 10px rgba(46, 204, 113, 0.3);
+      cursor: default;
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-bar {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      background: var(--skill-fill);
+      border-radius: 30px 0 0 30px;
+      width: 0;
+      transition: width 1.2s ease;
+      z-index: -1;
+    }
+
+    ul.achievements {
+      list-style-type: none;
+      padding-left: 20px;
+    }
+
+    ul.achievements li {
+      margin-bottom: 18px;
+      font-size: 1.15rem;
+      position: relative;
+      padding-left: 25px;
+    }
+
+    ul.achievements li::before {
+      content: "✔";
+      color: var(--primary);
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+
+    .quote {
+      font-style: italic;
+      font-size: 1.3rem;
+      color: var(--secondary);
+      border-left: 5px solid var(--primary);
+      padding-left: 20px;
+      max-width: 600px;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: black;
+      padding: 15px 40px;
+      border-radius: 40px;
+      font-weight: 800;
+      font-size: 1.25rem;
+      text-decoration: none;
+      box-shadow: 0 7px 15px rgba(46, 204, 113, 0.4);
+      transition: background 0.3s ease, transform 0.3s ease;
+      margin-bottom: 60px;
+    }
+
+    .cta-btn:hover {
+      background: var(--secondary);
       transform: scale(1.05);
     }
-  }
 
-  .about-graphic:hover {
-    transform: rotate(15deg);
-  }
-
-  /* Scroll Fade-In/Slide-Up Effect (Already present) */
-  .scroll-fade-in {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 1s ease-out;
-  }
-
-  .scroll-fade-in.in-view {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* --- Media Queries --- */
-  @media (max-width: 768px) {
-    header {
-      padding: 15px 20px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    nav {
-      margin-top: 10px;
-      width: 100%;
+    footer {
+      margin-top: 30px;
       text-align: center;
     }
-    nav a {
-      margin: 0 10px 5px;
-      display: inline-block;
-    }
-    .hero h1 {
-      font-size: 2.2rem;
-    }
-    .hero p {
-      font-size: 0.9rem;
-    }
-    .buttons a {
-      padding: 10px 20px;
-      margin: 0 5px;
-    }
-    .services h2 {
+
+    footer a {
+      margin: 0 15px;
+      color: var(--primary);
+      text-decoration: none;
       font-size: 2rem;
-    }
-    .skills-container {
-      padding: 20px;
-    }
-    .skills-grid {
-      grid-template-columns: 1fr; /* Stack columns on small screens */
+      transition: color 0.3s ease;
     }
 
-    /* Hide "Jay" and "Book a Call" at 768px and below */
-    .logo {
-        display: none; /* Hide the "Jay" logo */
-    }
-    .cta-button {
-        display: none; /* Hide the "Book a Call" button */
+    footer a:hover {
+      color: var(--secondary);
     }
 
-    /* About page specific responsive adjustments */
-    .about-section {
-      flex-direction: column;
-      text-align: center;
-      padding: 3rem 1rem; /* Adjust padding for smaller screens */
-    }
-    .about-text {
-      padding: 0;
-    }
-    .about-graphic {
-      width: 250px; /* Reduce size for mobile */
-      height: 250px; /* Reduce size for mobile */
-      margin: 30px auto; /* Center on mobile */
-    }
-  }
-
-  @media (max-width: 480px) {
-      .hero h1 { /* Note: .hero is not on this page, but keeping for consistency if you copy the whole block */
-          font-size: 1.8rem;
+    /* Responsive */
+    @media (max-width: 650px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
       }
-      .buttons { /* Note: .buttons is not on this page */
-          flex-direction: column;
-          gap: 15px;
+
+      .hero-text h1 {
+        font-size: 2.4rem;
       }
-  }
-</style>
+
+      .hero-text h2 {
+        font-size: 1.3rem;
+      }
+
+      .skill {
+        flex: 1 1 100%;
+      }
+
+      header {
+        flex-direction: column;
+        padding: 15px 20px;
+
+        /* Make header static on small screens */
+        position: static;
+      }
+
+      nav {
+        margin-top: 10px;
+        text-align: center;
+      }
+
+      nav a {
+        margin: 0 10px;
+        display: inline-block;
+      }
+
+      .cta-button {
+        display: none;
+      }
+
+      /* Hide logo text on small screens */
+      .logo {
+        display: none;
+      }
+
+      /* Remove extra top padding on body because header no longer fixed */
+      body {
+        padding-top: 20px;
+      }
+    }
+  </style>
 </head>
-<body>
-  <div class="animated-bg"></div>
-  <canvas id="starfield"></canvas>
 
+<body>
+
+  <!-- Header Inserted -->
   <header>
     <div class="logo">Jay</div>
     <nav>
-      <a href="index.html">Home</a>
+      <a href="index2.html">Home</a>
       <a href="About.html">About</a>
       <a href="services.html">Expertise</a>
       <a href="contact.html">Contact</a>
@@ -272,113 +346,86 @@
     </nav>
   </header>
 
-  <section class="about-section scroll-fade-in">
-    <div class="about-text">
-      <h1>Hello! I'm Jay, a passionate web developer.</h1>
-      <p>
-        I specialize in creating beautiful, interactive, and functional websites with modern technologies. My focus is on delivering responsive design, clean code, and engaging user experiences. With a strong grasp of HTML, CSS, JavaScript, and backend tools like PHP and Python, I turn ideas into fully functional websites. I love working on challenging projects and continuously learning new tech.
-
-        My approach to web development is holistic, ensuring that every project, from concept to deployment, is handled with meticulous attention to detail. I am adept at translating client visions into tangible web solutions that not only meet but exceed expectations. Whether it's crafting a visually stunning front-end or architecting a robust back-end, my goal is always to build high-performance, scalable applications. I thrive in dynamic environments, constantly embracing new challenges and expanding my skill set to stay at the forefront of web innovation. My commitment to elegant solutions and efficient workflows ensures that each website I develop is optimized for both users and search engines, providing a seamless and memorable digital experience. Let's collaborate to bring your next great idea to life on the web.
-      </p>
+  <!-- Main Hero -->
+  <div class="hero">
+    <img src="Asset/Image/profile.jpg" alt="Your Photo" />
+    <div class="hero-text">
+      <h1>Jay</h1>
+      <h2>Full-Stack Web Developer</h2>
+      <p>Passionate about building clean, modern, and high-performance website and application solutions, with a growing focus on AI-powered systems and purpose-driven design.</p>
     </div>
-    <div class="about-img">
-      <div class="about-graphic"></div>
+  </div>
+
+  <section>
+    <h3>About Me</h3>
+    <p>
+I specialize in crafting modern websites and full-stack applications. I am also exploring AI-powered applications, integrating intelligent features to enhance functionality and user experience. My goal is to create seamless, optimized solutions through thoughtful design and performance-focused development. Every project I take on is an opportunity to push the boundaries of website Ai and app development while delivering meaningful, elegant solutions.    </p>
+  </section>
+
+  <section>
+    <h3>Skills</h3>
+    <div class="skills">
+      <div class="skill" data-skill-level="95">HTML<div class="skill-bar"></div></div>
+      <div class="skill" data-skill-level="85">JavaScript<div class="skill-bar"></div></div>
+      <div class="skill" data-skill-level="80">css<div class="skill-bar"></div></div>
+      <div class="skill" data-skill-level="75">PHP<div class="skill-bar"></div></div>
+      <div class="skill" data-skill-level="80">Python<div class="skill-bar"></div></div>
+      <div class="skill" data-skill-level="90">Responsive Design<div class="skill-bar"></div></div>
+      <div class="skill" data-skill-level="75">React native<div class="skill-bar"></div></div>
+      <div class="skill" data-skill-level="80">SQL</div><div class="skill-bar"></div></div>
     </div>
   </section>
 
+  <section>
+    <h3>Achievements</h3>
+  <ul class="achievements">
+    <li>Built and maintained multiple personal and other projects, focusing on clean, responsive design and usability</li>
+    <li>Automated small tasks and experiments using Python and APIs to improve workflow and learn practical coding skills</li>
+    <li>Collaborated with peers on a team project simulating a SaaS platform, gaining experience in teamwork and basic user management</li>
+  </ul>
+
+  </section>
+
+  <section>
+    <h3>Quote</h3>
+    <p class="quote">"Code is like humor. When you have to explain it, it’s bad." – Cory House</p>
+  </section>
+
+  <a href="services.html" class="cta-btn">Expertise</a>
+
   <script>
-    // Starfield animation script
-    const canvas = document.getElementById('starfield');
-    const ctx = canvas.getContext('2d');
-    let stars = [];
-    let w, h;
-    const STAR_COUNT = 500;
-
-    function resizeCanvas() {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
-      createStars(STAR_COUNT);
+    // Animate skill bars
+    function animateSkills() {
+      const skills = document.querySelectorAll('.skill');
+      skills.forEach(skill => {
+        const bar = skill.querySelector('.skill-bar');
+        const level = skill.getAttribute('data-skill-level');
+        bar.style.width = level + '%';
+      });
     }
 
-    function createStars(count) {
-      stars = [];
-      for (let i = 0; i < count; i++) {
-        stars.push({
-          x: Math.random() * w,
-          y: Math.random() * h,
-          z: Math.random() * w,
-          speed: 1 + Math.random() * 2
-        });
-      }
-    }
+    // Animate on scroll for hero and headings
+    function onScrollAnimation() {
+      const heroImg = document.querySelector('.hero img');
+      const heroTexts = document.querySelectorAll('.hero-text h1, .hero-text h2, .hero-text p');
+      const headings = document.querySelectorAll('section h3');
 
-    function drawStars() {
-      ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = '#00aaff';
-      for (let i = 0; i < stars.length; i++) {
-        const star = stars[i];
-        const k = 128.0 / star.z;
-        const x = (star.x - w / 2) * k + w / 2;
-        const y = (star.y - h / 2) * k + h / 2;
-
-        if (x < 0 || x >= w || y < 0 || y >= h || star.z <= 0) {
-          stars[i] = {
-            x: Math.random() * w,
-            y: Math.random() * h,
-            z: w,
-            speed: 1 + Math.random() * 2
-          };
-          continue;
+      const revealOnScroll = (element) => {
+        const rect = element.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) {
+          element.classList.add('visible');
         }
+      };
 
-        const size = (1 - star.z / w) * 2;
-        const opacity = (1 - star.z / w);
-        ctx.globalAlpha = opacity;
-        ctx.beginPath();
-        ctx.arc(x, y, size, 0, Math.PI * 2);
-        ctx.fill();
-        star.z -= star.speed;
-      }
-      ctx.globalAlpha = 1;
+      revealOnScroll(heroImg);
+      heroTexts.forEach(el => revealOnScroll(el));
+      headings.forEach(el => revealOnScroll(el));
     }
 
-    function animate() {
-      drawStars();
-      requestAnimationFrame(animate);
-    }
-
-    resizeCanvas();
-    animate();
-    window.addEventListener('resize', resizeCanvas);
-
-    // Parallax background for animated-bg
-    window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      const animatedBg = document.querySelector('.animated-bg');
-      if (animatedBg) {
-        animatedBg.style.transform = `translateY(${scrollY * 0.1}px) translateZ(0)`;
-      }
-    });
-
-    document.addEventListener('DOMContentLoaded', () => {
-      // --- Intersection Observer for Scroll Effects ---
-      const scrollElements = document.querySelectorAll('.scroll-fade-in');
-
-      const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
-            // For the header, if it's the first time it comes into view, snap it to position
-            // This part is now effectively removed for the header because 'scroll-fade-in' class is removed from header HTML
-            // if (entry.target.tagName === 'HEADER') {
-            //     entry.target.style.transform = 'translateY(0)';
-            // }
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.1 }); /* Adjusted threshold to 0.1 for general elements */
-
-      scrollElements.forEach(el => observer.observe(el));
+    window.addEventListener('scroll', onScrollAnimation);
+    window.addEventListener('load', () => {
+      animateSkills();
+      onScrollAnimation();
     });
   </script>
 
