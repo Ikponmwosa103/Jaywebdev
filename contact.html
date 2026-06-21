@@ -11,8 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="Asset/Image/favicon.webp"> <!-- for iOS -->
 
   <style>
-    /* Minimal Base Styles */
-    * {
+* {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -20,7 +19,6 @@
 
     html, body {
       height: 100%;
-      /* Solid black background, removing background image and gradient */
       background: #000;
       font-family: 'Inter', sans-serif;
       color: #fff;
@@ -28,125 +26,127 @@
       scroll-behavior: smooth;
     }
 
-    /* --- Header Styles --- */
-/* ================= HEADER ================= */
+    /* ================= HEADER (EXACT MATCH FROM ABOUT PAGE) ================= */
+    :root {
+      --primary: #00ffae;
+      --secondary: #0099ff;
+      --border: rgba(255,255,255,.08);
+    }
 
-:root{
-  --primary:#00ffae;
-  --secondary:#0099ff;
-  --border:rgba(255,255,255,.08);
-}
+    /* Header Container */
+    header {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 92%;
+      max-width: 1200px;
+      height: 70px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background: rgba(255,255,255,.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 60px;
+      z-index: 1000;
+    }
 
-/* Header Container */
-header{
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 92%;
-  max-width: 1200px;
-  height: 70px;
+    /* Logo */
+    .logo {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
 
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+    /* Nav */
+    nav {
+      display: flex;
+      align-items: center;
+    }
 
-  padding:20px 40px;
+    nav a {
+      color: #ddd;
+      text-decoration: none;
+      margin-left: 30px;
+      transition: .3s;
+      font-weight: 500;
+    }
 
-  background:rgba(255,255,255,.05);
-  backdrop-filter:blur(20px);
-  border:1px solid var(--border);
-  border-radius:60px;
-  z-index:10000;
+    nav a:hover {
+      color: var(--primary);
+    }
 
-  position: fixed;
-}
+    /* CTA Button */
+    .cta-button {
+      padding: 12px 25px;
+      border-radius: 50px;
+      background: var(--primary);
+      color: #000;
+      font-weight: 700;
+      box-shadow: 0 0 15px rgba(0,255,174,.3);
+      transition: .3s;
+    }
 
-/* Logo */
-.logo{
-  font-size:2rem;
-  font-weight:700;
-  color:var(--primary);
-}
+    .cta-button:hover {
+      transform: translateY(-3px);
+      background: #01ad7a; /* slightly darker but clean */
+      box-shadow: none; /* ❌ still no glow */
+    }
 
-/* Nav */
-nav{
-  display:flex;
-  align-items:center;
-}
+    /* Mobile Menu Button */
+    .menu-btn {
+      display: none;
+      font-size: 1.8rem;
+      color: var(--primary);
+      cursor: pointer;
+    }
 
-nav a{
-  color:#ddd;
-  text-decoration:none;
-  margin-left:30px;
-  transition:.3s;
-  font-weight:500;
-}
+    /* ================= MOBILE ================= */
+    @media(max-width:768px) {
+      .menu-btn {
+        display: block;
+      }
 
-nav a:hover{
-  color:var(--primary);
-}
+      nav {
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.664);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 25px 0;
+      }
 
-/* CTA Button */
-.cta-button{
-  padding:12px 25px;
-  border-radius:50px;
-  background:var(--primary);
-  color:#000;
-  font-weight:700;
-  box-shadow:0 0 15px rgba(0,255,174,.3);
-  transition:.3s;
-}
+      nav.active {
+        display: flex;
+      }
 
-.cta-button:hover{
-  transform:translateY(-3px);
-  box-shadow:0 0 25px rgba(0,255,174,.5);
-}
+      nav a {
+        margin: 10px 0;
+        padding: 12px 15px;
+        width: 100%;
+        border-radius: 10px;
+        display: block;
+        text-align: center;
+      }
 
-/* Mobile Menu Button */
-.menu-btn{
-  display:none;
-  font-size:1.8rem;
-  color:var(--primary);
-  cursor:pointer;
-}
+      nav a:hover {
+        background: rgba(255,255,255,0.08);
+      }
 
-/* ================= MOBILE ================= */
+      .cta-button {
+        display: none;
+      }
+    }
 
-
-/* MOBILE FIX */
-@media(max-width:768px){
-
-  .menu-btn{
-    display:block;
-  }
-
-  nav{
-    position:absolute;
-    top:80px;
-    left:0;
-    width:100%;
-    display:none;
-    flex-direction:column;
-    background:rgba(0,0,0,0.8);
-    padding:20px 0;
-    border-radius:20px;
-  }
-
-  nav.active{
-    display:flex;
-  }
-
-  nav a{
-    margin:15px 0;
-  }
-
-  .cta-button{
-    display:none;
-  }
-}
-    /* --- Particle Background Animation (replaced existing animated-bg/canvas) --- */
-    /* Renamed canvas to particle-bg to use the same particle effect from expertise page */
+    /* --- Particle Background Animation --- */
     .particle-bg {
       position: fixed;
       top: 0;
@@ -162,8 +162,8 @@ nav a:hover{
       display: block;
       width: 20px;
       height: 20px;
-      background: rgba(46, 204, 113, 0.3); /* Green with transparency */
-      box-shadow: 0 0 15px rgba(46, 204, 113, 0.6); /* Green shadow */
+      background: rgba(46, 204, 113, 0.3);
+      box-shadow: 0 0 15px rgba(46, 204, 113, 0.6);
       border-radius: 50%;
       animation: float 20s linear infinite;
     }
@@ -202,20 +202,19 @@ nav a:hover{
 
     /* --- Contact Page Specific Styles --- */
     .contact-section {
-      padding: 120px 20px; /* Adjust padding to account for fixed header */
+      padding: 120px 20px;
       max-width: 1200px;
       margin: 0 auto;
       text-align: center;
       position: relative;
       z-index: 1;
-      /* Removed background image and gradient from section */
-      background: transparent; /* Allow particle background to show through */
+      background: transparent;
     }
 
     .contact-section h1 {
       font-size: 3rem;
       margin-bottom: 20px;
-      text-shadow: 0 0 15px #2ECC71; /* Green shadow */
+      text-shadow: 0 0 15px #2ECC71;
     }
 
     .contact-section p {
@@ -237,12 +236,11 @@ nav a:hover{
     .contact-info-container {
       flex: 1;
       min-width: 300px;
-      background: rgba(10, 10, 10, 0.8); /* Darker background for the boxes */
+      background: rgba(10, 10, 10, 0.8);
       padding: 30px;
       border-radius: 10px;
-      /* Glowing green shadow */
       box-shadow: 0 0 25px rgba(46, 204, 113, 0.2), 0 0 50px rgba(46, 204, 113, 0.1);
-      border: 1px solid rgba(46, 204, 113, 0.4); /* Green border */
+      border: 1px solid rgba(46, 204, 113, 0.4);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
@@ -252,13 +250,12 @@ nav a:hover{
         box-shadow: 0 0 30px rgba(46, 204, 113, 0.5), 0 0 60px rgba(46, 204, 113, 0.3);
     }
 
-
     .contact-form-container h2,
     .contact-info-container h2 {
       font-size: 1.8rem;
       margin-bottom: 25px;
-      color: #2ECC71; /* Green */
-      text-shadow: 0 0 10px #2ECC71; /* Green shadow */
+      color: #2ECC71;
+      text-shadow: 0 0 10px #2ECC71;
     }
 
     .contact-form label {
@@ -271,7 +268,7 @@ nav a:hover{
 
     .contact-form input[type="text"],
     .contact-form input[type="email"],
-    .contact-form input[type="subject"], /* Added subject input type for consistency */
+    .contact-form input[type="subject"],
     .contact-form textarea {
       width: 100%;
       padding: 12px;
@@ -287,10 +284,10 @@ nav a:hover{
 
     .contact-form input[type="text"]:focus,
     .contact-form input[type="email"]:focus,
-    .contact-form input[type="subject"]:focus, /* Added subject input type for consistency */
+    .contact-form input[type="subject"]:focus,
     .contact-form textarea:focus {
-      border-color: #2ECC71; /* Green focus border */
-      box-shadow: 0 0 10px rgba(46, 204, 113, 0.5); /* Green focus shadow */
+      border-color: #2ECC71;
+      box-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
     }
 
     .contact-form textarea {
@@ -299,7 +296,7 @@ nav a:hover{
     }
 
     .contact-form button {
-      background: #2ECC71; /* Green */
+      background: #2ECC71;
       color: #000;
       padding: 12px 25px;
       border: none;
@@ -307,14 +304,14 @@ nav a:hover{
       font-size: 1.1rem;
       font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 0 15px #2ECC71; /* Green shadow */
+      box-shadow: 0 0 15px #2ECC71;
       transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease-out;
       width: 100%;
     }
 
     .contact-form button:hover {
-      background: #27AE60; /* Darker green */
-      box-shadow: 0 0 20px #27AE60; /* Darker green shadow */
+      background: #27AE60;
+      box-shadow: 0 0 20px #27AE60;
       transform: translateY(-2px);
     }
 
@@ -325,9 +322,8 @@ nav a:hover{
 
     .contact-info-item h3 {
       font-size: 1.2rem;
-      color: #2ECC71; /* Green */
+      color: #2ECC71;
       margin-bottom: 8px;
-      text-shadow: none; /* Removed extra text-shadow as it's set on h2 */
     }
 
     .contact-info-item p,
@@ -339,7 +335,7 @@ nav a:hover{
     }
 
     .contact-info-item a:hover {
-      color: #2ECC71; /* Green hover for links */
+      color: #2ECC71;
     }
 
     .social-links {
@@ -350,29 +346,19 @@ nav a:hover{
     }
 
     .social-links a {
-      color: #2ECC71; /* Green for social icons */
+      color: #2ECC71;
       font-size: 1.8rem;
       transition: transform 0.3s ease, color 0.3s ease;
     }
 
     .social-links a:hover {
       transform: translateY(-5px) scale(1.1);
-      color: #27AE60; /* Darker green on hover */
+      color: #27AE60;
     }
-
-    /* Media Queries for responsiveness */
-   
-
 
     @media (max-width: 480px) {
       .contact-section h1 {
         font-size: 1.8rem;
-      }
-      header {
-        padding: 10px 15px;
-      }
-      nav a {
-        margin: 0 5px;
       }
     }
   </style>
