@@ -89,6 +89,7 @@
  background: rgba(0, 0, 0, 0.05);
      pointer-events: none;
     z-index: 1;
+      height: 100vh;
   }
 
 :root{
@@ -210,8 +211,7 @@ nav a:hover{
 
   .hero {
     display: flex;
-    min-height: 100vh;
-    width: 100%;
+    min-height: 100dvh; /* modern mobile safe height */    width: 100%;
     min-height: 100vh;
     padding: 120px 20px 20px;
     padding-bottom: 40px;
@@ -401,7 +401,7 @@ nav a:hover{
     flex-direction: column;
     align-items: center;
 
-    background: rgba(0, 0, 0, 0.404);
+    background: rgba(0, 0, 0, 0.664);
     backdrop-filter: blur(20px);
     border: 1px solid var(--border);
     border-radius: 20px;
