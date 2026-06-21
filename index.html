@@ -212,7 +212,6 @@ nav a:hover{
     display: flex;
     min-height: 100vh;
     width: 100%;
-.hero {
     min-height: 100vh;
     padding: 120px 20px 20px;
     padding-bottom: 40px;
@@ -227,6 +226,7 @@ nav a:hover{
     align-items: center;
     text-shadow: 0 0 5px rgba(0,0,0,0.7);
     padding: 0 20px;
+    width: 100%;
     max-width: 800px;
       background: rgba(255,255,255,0.05);
   backdrop-filter: blur(20px);
@@ -360,7 +360,22 @@ nav a:hover{
   body {
     background-attachment: scroll; /* smoother on mobile */
   }
+  .hero-text {
+    width: 100%;
+    max-width: 100%;
+    padding: 35px 25px;
+    border-radius: 25px;
+  }
+}
 
+@media (max-width: 480px) {
+  .hero-text {
+    width: 100%;
+    max-width: 100%;
+    padding: 25px 18px;
+    border-radius: 20px;
+  }
+}
   header {
     width: 95%;
     padding: 15px 25px;
