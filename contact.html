@@ -39,13 +39,13 @@
 
 /* Header Container */
 header{
-  position:fixed;
-  top:20px;
-  left:50%;
-  transform:translateX(-50%);
-  width:92%;
-  max-width:1200px;
-  height:70px;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 92%;
+  max-width: 1200px;
+  height: 70px;
 
   display:flex;
   justify-content:space-between;
@@ -57,7 +57,9 @@ header{
   backdrop-filter:blur(20px);
   border:1px solid var(--border);
   border-radius:60px;
-  z-index:1000;
+  z-index:10000;
+
+  position: fixed;
 }
 
 /* Logo */
@@ -117,22 +119,28 @@ nav a:hover{
     display:block;
   }
 
-  nav {
-    position: absolute;
-    top: 80px;
-    left: 0;
-    width: 100%;
+@media (max-width:768px){
 
-    display: none;
-    flex-direction: column;
-    align-items: center;
+  .menu-btn{
+    display:block;
+  }
 
-    background: rgba(0, 0, 0, 0.815);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--border);
-    border-radius: 20px;
+  nav{
+    position:absolute;
+    top:70px;
+    left:0;
+    width:100%;
 
-    padding: 25px 0;
+    display:none;
+    flex-direction:column;
+    align-items:center;
+
+    background:rgba(0,0,0,0.95);
+    backdrop-filter:blur(20px);
+    border-radius:15px;
+    padding:20px;
+
+    z-index:9999;
   }
 
   nav.active{
@@ -141,7 +149,6 @@ nav a:hover{
 
   nav a{
     margin:15px 0;
-    text-align:center;
   }
 
   .cta-button{
@@ -454,29 +461,43 @@ nav a:hover{
     </div>
   </section>
 
-  <script>
-    const menuBtn = document.querySelector('.menu-btn');
-const nav = document.querySelector('nav');
+<script>
+document.addEventListener('DOMContentLoaded', () => {
 
-menuBtn.addEventListener('click', () => {
-  nav.classList.toggle('active');
-});
-    // Removed old starfield and animated-bg scripts
-    // Re-implemented particle background logic as per 'Expertise' page
-    document.addEventListener('DOMContentLoaded', () => {
-      const scrollElements = document.querySelectorAll('.scroll-fade-in');
+  const menuBtn = document.querySelector('.menu-btn');
+  const nav = document.querySelector('nav');
 
-      const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.1 });
-
-      scrollElements.forEach(el => observer.observe(el));
+  // ✅ MOBILE MENU TOGGLE
+  if (menuBtn && nav) {
+    menuBtn.addEventListener('click', () => {
+      nav.classList.toggle('active');
     });
-  </script>
+
+    // ✅ CLOSE MENU WHEN A LINK IS CLICKED (IMPORTANT FOR PHONE)
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('active');
+      });
+    });
+  }
+
+  // ✅ SCROLL ANIMATION (UNCHANGED BUT SAFE)
+  const scrollElements = document.querySelectorAll('.scroll-fade-in');
+
+  if (scrollElements.length > 0) {
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    scrollElements.forEach(el => observer.observe(el));
+  }
+
+});
+</script>
 </body>
 </html>
