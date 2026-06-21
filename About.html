@@ -190,13 +190,7 @@ nav a:hover{
 
 /* ================= MOBILE ================= */
 
-@media(max-width:768px){
-
-  .menu-btn{
-    display:block;
-  }
-
-  nav {
+ nav {
     position: absolute;
     top: 80px;
     left: 0;
@@ -227,13 +221,45 @@ nav a:hover{
   .cta-button{
     display:none;
   }
-}
 
 /* Hero */
 
 .hero{
     width:90%;
     max-width:1200px;
+  nav {
+    position: absolute;
+    top: 80px;
+    left: 0;
+    width: 100%;
+
+    display: none;
+    flex-direction: column;
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.664);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+
+    padding: 25px 0;
+  }
+
+  nav.active{
+    display:flex;
+  }
+
+  nav a{
+    margin:10px 0;
+    padding:12px 15px;
+    width:100%;
+    border-radius:10px;
+    display:block;
+  }
+
+  nav a:hover{
+    background:rgba(255,255,255,0.08);
+  }
     margin:0 auto 80px;
     padding:60px;
     border-radius:30px;
