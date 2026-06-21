@@ -3,17 +3,58 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jay Ikponmwosa</title>
+  
+  <!-- Title for SEO -->
+  <title>Jay Ikponmwosa | Web, App & AI Developer Portfolio</title>
+  
+  <!-- Meta Description (important for Google ranking & search snippets) -->
+  <meta name="description" content="Explore Jay Ikponmwosa's portfolio, featuring cutting-edge web, app, and AI development projects. Discover creative solutions, responsive design, and SEO expertise.">
+  
+  <!-- Keywords (including AI, app development, and variations of your name) -->
+  <meta name="keywords" content="Jay Ikponmwosa, IK, web developer, frontend developer, portfolio, responsive websites, SEO, Nigeria web developer, web design, AI development, app development, Jay, Ikponmwosa, Ik">
 
-  <!-- Favicon -->
-<link rel="icon" type="image/png" sizes="32x32" href="Asset/Image/favicon.webp">
-<link rel="icon" type="image/png" sizes="192x192" href="Asset/Image/favicon.webp"> <!-- for Android -->
-<link rel="apple-touch-icon" sizes="180x180" href="Asset/Image/favicon.webp"> <!-- for iOS -->
+  <!-- Author -->
+  <meta name="author" content="Jay Ikponmwosa">
+
+  <!-- Open Graph for social media previews -->
+  <meta property="og:title" content="Jay Ikponmwosa | Web, App & AI Developer Portfolio">
+  <meta property="og:description" content="Explore Jay Ikponmwosa's portfolio, featuring cutting-edge web, app, and AI development projects. Discover creative solutions, responsive design, and SEO expertise.">
+  <meta property="og:image" content="https://jayikponmwosa.netlify.app/preview.png">
+  <meta property="og:url" content="https://jayikponmwosa.netlify.app">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Jay Ikponmwosa | Web, App & AI Developer Portfolio">
+  <meta name="twitter:description" content="Explore Jay Ikponmwosa's portfolio, featuring innovative web, app, and AI development projects, with expertise in responsive design and SEO.">
+  <meta name="twitter:image" content="https://jayikponmwosa.netlify.app/preview.png">
 
   <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-  
+  <link rel="icon" type="image/png" sizes="32x32" href="Asset/Image/favicon.webp">
+  <link rel="icon" type="image/png" sizes="192x192" href="Asset/Image/favicon.webp"> <!-- for Android -->
+  <link rel="apple-touch-icon" sizes="180x180" href="Asset/Image/favicon.webp"> <!-- for iOS -->
+  <link rel="canonical" href="https://jayikponmwosa.netlify.app/">
+  <meta name="robots" content="index, follow">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Jay Ikponmwosa",
+  "jobTitle": "Web Developer",
+  "url": "https://jayikponmwosa.netlify.app",
+  "sameAs": [
+    "https://github.com/jaythewebdev",
+    "https://www.linkedin.com/in/jaythewebdev"
+  ]
+}
+</script>
+</head>
+
+
+  <!-- ✅ Schema Markup (Google Rich Results) -->
 
 <style>
   * {
@@ -32,7 +73,7 @@
   }
 
   body {
-    background-image: url('Asset/Image/download.jpg');
+    background-image: url('Asset/Image/download.webp');
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -45,65 +86,135 @@
     content: "";
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.5);
-    pointer-events: none;
+ background: rgba(0, 0, 0, 0.05);
+     pointer-events: none;
     z-index: 1;
   }
 
-  header, .hero {
-    position: relative;
-    z-index: 2;
+:root{
+  --primary:#00ffae;
+  --secondary:#0099ff;
+  --border:rgba(255,255,255,.08);
+}
+
+/* Header Container */
+header{
+  position:fixed;
+  top:20px;
+  left:50%;
+  transform:translateX(-50%);
+  width:92%;
+  max-width:1200px;
+  height:70px;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:20px 40px;
+
+  background:rgba(255,255,255,.05);
+  backdrop-filter:blur(20px);
+  border:1px solid var(--border);
+  border-radius:60px;
+  z-index:1000;
+}
+
+/* Logo */
+.logo{
+  font-size:2rem;
+  font-weight:700;
+  color:var(--primary);
+}
+
+/* Nav */
+nav{
+  display:flex;
+  align-items:center;
+}
+
+nav a{
+  color:#ddd;
+  text-decoration:none;
+  margin-left:30px;
+  transition:.3s;
+  font-weight:500;
+}
+
+nav a:hover{
+  color:var(--primary);
+}
+
+/* CTA Button */
+.cta-button{
+  padding:12px 25px;
+  border-radius:50px;
+  background:var(--primary);
+  color:#000;
+  font-weight:700;
+  box-shadow:0 0 15px rgba(0,255,174,.3);
+  transition:.3s;
+}
+
+.cta-button:hover{
+  transform: translateY(-3px);
+  background: #01ad7a; /* slightly darker but clean */
+  box-shadow: none; /* ❌ still no glow */
+}
+
+/* Mobile Menu Button */
+.menu-btn{
+  display:none;
+  font-size:1.8rem;
+  color:var(--primary);
+  cursor:pointer;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:768px){
+
+  .menu-btn{
+    display:block;
   }
 
-  header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 20px 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    backdrop-filter: blur(10px);
-    flex-wrap: wrap;
-    z-index: 1000;
+  nav{
+    position:absolute;
+    top:80px;
+    left:0;
+    width:100%;
+
+    display:none;
+    flex-direction:column;
+
+    background:rgba(5,8,22,.97);
+    backdrop-filter:blur(20px);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:20px;
   }
 
-  header .logo {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #2ECC71;
-    text-shadow: 0 0 10px #2ECC71;
+  nav.active{
+    display:flex;
   }
 
-  header nav {
-    flex: 1;
-    text-align: center;
+  nav a{
+    margin:15px 0;
+    text-align:center;
   }
 
-  header nav a {
-    color: #ccc;
-    margin: 0 12px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
-    display: inline-block;
+  .cta-button{
+    display:none;
   }
-
-  header nav a:hover {
-    color: #fff;
-  }
-
-  header .phone {
-    color: #ccc;
-    font-size: 0.9rem;
-  }
+}
 
   .hero {
     display: flex;
     min-height: 100vh;
     width: 100%;
-    padding-top: 100px;
+.hero {
+    min-height: 100vh;
+    padding: 120px 20px 20px;
     padding-bottom: 40px;
     justify-content: center;
     align-items: center;
@@ -117,12 +228,29 @@
     text-shadow: 0 0 5px rgba(0,0,0,0.7);
     padding: 0 20px;
     max-width: 800px;
+      background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 30px;
+  padding: 50px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
   }
+  .secondary-btn {
+  border: 1px solid rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+}
 
   .hero-text h1 {
     font-size: 2.5rem;
     margin-bottom: 10px;
     line-height: 1.2;
+      font-size: 2.5rem;
+  margin-bottom: 10px;
+  color: #fff;
+  text-shadow:
+    0 0 10px rgba(255,255,255,0.4),
+    0 0 30px rgba(46,204,113,0.2);
   }
 
   .hero-text h1 span {
@@ -132,16 +260,16 @@
     text-shadow: 0 0 20px #2ECC71;
   }
 
-  .hero-text p {
-    color: #aaa;
-    font-size: 1.2rem;
-    margin-bottom: 30px;
-    white-space: nowrap;
-    overflow: hidden;
-    border-right: 2px solid #2ECC71;
-    animation: blink 1s steps(2, start) infinite;
-    min-height: 1.5em;
-  }
+.hero-text p {
+   color: rgba(255,255,255,0.9);
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  max-width: 700px;
+  text-align: center;
+  border-right: 2px solid #2ECC71;
+  min-height: 1.5em;
+  line-height: 1.6;
+}
 
   @keyframes blink {
     0%, 100% { border-color: #2ECC71; }
@@ -207,84 +335,163 @@
 
   /* === Responsive Media Queries === */
 /* Tablet and smaller: show only WhatsApp, Facebook, Instagram, X, and Linktree icons */
+/* ================= RESPONSIVE FIXES ================= */
+
 @media (max-width: 1024px) {
+
+  /* Show only selected social icons */
   .socials a {
-    display: none; /* Hide all icons */
+    display: none;
   }
 
-.socials a.social-facebook,
-.socials a.social-instagram,
-.socials a.social-x,
-.socials a.social-whatsapp,
-.socials a.social-linktree {
-  display: inline-block;
-  margin: 0 5px; /* spacing between icons */
-}
-
-}
-
-  @media (max-width: 768px) {
-    .hide-sm {
-      display: none !important;
-    }
-
-    body {
-      background-attachment: scroll;
-    }
-
-    header {
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 15px 20px;
-    }
-
-    header .logo {
-      display: none;
-    }
-
-    header nav {
-      width: 100%;
-      text-align: center;
-      margin-top: 10px;
-    }
-
-    header nav a {
-      margin: 0 8px;
-    }
-
-    .phone {
-      display: none;
-    }
-
-    .hero {
-      flex-direction: column;
-      padding-top: 140px;
-      padding-left: 20px;
-      padding-right: 20px;
-    }
-
-    .hero-text h1 {
-      font-size: 1.8rem;
-    }
-
-    .hero-text h1 span {
-      font-size: 2.4rem;
-    }
-
-    .hero-text p {
-      font-size: 1rem;
-    }
-
-    .buttons {
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .secondary-btn {
-      width: 100%;
-      text-align: center;
-    }
+  .socials a.social-facebook,
+  .socials a.social-instagram,
+  .socials a.social-x,
+  .socials a.social-whatsapp,
+  .socials a.social-linktree {
+    display: inline-flex;
   }
+}
+
+
+/* Tablet */
+@media (max-width: 768px) {
+
+  body {
+    background-attachment: scroll; /* smoother on mobile */
+  }
+
+  header {
+    width: 95%;
+    padding: 15px 25px;
+    height: 65px;
+  }
+
+  .logo {
+    font-size: 1.6rem;
+  }
+
+  .menu-btn {
+    display: block;
+    font-size: 1.7rem;
+  }
+
+  nav {
+    position: absolute;
+    top: 80px;
+    left: 0;
+    width: 100%;
+
+    display: none;
+    flex-direction: column;
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.404);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+
+    padding: 25px 0;
+  }
+
+  nav.active {
+    display: flex;
+  }
+
+  nav a {
+    margin: 12px 0;
+    font-size: 1rem;
+  }
+
+  .cta-button {
+    display: none;
+  }
+
+  .hero {
+    padding-top: 120px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .hero-text h1 {
+    font-size: 2rem;
+  }
+
+  .hero-text h1 span {
+    font-size: 2.8rem;
+  }
+
+  .hero-text p {
+    font-size: 1rem;
+
+    /* IMPORTANT FIX */
+    white-space: normal;
+    overflow: visible;
+    text-align: center;
+    max-width: 100%;
+    line-height: 1.5;
+  }
+
+  .buttons {
+    width: 100%;
+  }
+
+  .secondary-btn {
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+  }
+
+  .socials {
+    gap: 18px;
+    margin-top: 35px;
+  }
+}
+
+
+/* Small Phones */
+@media (max-width: 480px) {
+
+  header {
+    top: 12px;
+    height: 60px;
+    padding: 12px 18px;
+  }
+
+  .logo {
+    font-size: 1.4rem;
+  }
+
+  .hero-text h1 {
+    font-size: 1.6rem;
+  }
+
+  .hero-text h1 span {
+    font-size: 2.2rem;
+  }
+
+  .hero-text p {
+    font-size: 0.95rem;
+  }
+
+  .buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .secondary-btn {
+    width: 100%;
+    max-width: 250px;
+  }
+
+  .socials {
+    gap: 15px;
+    font-size: 1.1rem;
+  }
+}
+
+ 
 </style>
 
 </head>
@@ -292,19 +499,20 @@
 <body>
 
 
-    ...
-
   <!-- Header -->
-  <header>
-    <div class="logo">Jay</div>
-    <nav>
-      <a href="#">Home</a>
-      <a href="About.html">About</a>
-      <a href="services.html">Expertise</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-    <div class="phone"><i class="fas fa-phone-alt ji"></i> 09011194641</div>
-  </header>
+<header>
+  <div class="logo">Jay</div>
+
+  <div class="menu-btn">☰</div>
+
+  <nav>
+    <a href="index2.html">Home</a>
+    <a href="About.html">About</a>
+    <a href="services.html">Expertise</a>
+    <a href="contact.html">Contact</a>
+    <a href="contact.html" class="cta-button">Book a Call</a>
+  </nav>
+</header>
 
   <!-- Hero Section -->
   <section class="hero">
@@ -338,6 +546,12 @@
 
   <!-- Typing Effect Script -->
   <script>
+    const menuBtn = document.querySelector('.menu-btn');
+const nav = document.querySelector('nav');
+
+menuBtn.addEventListener('click', () => {
+  nav.classList.toggle('active');
+});
     const text = "Web developer/app developer and Ai intern";
     let index = 0;
 
