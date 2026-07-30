@@ -71,27 +71,6 @@ body{
     bottom:-100px;
     animation:float2 14s infinite alternate;
 }
-.menu-btn{
-    display:none;
-    font-size:1.4rem;
-    color:var(--primary);
-    cursor:pointer;
-}
-
-/* Mobile Navigation */
-
-
-@media(min-width:769px){
-
-    nav{
-        display:flex !important;
-        align-items:center;
-    }
-
-    .menu-btn{
-        display:none;
-    }
-}
 
 @keyframes float1{
     to{
@@ -105,17 +84,8 @@ body{
     }
 }
 
-/* Header */
-
 /* ================= HEADER ================= */
 
-:root{
-  --primary:#00ffae;
-  --secondary:#0099ff;
-  --border:rgba(255,255,255,.08);
-}
-
-/* Header Container */
 header{
   position:fixed;
   top:20px;
@@ -145,7 +115,7 @@ header{
   color:var(--primary);
 }
 
-/* Nav */
+/* Desktop Nav */
 nav{
   display:flex;
   align-items:center;
@@ -176,11 +146,11 @@ nav a:hover{
 
 .cta-button:hover{
   transform: translateY(-3px);
-  background: #01ad7a; /* slightly darker but clean */
-  box-shadow: none; /* ❌ still no glow */
+  background: #01ad7a;
+  box-shadow: none;
 }
 
-/* Mobile Menu Button */
+/* Mobile Menu Button (hidden by default) */
 .menu-btn{
   display:none;
   font-size:1.8rem;
@@ -188,78 +158,11 @@ nav a:hover{
   cursor:pointer;
 }
 
-/* ================= MOBILE ================= */
-
- nav {
-    position: absolute;
-    top: 80px;
-    left: 0;
-    width: 100%;
-
-    display: none;
-    flex-direction: column;
-    align-items: center;
-
-    background: rgba(0, 0, 0, 0.664);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-
-    padding: 25px 0;
-  }
-
-
-  nav.active{
-    display:flex;
-  }
-
-  nav a{
-    margin:15px 0;
-    text-align:center;
-  }
-
-  .cta-button{
-    display:none;
-  }
-
 /* Hero */
 
 .hero{
     width:90%;
     max-width:1200px;
-  nav {
-    position: absolute;
-    top: 80px;
-    left: 0;
-    width: 100%;
-
-    display: none;
-    flex-direction: column;
-    align-items: center;
-
-    background: rgba(0, 0, 0, 0.664);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-
-    padding: 25px 0;
-  }
-
-  nav.active{
-    display:flex;
-  }
-
-  nav a{
-    margin:10px 0;
-    padding:12px 15px;
-    width:100%;
-    border-radius:10px;
-    display:block;
-  }
-
-  nav a:hover{
-    background:rgba(255,255,255,0.08);
-  }
     margin:0 auto 80px;
     padding:60px;
     border-radius:30px;
@@ -473,15 +376,8 @@ footer a{
     transform:translateY(0);
 }
 
-/* Mobile */
-
+/* ================= MOBILE ================= */
 @media(max-width:768px){
-
-.hero{
-    flex-direction:column;
-    text-align:center;
-    padding:40px 25px;
-}
 
   .menu-btn{
     display:block;
@@ -492,34 +388,54 @@ footer a{
     top: 80px;
     left: 0;
     width: 100%;
-
     display: none;
     flex-direction: column;
     align-items: center;
-
     background: rgba(0, 0, 0, 0.664);
     backdrop-filter: blur(20px);
     border: 1px solid var(--border);
     border-radius: 20px;
-
     padding: 25px 0;
   }
 
-.hero h1{
-    font-size:2.8rem;
-}
+  nav.active{
+    display:flex;
+  }
 
-header{
-    padding:18px 25px;
-}
+  nav a{
+    margin:10px 0;
+    padding:12px 15px;
+    width:100%;
+    border-radius:10px;
+    display:block;
+    text-align:center;
+  }
 
-nav{
+  nav a:hover{
+    background:rgba(255,255,255,0.08);
+  }
+
+  .cta-button{
     display:none;
-}
+  }
 
-section{
+  .hero{
+    flex-direction:column;
+    text-align:center;
+    padding:40px 25px;
+  }
+
+  .hero h1{
+    font-size:2.8rem;
+  }
+
+  header{
+    padding:18px 25px;
+  }
+
+  section{
     padding:35px 25px;
-}
+  }
 }
 </style>
 </head>
