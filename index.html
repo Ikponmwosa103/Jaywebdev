@@ -1063,19 +1063,17 @@ if (document.readyState === 'loading') {
 
     savedScrollPosition = window.scrollY;
 
-    document.body.dataset.aiScrollPosition = savedScrollPosition;
-
-    /*
-      IMPORTANT:
-      Fixed body prevents the portfolio from moving when
-      Android opens the keyboard.
-    */
+    document.body.dataset.aiScrollPosition =
+      savedScrollPosition;
 
     document.body.style.position = 'fixed';
-    document.body.style.top = `-${savedScrollPosition}px`;
+    document.body.style.top =
+      `-${savedScrollPosition}px`;
+
     document.body.style.left = '0';
     document.body.style.right = '0';
     document.body.style.width = '100%';
+
     document.body.style.overflow = 'hidden';
 
     document.documentElement.style.overflow = 'hidden';
@@ -1085,19 +1083,15 @@ if (document.readyState === 'loading') {
 
 
   /* =======================================================
-     FORCE PAGE BACK TO ORIGINAL POSITION
+     KEEP PAGE AT ORIGINAL POSITION
   ======================================================= */
 
   function forcePagePosition() {
 
     if (!pageIsLocked) return;
 
-    document.body.style.top = `-${savedScrollPosition}px`;
-
-    /*
-      Do NOT call window.scrollTo() continuously.
-      Android can fight against it when the keyboard is open.
-    */
+    document.body.style.top =
+      `-${savedScrollPosition}px`;
   }
 
 
@@ -1111,17 +1105,11 @@ if (document.readyState === 'loading') {
 
     keyboardIsOpen = false;
 
-    /*
-      Blur input first.
-    */
-
     if (document.activeElement === input) {
       input.blur();
     }
 
-    /*
-      Remove mobile positioning from chat.
-    */
+    /* Reset chat positioning */
 
     chatBox.style.position = '';
     chatBox.style.top = '';
@@ -1132,6 +1120,8 @@ if (document.readyState === 'loading') {
     chatBox.style.height = '';
     chatBox.style.maxHeight = '';
 
+    /* Unlock body */
+
     document.body.style.position = '';
     document.body.style.top = '';
     document.body.style.left = '';
@@ -1141,9 +1131,7 @@ if (document.readyState === 'loading') {
 
     document.documentElement.style.overflow = '';
 
-    /*
-      Restore exact page position.
-    */
+    /* Restore exact position */
 
     requestAnimationFrame(() => {
       window.scrollTo(0, savedScrollPosition);
@@ -1154,7 +1142,7 @@ if (document.readyState === 'loading') {
 
 
   /* =======================================================
-     CALCULATE MOBILE CHAT POSITION
+     MOBILE CHAT POSITION
   ======================================================= */
 
   function updateMobileChatPosition() {
@@ -1165,24 +1153,18 @@ if (document.readyState === 'loading') {
 
     if (!viewport) return;
 
-    const viewportHeight = viewport.height;
-    const viewportTop = viewport.offsetTop;
-
     const screenHeight = window.innerHeight;
+    const viewportHeight = viewport.height;
 
     /*
-      Difference between the normal screen and the
-      currently visible viewport.
-
-      When keyboard opens this becomes large.
+      Calculate keyboard height.
     */
 
     const keyboardHeight =
-      Math.max(0, screenHeight - viewportHeight - viewportTop);
-
-    /*
-      Keyboard detection.
-    */
+      Math.max(
+        0,
+        screenHeight - viewportHeight
+      );
 
     keyboardIsOpen = keyboardHeight > 100;
 
@@ -1194,46 +1176,51 @@ if (document.readyState === 'loading') {
     if (keyboardIsOpen) {
 
       /*
-        Keep the portfolio itself completely fixed.
+        IMPORTANT:
 
-        Only the AI window is repositioned.
+        The portfolio remains completely locked.
+
+        Only the chat is repositioned.
       */
 
       forcePagePosition();
-
-      /*
-        Position the AI chat so its bottom is immediately
-        above the keyboard.
-
-        6px gives a tiny breathing space.
-      */
 
       chatBox.style.position = 'fixed';
 
       chatBox.style.left = '8px';
       chatBox.style.right = '8px';
 
-      chatBox.style.width = 'calc(100vw - 16px)';
-
-      chatBox.style.bottom = `${keyboardHeight + 6}px`;
+      chatBox.style.width =
+        'calc(100vw - 16px)';
 
       /*
-        The chat fills the available visible space.
+        KEEP CHAT LOW.
 
-        Minimum height prevents it becoming too tiny.
+        This is the main fix.
       */
 
-      const availableHeight =
-        viewportHeight - keyboardHeight - 12;
+      chatBox.style.bottom = '10px';
 
-      chatBox.style.height =
-        `${Math.max(180, availableHeight)}px`;
-
-      chatBox.style.maxHeight =
-        `${Math.max(180, availableHeight)}px`;
 
       /*
-        Keep the page at the original position.
+        Keep the chat from becoming enormous.
+      */
+
+      const chatHeight = Math.min(
+        360,
+        viewportHeight - 80
+      );
+
+      chatBox.style.height =
+        `${Math.max(180, chatHeight)}px`;
+
+      chatBox.style.maxHeight =
+        `${Math.max(180, chatHeight)}px`;
+
+
+      /*
+        Make absolutely sure the page itself
+        stays at its original position.
       */
 
       document.body.style.top =
@@ -1249,7 +1236,7 @@ if (document.readyState === 'loading') {
     else {
 
       /*
-        Return chat to its normal CSS position.
+        Return chat control to CSS.
       */
 
       chatBox.style.position = '';
@@ -1273,8 +1260,7 @@ if (document.readyState === 'loading') {
   function openChat() {
 
     /*
-      Lock the portfolio BEFORE displaying the chat.
-      This prevents the page from jumping.
+      Lock page BEFORE opening chat.
     */
 
     lockPage();
@@ -1282,22 +1268,21 @@ if (document.readyState === 'loading') {
     chatBox.classList.remove('hidden');
 
     /*
-      Do NOT focus input automatically.
+      Never automatically focus the input.
     */
 
     requestAnimationFrame(() => {
 
       forcePagePosition();
 
-      messages.scrollTop = messages.scrollHeight;
-
-      /*
-        On mobile, allow the browser one frame to settle.
-      */
+      messages.scrollTop =
+        messages.scrollHeight;
 
       setTimeout(() => {
+
         forcePagePosition();
         updateMobileChatPosition();
+
       }, 50);
 
     });
@@ -1361,34 +1346,45 @@ if (document.readyState === 'loading') {
     if (!pageIsLocked) return;
 
     /*
-      Save the page position again immediately before
-      Android tries to move the page.
+      Immediately protect the page.
     */
 
     forcePagePosition();
 
     /*
-      Wait for the keyboard to appear.
+      Android needs a little time to open
+      the keyboard and update visualViewport.
     */
 
     setTimeout(() => {
+
       forcePagePosition();
       updateMobileChatPosition();
+
     }, 50);
 
+
     setTimeout(() => {
+
       forcePagePosition();
       updateMobileChatPosition();
+
     }, 150);
 
-    setTimeout(() => {
-      forcePagePosition();
-      updateMobileChatPosition();
-    }, 300);
 
     setTimeout(() => {
+
       forcePagePosition();
       updateMobileChatPosition();
+
+    }, 300);
+
+
+    setTimeout(() => {
+
+      forcePagePosition();
+      updateMobileChatPosition();
+
     }, 500);
 
   });
@@ -1400,10 +1396,6 @@ if (document.readyState === 'loading') {
 
   input.addEventListener('blur', function () {
 
-    /*
-      Give Android time to close the keyboard.
-    */
-
     setTimeout(() => {
 
       if (!pageIsLocked) return;
@@ -1411,7 +1403,7 @@ if (document.readyState === 'loading') {
       updateMobileChatPosition();
       forcePagePosition();
 
-    }, 100);
+    }, 150);
 
   });
 
@@ -1434,7 +1426,8 @@ if (document.readyState === 'loading') {
     }
 
     /*
-      textContent is safer than innerHTML for user messages.
+      textContent prevents user input
+      from being interpreted as HTML.
     */
 
     div.textContent = text;
@@ -1442,7 +1435,10 @@ if (document.readyState === 'loading') {
     messages.appendChild(div);
 
     requestAnimationFrame(() => {
-      messages.scrollTop = messages.scrollHeight;
+
+      messages.scrollTop =
+        messages.scrollHeight;
+
     });
 
     return div;
@@ -1455,12 +1451,12 @@ if (document.readyState === 'loading') {
 
   function removeMessage(id) {
 
-    const element = document.getElementById(id);
+    const element =
+      document.getElementById(id);
 
     if (element) {
       element.remove();
     }
-
   }
 
 
@@ -1470,16 +1466,19 @@ if (document.readyState === 'loading') {
 
   function sendMessage() {
 
-    const text = input.value.trim();
+    const text =
+      input.value.trim();
 
     if (!text) return;
 
-    addMessage(text, 'user');
+    addMessage(
+      text,
+      'user'
+    );
 
     input.value = '';
 
     processQuestion(text);
-
   }
 
 
@@ -1519,7 +1518,8 @@ if (document.readyState === 'loading') {
 
   function processQuestion(question) {
 
-    const thinkingId = 'jay-ai-thinking';
+    const thinkingId =
+      'jay-ai-thinking';
 
     addMessage(
       'Thinking...',
@@ -1528,18 +1528,26 @@ if (document.readyState === 'loading') {
     );
 
     const delay =
-      650 + Math.floor(Math.random() * 550);
+      650 +
+      Math.floor(
+        Math.random() * 550
+      );
 
     setTimeout(() => {
 
-      removeMessage(thinkingId);
+      removeMessage(
+        thinkingId
+      );
 
-      const reply = getReply(question);
+      const reply =
+        getReply(question);
 
-      addMessage(reply, 'bot');
+      addMessage(
+        reply,
+        'bot'
+      );
 
     }, delay);
-
   }
 
 
@@ -1549,10 +1557,15 @@ if (document.readyState === 'loading') {
 
   function getReply(question) {
 
-    const q = question.toLowerCase().trim();
+    const q =
+      question
+        .toLowerCase()
+        .trim();
 
 
-    /* GREETINGS */
+    /* -------------------------------------------------------
+       GREETINGS
+    ------------------------------------------------------- */
 
     if (
       /^(hi|hello|hey|good\s*(morning|afternoon|evening|day)|greetings|howdy|yo)\b/i.test(q) ||
@@ -1564,7 +1577,9 @@ if (document.readyState === 'loading') {
     }
 
 
-    /* WHO ARE YOU */
+    /* -------------------------------------------------------
+       WHO ARE YOU
+    ------------------------------------------------------- */
 
     if (
       /(who are you|what are you|who'?s this|what is this|are you a bot|are you ai|are you real)/i.test(q)
@@ -1575,7 +1590,9 @@ if (document.readyState === 'loading') {
     }
 
 
-    /* WHO IS JAY */
+    /* -------------------------------------------------------
+       WHO IS JAY
+    ------------------------------------------------------- */
 
     if (
       /(who is|who'?s|tell me about|about).*(jay|jaywebdev)/i.test(q) ||
@@ -1587,7 +1604,9 @@ if (document.readyState === 'loading') {
     }
 
 
-    /* WHAT DOES JAY DO */
+    /* -------------------------------------------------------
+       WHAT DOES JAY DO
+    ------------------------------------------------------- */
 
     if (
       /(what does|what is|what do you|tell me what).*(jay|jaywebdev|he do|he does)/i.test(q) ||
@@ -1599,7 +1618,9 @@ if (document.readyState === 'loading') {
     }
 
 
-    /* PROFESSIONAL */
+    /* -------------------------------------------------------
+       PROFESSIONAL
+    ------------------------------------------------------- */
 
     if (
       /(is jay|are you).*(developer|programmer|skilled|professional|good|experienced)/i.test(q)
@@ -1619,7 +1640,9 @@ if (document.readyState === 'loading') {
     }
 
 
-    /* PROJECTS */
+    /* -------------------------------------------------------
+       HOW MANY PROJECTS
+    ------------------------------------------------------- */
 
     if (
       /(how many|number of).*(project|client)/i.test(q)
@@ -1630,7 +1653,9 @@ if (document.readyState === 'loading') {
     }
 
 
-    /* WEBSITE */
+    /* -------------------------------------------------------
+       WEBSITE
+    ------------------------------------------------------- */
 
     if (
       /(build|make|create|develop).*(website|site|web page)/i.test(q) ||
@@ -1642,7 +1667,9 @@ if (document.readyState === 'loading') {
     }
 
 
-    /* APP */
+    /* -------------------------------------------------------
+       APP / MOBILE
+    ------------------------------------------------------- */
 
     if (
       /(build|make|create|develop).*(app|application|mobile)/i.test(q) ||
@@ -1654,7 +1681,9 @@ if (document.readyState === 'loading') {
     }
 
 
-    /* AI */
+    /* -------------------------------------------------------
+       AI
+    ------------------------------------------------------- */
 
     if (
       /(ai|artificial intelligence|chatgpt|llm|machine learning).*(build|make|create|integrate|add|system|app|application)/i.test(q) ||
@@ -1666,7 +1695,9 @@ if (document.readyState === 'loading') {
     }
 
 
-    /* PRICING */
+    /* -------------------------------------------------------
+       PRICING
+    ------------------------------------------------------- */
 
     if (
       /(how much|price|cost|pricing|quote|budget|charge)/i.test(q)
@@ -1677,7 +1708,9 @@ if (document.readyState === 'loading') {
     }
 
 
-    /* SKILLS */
+    /* -------------------------------------------------------
+       SKILLS
+    ------------------------------------------------------- */
 
     if (
       /(what can|skills|what.*(jay|he).*(do|build|offer)|capabilities)/i.test(q)
@@ -1688,7 +1721,9 @@ if (document.readyState === 'loading') {
     }
 
 
-    /* SERVICES */
+    /* -------------------------------------------------------
+       SERVICES
+    ------------------------------------------------------- */
 
     if (
       /(services|what.*(do you|does jay).*(offer|provide)|what services)/i.test(q)
@@ -1699,7 +1734,9 @@ if (document.readyState === 'loading') {
     }
 
 
-    /* APPOINTMENT */
+    /* -------------------------------------------------------
+       BOOK / APPOINTMENT
+    ------------------------------------------------------- */
 
     if (
       /(reserve|book|schedule|spot|slot|appointment|available time)/i.test(q)
@@ -1710,7 +1747,9 @@ if (document.readyState === 'loading') {
     }
 
 
-    /* EXISTING PROJECT */
+    /* -------------------------------------------------------
+       EXISTING PROJECT
+    ------------------------------------------------------- */
 
     if (
       /(existing|current|ongoing).*(project|website|app)/i.test(q) ||
@@ -1722,7 +1761,9 @@ if (document.readyState === 'loading') {
     }
 
 
-    /* FIX / DEBUG */
+    /* -------------------------------------------------------
+       FIX / DEBUG / UPDATE
+    ------------------------------------------------------- */
 
     if (
       /(fix|debug|improve|update|maintain|bug|error)/i.test(q)
@@ -1733,7 +1774,9 @@ if (document.readyState === 'loading') {
     }
 
 
-    /* PORTFOLIO */
+    /* -------------------------------------------------------
+       PROJECTS / PORTFOLIO
+    ------------------------------------------------------- */
 
     if (
       /(see|show|view|look).*(project|portfolio|work)/i.test(q) ||
@@ -1745,7 +1788,9 @@ if (document.readyState === 'loading') {
     }
 
 
-    /* TECHNOLOGIES */
+    /* -------------------------------------------------------
+       TECHNOLOGIES
+    ------------------------------------------------------- */
 
     if (
       /(technolog|stack|tools|languages|framework|what.*(tech|code|language))/i.test(q)
@@ -1756,7 +1801,9 @@ if (document.readyState === 'loading') {
     }
 
 
-    /* HELP */
+    /* -------------------------------------------------------
+       CAN JAY HELP
+    ------------------------------------------------------- */
 
     if (
       /(can.*(you|jay).*(help|assist)|do you help)/i.test(q)
@@ -1767,7 +1814,9 @@ if (document.readyState === 'loading') {
     }
 
 
-    /* HIRE */
+    /* -------------------------------------------------------
+       HIRE
+    ------------------------------------------------------- */
 
     if (
       /(hire|work with|need.*(developer|you|jay)|want.*(to work|you)|i want to hire)/i.test(q)
@@ -1778,7 +1827,9 @@ if (document.readyState === 'loading') {
     }
 
 
-    /* CONTACT */
+    /* -------------------------------------------------------
+       CONTACT
+    ------------------------------------------------------- */
 
     if (
       /(contact|reach|email|message|available|availability|free|how.*(contact|reach))/i.test(q)
@@ -1789,7 +1840,9 @@ if (document.readyState === 'loading') {
     }
 
 
-    /* BUSINESS */
+    /* -------------------------------------------------------
+       BUSINESS
+    ------------------------------------------------------- */
 
     if (
       /(business|company|startup|enterprise)/i.test(q)
@@ -1800,7 +1853,9 @@ if (document.readyState === 'loading') {
     }
 
 
-    /* RELATED */
+    /* -------------------------------------------------------
+       RELATED QUESTIONS
+    ------------------------------------------------------- */
 
     if (
       /(jay|webdev|developer|website|app|ai|software|project|code|build)/i.test(q)
@@ -1811,7 +1866,9 @@ if (document.readyState === 'loading') {
     }
 
 
-    /* DEFAULT */
+    /* -------------------------------------------------------
+       DEFAULT
+    ------------------------------------------------------- */
 
     return 'Please go to the Contact page and leave a message. Jay will be able to assist you there.';
 
@@ -1819,44 +1876,41 @@ if (document.readyState === 'loading') {
 
 
   /* =======================================================
-     VISUAL VIEWPORT
+     VISUAL VIEWPORT — KEYBOARD DETECTION
   ======================================================= */
 
   if (window.visualViewport) {
 
-    /*
-      Fires when Android keyboard opens/closes.
-    */
+    window.visualViewport.addEventListener(
+      'resize',
+      function () {
 
-    window.visualViewport.addEventListener('resize', () => {
+        if (!pageIsLocked) return;
 
-      if (!pageIsLocked) return;
+        updateMobileChatPosition();
 
-      updateMobileChatPosition();
+        forcePagePosition();
 
-      /*
-        Keep portfolio frozen.
-      */
-
-      forcePagePosition();
-
-    });
+      }
+    );
 
 
-    /*
-      Android can change viewport position while keyboard
-      is appearing.
-    */
+    window.visualViewport.addEventListener(
+      'scroll',
+      function () {
 
-    window.visualViewport.addEventListener('scroll', () => {
+        if (!pageIsLocked) return;
 
-      if (!pageIsLocked) return;
+        /*
+          Prevent the portfolio from moving.
+        */
 
-      forcePagePosition();
+        forcePagePosition();
 
-      updateMobileChatPosition();
+        updateMobileChatPosition();
 
-    });
+      }
+    );
 
   }
 
@@ -1865,15 +1919,18 @@ if (document.readyState === 'loading') {
      WINDOW RESIZE
   ======================================================= */
 
-  window.addEventListener('resize', () => {
+  window.addEventListener(
+    'resize',
+    function () {
 
-    if (!pageIsLocked) return;
+      if (!pageIsLocked) return;
 
-    updateMobileChatPosition();
+      updateMobileChatPosition();
 
-    forcePagePosition();
+      forcePagePosition();
 
-  });
+    }
+  );
 
 
   /* =======================================================
@@ -1887,21 +1944,25 @@ if (document.readyState === 'loading') {
       if (!pageIsLocked) return;
 
       /*
-        Allow scrolling inside AI messages.
+        Allow scrolling inside the messages area.
       */
 
       if (
-        event.target.closest('#jay-ai-messages')
+        event.target.closest(
+          '#jay-ai-messages'
+        )
       ) {
         return;
       }
 
       /*
-        Prevent portfolio from moving.
+        Everything outside the chat stays locked.
       */
 
       if (
-        !event.target.closest('#jay-ai-chat')
+        !event.target.closest(
+          '#jay-ai-chat'
+        )
       ) {
 
         event.preventDefault();
@@ -1925,18 +1986,18 @@ if (document.readyState === 'loading') {
 
       if (!pageIsLocked) return;
 
-      /*
-        Allow wheel scrolling inside messages.
-      */
-
       if (
-        event.target.closest('#jay-ai-messages')
+        event.target.closest(
+          '#jay-ai-messages'
+        )
       ) {
         return;
       }
 
       if (
-        !event.target.closest('#jay-ai-chat')
+        !event.target.closest(
+          '#jay-ai-chat'
+        )
       ) {
 
         event.preventDefault();
@@ -1954,17 +2015,26 @@ if (document.readyState === 'loading') {
      ESCAPE KEY
   ======================================================= */
 
-  document.addEventListener('keydown', function (event) {
+  document.addEventListener(
+    'keydown',
+    function (event) {
 
-    if (event.key === 'Escape') {
+      if (event.key === 'Escape') {
 
-      if (!chatBox.classList.contains('hidden')) {
-        closeChat();
+        if (
+          !chatBox.classList.contains(
+            'hidden'
+          )
+        ) {
+
+          closeChat();
+
+        }
+
       }
 
     }
-
-  });
+  );
 
 
   /* =======================================================
