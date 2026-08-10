@@ -448,6 +448,236 @@ nav a:hover {
     font-size: 1.1rem;
   }
 }
+/* ===== JayWebDev AI Assistant ===== */
+#jay-ai-widget {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  font-family: inherit;
+}
+
+#jay-ai-toggle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, background 0.2s;
+}
+
+#jay-ai-toggle:hover {
+  transform: scale(1.08);
+  background: black;
+}
+
+#jay-ai-chat {
+  position: absolute;
+  bottom: 75px;
+  right: 0;
+
+  /* Expanded desktop size */
+  width: 420px;
+  max-width: calc(100vw - 32px);
+  height: 400px;
+
+  background: #030303;
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  border: 1px solid #2a2a2a;
+  box-sizing: border-box;
+}
+
+#jay-ai-chat.hidden {
+  display: none;
+}
+
+.jay-ai-header {
+  background: #000000;
+  color: white;
+  padding: 16px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.jay-ai-header strong {
+  display: block;
+  font-size: 15px;
+}
+
+.jay-ai-header span {
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+#jay-ai-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 26px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 4px;
+}
+
+#jay-ai-messages {
+  flex: 1;
+  min-height: 0;
+  padding: 18px;
+  overflow-y: auto;
+  background: #0a0a0a;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.jay-ai-bot,
+.jay-ai-user {
+  max-width: 85%;
+  padding: 11px 15px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.jay-ai-bot {
+  background: black;
+  color: white;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+
+.jay-ai-user {
+  background: #313131;
+  color: white;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+
+.jay-ai-input-area {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+
+  padding: 12px;
+  border-top: 1px solid #2a2a2a;
+  background: #070707;
+  gap: 8px;
+  box-sizing: border-box;
+}
+
+#jay-ai-input {
+  flex: 1;
+  min-width: 0;
+  height: 42px;
+  box-sizing: border-box;
+
+  border: 1px solid #3a3a3a;
+  border-radius: 10px;
+  padding: 10px 14px;
+
+  font-size: 14px;
+  outline: none;
+
+  background: #111;
+  color: white;
+}
+
+#jay-ai-input::placeholder {
+  color: #888;
+}
+
+#jay-ai-input:focus {
+  border-color: #666;
+}
+
+#jay-ai-send {
+  flex: 0 0 70px;
+  width: 70px;
+  min-width: 70px;
+  max-width: 70px;
+
+  height: 42px;
+  box-sizing: border-box;
+
+  background: #f8f7f7;
+  color: black;
+
+  border: none;
+  border-radius: 10px;
+  padding: 0 10px;
+
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#jay-ai-send:hover {
+  background: #dcdcdc;
+}
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 480px) {
+  #jay-ai-chat {
+    position: fixed;
+
+    width: calc(100vw - 16px);
+    max-width: calc(100vw - 16px);
+
+    height: 72vh;
+    max-height: calc(100vh - 100px);
+
+    bottom: 72px;
+    left: 8px;
+    right: 8px;
+
+    border-radius: 16px;
+    z-index: 99999;
+  }
+
+  #jay-ai-input-area {
+    width: 100%;
+  }
+}
+
+@media (max-width: 360px) {
+  #jay-ai-chat {
+    width: calc(100vw - 12px);
+    max-width: calc(100vw - 12px);
+
+    height: 74vh;
+    max-height: calc(100vh - 90px);
+
+    bottom: 64px;
+    left: 6px;
+    right: 6px;
+  }
+
+  #jay-ai-send {
+    flex: 0 0 64px;
+    width: 64px;
+    min-width: 64px;
+    max-width: 64px;
+    padding: 0 6px;
+  }
+}
 </style>
 </head>
 
@@ -494,39 +724,278 @@ nav a:hover {
   <a href="https://linktr.ee/Jaythewebdev" class="social-linktree" target="_blank" rel="noopener"><i class="fas fa-link"></i></a>
 </div>
 
+<!-- JayWebDev AI Assistant -->
+<div id="jay-ai-widget">
+  <button id="jay-ai-toggle" aria-label="Open AI Assistant">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+    </svg>
+  </button>
 
+  <div id="jay-ai-chat" class="hidden">
+    <div class="jay-ai-header">
+      <div>
+        <strong>JayWebDev Assistant</strong>
+        <span>Online</span>
+      </div>
+      <button id="jay-ai-close">×</button>
+    </div>
+
+    <div id="jay-ai-messages">
+      <div class="jay-ai-bot">
+        Hi! I'm the official AI assistant for JayWebDev.<br>
+        Ask me about services, skills, projects, or how to hire Jay.
+      </div>
+    </div>
+
+    <div class="jay-ai-input-area">
+      <input type="text" id="jay-ai-input" placeholder="Type your question..." autocomplete="off">
+      <button id="jay-ai-send">Send</button>
+    </div>
+  </div>
+</div>
 
     </div>
   </section>
 
   <!-- Typing Effect Script -->
-  <script>
-    const menuBtn = document.querySelector('.menu-btn');
-const nav = document.querySelector('nav');
+<script>
+  // ===== Mobile Menu =====
+  const menuBtn = document.querySelector('.menu-btn');
+  const nav = document.querySelector('nav');
 
-menuBtn.addEventListener('click', () => {
-  nav.classList.toggle('active');
-});
-    const text = "Web developer/app developer and Ai intern";
-    let index = 0;
+  menuBtn.addEventListener('click', () => {
+    nav.classList.toggle('active');
+  });
 
-    function typeEffect() {
-      const target = document.querySelector('.hero-text p');
-      // Do NOT clear text here — no flicker or delay
+  // ===== Typing Effect =====
+  const text = "Web developer/app developer and Ai intern";
+  let index = 0;
 
-      const interval = setInterval(() => {
-        if (index < text.length) {
-          target.textContent += text.charAt(index);
-          index++;
-        } else {
-          clearInterval(interval);
-        }
-      }, 100);
+  function typeEffect() {
+    const target = document.querySelector('.hero-text p');
+
+    const interval = setInterval(() => {
+      if (index < text.length) {
+        target.textContent += text.charAt(index);
+        index++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 100);
+  }
+
+  document.addEventListener("DOMContentLoaded", typeEffect);
+
+  // ===== JayWebDev AI Assistant =====
+  (function () {
+    const toggleBtn = document.getElementById('jay-ai-toggle');
+    const chatBox = document.getElementById('jay-ai-chat');
+    const closeBtn = document.getElementById('jay-ai-close');
+    const messages = document.getElementById('jay-ai-messages');
+    const input = document.getElementById('jay-ai-input');
+    const sendBtn = document.getElementById('jay-ai-send');
+
+    if (!toggleBtn || !chatBox) return;
+
+    // Toggle chat
+    toggleBtn.addEventListener('click', () => {
+      chatBox.classList.toggle('hidden');
+      if (!chatBox.classList.contains('hidden')) {
+        input.focus();
+      }
+    });
+
+    closeBtn.addEventListener('click', () => {
+      chatBox.classList.add('hidden');
+    });
+
+    // Send message
+    function sendMessage() {
+      const text = input.value.trim();
+      if (!text) return;
+
+      addMessage(text, 'user');
+      input.value = '';
+
+      setTimeout(() => {
+        const reply = getReply(text);
+        addMessage(reply, 'bot');
+      }, 450);
     }
 
-    document.addEventListener("DOMContentLoaded", typeEffect);
-  </script>
+    sendBtn.addEventListener('click', sendMessage);
+    input.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') sendMessage();
+    });
 
+    function addMessage(text, type, id) {
+      const div = document.createElement('div');
+      div.className = type === 'user' ? 'jay-ai-user' : 'jay-ai-bot';
+      if (id) div.id = id;
+      div.innerHTML = text;
+      messages.appendChild(div);
+      messages.scrollTop = messages.scrollHeight;
+      return div;
+    }
+
+    function removeMessage(id) {
+      const el = document.getElementById(id);
+      if (el) el.remove();
+    }
+
+    function sendMessage() {
+      const text = input.value.trim();
+      if (!text) return;
+
+      addMessage(text, 'user');
+      input.value = '';
+      input.blur();
+
+      processQuestion(text);
+    }
+
+    function processQuestion(question) {
+      const thinkingId = 'jay-ai-thinking';
+      addMessage('Thinking...', 'bot', thinkingId);
+
+      const delay = 650 + Math.floor(Math.random() * 550);
+      setTimeout(() => {
+        removeMessage(thinkingId);
+        const reply = getReply(question);
+        addMessage(reply, 'bot');
+      }, delay);
+    }
+
+    function getReply(question) {
+      const q = question.toLowerCase().trim();
+
+      // ——— Greetings ———
+      if (/^(hi|hello|hey|good\s*(morning|afternoon|evening|day)|greetings|howdy|yo)\b/i.test(q) ||
+          /^(hi|hello|hey)\s+(there|jay|assistant)?[!?.]*$/i.test(q)) {
+        return 'Good day! How can I help you?';
+      }
+
+      // ——— Who are you / What are you ———
+      if (/(who are you|what are you|who'?s this|what is this|are you a bot|are you ai|are you real)/i.test(q)) {
+        return 'I am the official AI assistant for JayWebDev. I can answer questions about Jay’s skills, services, and projects.';
+      }
+
+      // ——— Who is Jay ———
+      if (/(who is|who'?s|tell me about|about).*(jay|jaywebdev)/i.test(q) ||
+          /^(who is jay|who'?s jay|about jay)/i.test(q)) {
+        return 'Jay is a professional web, app, and AI developer. He builds websites, web applications, mobile apps, custom software, and AI-powered solutions.';
+      }
+
+      // ——— What does Jay do ———
+      if (/(what does|what is|what do you|tell me what).*(jay|jaywebdev|he do|he does)/i.test(q) ||
+          /what.*(jay|he).*(do|does|offer)/i.test(q)) {
+        return 'Jay works with HTML, CSS, JavaScript, React, Next.js, PHP, MySQL, and Python. He builds websites, web apps, applications, software, and AI-powered solutions.';
+      }
+
+      // ——— Is Jay a developer / skilled ———
+      if (/(is jay|are you).*(developer|programmer|skilled|professional|good|experienced)/i.test(q)) {
+        return 'Yes. Jay is a professional developer who builds modern websites, applications, software, and AI-powered solutions.';
+      }
+
+      // ——— Can you reserve a spot / book / schedule ———
+      if (/(reserve|book|schedule|spot|slot|appointment|available time)/i.test(q)) {
+        return 'I can’t reserve a spot directly, but you can contact Jay on the Contact page with your project details and he will get back to you.';
+      }
+
+      // ——— Website ———
+      if (/(build|make|create|develop).*(website|site|web page)/i.test(q) ||
+          /can.*(you|jay).*(build|make).*(website|site)/i.test(q)) {
+        return 'Yes, Jay can build your website. Please contact him privately with your requirements to discuss the project and pricing.';
+      }
+
+      // ——— App / Mobile ———
+      if (/(build|make|create|develop).*(app|application|mobile)/i.test(q) ||
+          /can.*(you|jay).*(build|make).*(app|application)/i.test(q)) {
+        return 'Yes, Jay can build applications. Contact him privately with your requirements to discuss the project and pricing.';
+      }
+
+      // ——— AI ———
+      if (/(ai|artificial intelligence|chatgpt|llm|machine learning).*(build|make|create|integrate|add|system|app|application)/i.test(q) ||
+          /can.*(you|jay).*(build|make|add).*(ai|artificial intelligence)/i.test(q)) {
+        return 'Yes, Jay can build AI-powered applications and integrate AI into existing projects. Contact him privately to discuss your requirements and pricing.';
+      }
+
+      // ——— Pricing ———
+      if (/(how much|price|cost|pricing|quote|budget|charge)/i.test(q)) {
+        return 'Pricing depends on the project requirements. Please contact Jay privately to discuss your project and get a suitable quote.';
+      }
+
+      // ——— Skills / What can Jay do ———
+      if (/(what can|skills|what.*(jay|he).*(do|build|offer)|capabilities)/i.test(q)) {
+        return 'Jay works with HTML, CSS, JavaScript, React, Next.js, PHP, MySQL, and Python. He builds websites, web apps, applications, software, and AI-powered solutions.';
+      }
+
+      // ——— Services ———
+      if (/(services|what.*(do you|does jay).*(offer|provide)|what services)/i.test(q)) {
+        return 'Jay offers website development, web apps, app development, custom software, AI solutions, frontend, backend, full-stack development, and database integration.';
+      }
+
+      // ——— Professional / experienced ———
+      if (/(professional|good|skilled|experienced|expert|reliable)/i.test(q)) {
+        return 'Yes. Jay is a professional developer who builds modern websites, applications, software, and AI-powered solutions.';
+      }
+
+      // ——— How many projects ———
+      if (/(how many|number of).*(project|client)/i.test(q)) {
+        return 'Jay has handled a lot of projects, but many of them are not displayed here due to client confidentiality.';
+      }
+
+      // ——— Projects / Portfolio ———
+      if (/(see|show|view|look).*(project|portfolio|work)/i.test(q) || /(projects|portfolio)/i.test(q)) {
+        return 'Please check the projects / portfolio section of the website. Some projects are not displayed due to client confidentiality.';
+      }
+
+      // ——— Technologies ———
+      if (/(technolog|stack|tools|languages|framework|what.*(tech|code|language))/i.test(q)) {
+        return 'Jay works with HTML, CSS, JavaScript, React, Next.js, PHP, MySQL, and Python.';
+      }
+
+      // ——— Can Jay help me ———
+      if (/(can.*(you|jay).*(help|assist)|do you help)/i.test(q)) {
+        return 'Yes, Jay can help with websites, web apps, mobile apps, custom software, and AI solutions. Please contact him with your project details.';
+      }
+
+      // ——— Hire ———
+      if (/(hire|work with|need.*(developer|you|jay)|want.*(to work|you to)|i want to hire)/i.test(q)) {
+        return 'Sure. Please go to the Contact page and leave a message with your project details.';
+      }
+
+      // ——— Contact / Availability ———
+      if (/(contact|reach|email|message|available|availability|free|how.*(contact|reach))/i.test(q)) {
+        return 'Please go to the Contact page and leave a message with your requirements.';
+      }
+
+      // ——— Existing project ———
+      if (/(existing|current|ongoing).*(project|website|app)/i.test(q) || /work on.*(existing|my)/i.test(q)) {
+        return 'Yes, Jay can work on existing projects depending on the requirements. Please contact him with the project details.';
+      }
+
+      // ——— Fix / Debug ———
+      if (/(fix|debug|improve|update|maintain|bug|error)/i.test(q)) {
+        return 'Yes, Jay can help with fixing and improving existing projects. Please contact him with the details.';
+      }
+
+      // ——— Businesses ———
+      if (/(business|company|startup|enterprise)/i.test(q)) {
+        return 'Yes. Jay can build digital solutions for businesses, including websites, apps, software, and AI-powered solutions.';
+      }
+
+      // ——— Fallback for related questions ———
+      if (/(jay|webdev|developer|website|app|ai|software|project|code|build)/i.test(q)) {
+        return 'Jay is a web, app, and AI developer who builds modern digital solutions. For specific project details, please go to the Contact page.';
+      }
+
+      // ——— Completely unrelated ———
+      return 'Please go to the Contact page and leave a message. Jay will be able to assist you there.';
+    }
+  })();
+</script>
 
 </body>
 </html>
