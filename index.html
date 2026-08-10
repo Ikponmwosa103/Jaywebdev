@@ -977,9 +977,9 @@ const menuBtn = document.querySelector('.menu-btn');
 const nav = document.querySelector('nav');
 
 if (menuBtn && nav) {
-    menuBtn.addEventListener('click', () => {
-        nav.classList.toggle('active');
-    });
+  menuBtn.addEventListener('click', () => {
+    nav.classList.toggle('active');
+  });
 }
 
 
@@ -989,35 +989,29 @@ if (menuBtn && nav) {
 
 const typingText = "Web developer/app developer and Ai intern";
 let typingIndex = 0;
-let typingInterval = null;
 
 function typeEffect() {
-    const target = document.querySelector('.hero-text p');
+  const target = document.querySelector('.hero-text p');
 
-    if (!target) return;
+  if (!target) return;
 
-    target.textContent = '';
-    typingIndex = 0;
+  target.textContent = '';
+  typingIndex = 0;
 
-    if (typingInterval) {
-        clearInterval(typingInterval);
+  const interval = setInterval(() => {
+    if (typingIndex < typingText.length) {
+      target.textContent += typingText.charAt(typingIndex);
+      typingIndex++;
+    } else {
+      clearInterval(interval);
     }
-
-    typingInterval = setInterval(() => {
-        if (typingIndex < typingText.length) {
-            target.textContent += typingText.charAt(typingIndex);
-            typingIndex++;
-        } else {
-            clearInterval(typingInterval);
-            typingInterval = null;
-        }
-    }, 100);
+  }, 100);
 }
 
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', typeEffect);
+  document.addEventListener('DOMContentLoaded', typeEffect);
 } else {
-    typeEffect();
+  typeEffect();
 }
 
 
@@ -1027,837 +1021,957 @@ if (document.readyState === 'loading') {
 
 (function () {
 
-    const toggleBtn = document.getElementById('jay-ai-toggle');
-    const chatBox = document.getElementById('jay-ai-chat');
-    const closeBtn = document.getElementById('jay-ai-close');
-    const messages = document.getElementById('jay-ai-messages');
-    const input = document.getElementById('jay-ai-input');
-    const sendBtn = document.getElementById('jay-ai-send');
+  const toggleBtn = document.getElementById('jay-ai-toggle');
+  const chatBox = document.getElementById('jay-ai-chat');
+  const closeBtn = document.getElementById('jay-ai-close');
+  const messages = document.getElementById('jay-ai-messages');
+  const input = document.getElementById('jay-ai-input');
+  const sendBtn = document.getElementById('jay-ai-send');
+
+  if (
+    !toggleBtn ||
+    !chatBox ||
+    !closeBtn ||
+    !messages ||
+    !input ||
+    !sendBtn
+  ) {
+    return;
+  }
+
+
+  /* =======================================================
+     VARIABLES
+  ======================================================= */
+
+  let savedScrollPosition = 0;
+  let pageIsLocked = false;
+  let keyboardIsOpen = false;
+
+  const isMobile = () => {
+    return window.matchMedia('(max-width: 768px)').matches;
+  };
+
+
+  /* =======================================================
+     PAGE LOCK
+  ======================================================= */
+
+  function lockPage() {
+
+    if (pageIsLocked) return;
+
+    savedScrollPosition = window.scrollY;
+
+    document.body.dataset.aiScrollPosition = savedScrollPosition;
+
+    /*
+      IMPORTANT:
+      Fixed body prevents the portfolio from moving when
+      Android opens the keyboard.
+    */
+
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${savedScrollPosition}px`;
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
+
+    document.documentElement.style.overflow = 'hidden';
+
+    pageIsLocked = true;
+  }
+
+
+  /* =======================================================
+     FORCE PAGE BACK TO ORIGINAL POSITION
+  ======================================================= */
+
+  function forcePagePosition() {
+
+    if (!pageIsLocked) return;
+
+    document.body.style.top = `-${savedScrollPosition}px`;
+
+    /*
+      Do NOT call window.scrollTo() continuously.
+      Android can fight against it when the keyboard is open.
+    */
+  }
+
+
+  /* =======================================================
+     UNLOCK PAGE
+  ======================================================= */
+
+  function unlockPage() {
+
+    if (!pageIsLocked) return;
+
+    keyboardIsOpen = false;
+
+    /*
+      Blur input first.
+    */
+
+    if (document.activeElement === input) {
+      input.blur();
+    }
+
+    /*
+      Remove mobile positioning from chat.
+    */
+
+    chatBox.style.position = '';
+    chatBox.style.top = '';
+    chatBox.style.bottom = '';
+    chatBox.style.left = '';
+    chatBox.style.right = '';
+    chatBox.style.width = '';
+    chatBox.style.height = '';
+    chatBox.style.maxHeight = '';
+
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    document.body.style.width = '';
+    document.body.style.overflow = '';
+
+    document.documentElement.style.overflow = '';
+
+    /*
+      Restore exact page position.
+    */
+
+    requestAnimationFrame(() => {
+      window.scrollTo(0, savedScrollPosition);
+    });
+
+    pageIsLocked = false;
+  }
+
+
+  /* =======================================================
+     CALCULATE MOBILE CHAT POSITION
+  ======================================================= */
+
+  function updateMobileChatPosition() {
+
+    if (!pageIsLocked || !isMobile()) return;
+
+    const viewport = window.visualViewport;
+
+    if (!viewport) return;
+
+    const viewportHeight = viewport.height;
+    const viewportTop = viewport.offsetTop;
+
+    const screenHeight = window.innerHeight;
+
+    /*
+      Difference between the normal screen and the
+      currently visible viewport.
+
+      When keyboard opens this becomes large.
+    */
+
+    const keyboardHeight =
+      Math.max(0, screenHeight - viewportHeight - viewportTop);
+
+    /*
+      Keyboard detection.
+    */
+
+    keyboardIsOpen = keyboardHeight > 100;
+
+
+    /* =====================================================
+       KEYBOARD OPEN
+    ===================================================== */
+
+    if (keyboardIsOpen) {
+
+      /*
+        Keep the portfolio itself completely fixed.
+
+        Only the AI window is repositioned.
+      */
+
+      forcePagePosition();
+
+      /*
+        Position the AI chat so its bottom is immediately
+        above the keyboard.
+
+        6px gives a tiny breathing space.
+      */
+
+      chatBox.style.position = 'fixed';
+
+      chatBox.style.left = '8px';
+      chatBox.style.right = '8px';
+
+      chatBox.style.width = 'calc(100vw - 16px)';
+
+      chatBox.style.bottom = `${keyboardHeight + 6}px`;
+
+      /*
+        The chat fills the available visible space.
+
+        Minimum height prevents it becoming too tiny.
+      */
+
+      const availableHeight =
+        viewportHeight - keyboardHeight - 12;
+
+      chatBox.style.height =
+        `${Math.max(180, availableHeight)}px`;
+
+      chatBox.style.maxHeight =
+        `${Math.max(180, availableHeight)}px`;
+
+      /*
+        Keep the page at the original position.
+      */
+
+      document.body.style.top =
+        `-${savedScrollPosition}px`;
+
+    }
+
+
+    /* =====================================================
+       KEYBOARD CLOSED
+    ===================================================== */
+
+    else {
+
+      /*
+        Return chat to its normal CSS position.
+      */
+
+      chatBox.style.position = '';
+      chatBox.style.top = '';
+      chatBox.style.bottom = '';
+      chatBox.style.left = '';
+      chatBox.style.right = '';
+      chatBox.style.width = '';
+      chatBox.style.height = '';
+      chatBox.style.maxHeight = '';
+
+      forcePagePosition();
+    }
+  }
+
+
+  /* =======================================================
+     OPEN CHAT
+  ======================================================= */
+
+  function openChat() {
+
+    /*
+      Lock the portfolio BEFORE displaying the chat.
+      This prevents the page from jumping.
+    */
+
+    lockPage();
+
+    chatBox.classList.remove('hidden');
+
+    /*
+      Do NOT focus input automatically.
+    */
+
+    requestAnimationFrame(() => {
+
+      forcePagePosition();
+
+      messages.scrollTop = messages.scrollHeight;
+
+      /*
+        On mobile, allow the browser one frame to settle.
+      */
+
+      setTimeout(() => {
+        forcePagePosition();
+        updateMobileChatPosition();
+      }, 50);
+
+    });
+  }
+
+
+  /* =======================================================
+     CLOSE CHAT
+  ======================================================= */
+
+  function closeChat() {
+
+    if (document.activeElement === input) {
+      input.blur();
+    }
+
+    keyboardIsOpen = false;
+
+    chatBox.classList.add('hidden');
+
+    unlockPage();
+  }
+
+
+  /* =======================================================
+     TOGGLE BUTTON
+  ======================================================= */
+
+  toggleBtn.addEventListener('click', function (event) {
+
+    event.preventDefault();
+
+    if (chatBox.classList.contains('hidden')) {
+      openChat();
+    } else {
+      closeChat();
+    }
+
+  });
+
+
+  /* =======================================================
+     CLOSE BUTTON
+  ======================================================= */
+
+  closeBtn.addEventListener('click', function (event) {
+
+    event.preventDefault();
+
+    closeChat();
+
+  });
+
+
+  /* =======================================================
+     INPUT FOCUS
+  ======================================================= */
+
+  input.addEventListener('focus', function () {
+
+    if (!pageIsLocked) return;
+
+    /*
+      Save the page position again immediately before
+      Android tries to move the page.
+    */
+
+    forcePagePosition();
+
+    /*
+      Wait for the keyboard to appear.
+    */
+
+    setTimeout(() => {
+      forcePagePosition();
+      updateMobileChatPosition();
+    }, 50);
+
+    setTimeout(() => {
+      forcePagePosition();
+      updateMobileChatPosition();
+    }, 150);
+
+    setTimeout(() => {
+      forcePagePosition();
+      updateMobileChatPosition();
+    }, 300);
+
+    setTimeout(() => {
+      forcePagePosition();
+      updateMobileChatPosition();
+    }, 500);
+
+  });
+
+
+  /* =======================================================
+     INPUT BLUR
+  ======================================================= */
+
+  input.addEventListener('blur', function () {
+
+    /*
+      Give Android time to close the keyboard.
+    */
+
+    setTimeout(() => {
+
+      if (!pageIsLocked) return;
+
+      updateMobileChatPosition();
+      forcePagePosition();
+
+    }, 100);
+
+  });
+
+
+  /* =======================================================
+     ADD MESSAGE
+  ======================================================= */
+
+  function addMessage(text, type, id) {
+
+    const div = document.createElement('div');
+
+    div.className =
+      type === 'user'
+        ? 'jay-ai-user'
+        : 'jay-ai-bot';
+
+    if (id) {
+      div.id = id;
+    }
+
+    /*
+      textContent is safer than innerHTML for user messages.
+    */
+
+    div.textContent = text;
+
+    messages.appendChild(div);
+
+    requestAnimationFrame(() => {
+      messages.scrollTop = messages.scrollHeight;
+    });
+
+    return div;
+  }
+
+
+  /* =======================================================
+     REMOVE MESSAGE
+  ======================================================= */
+
+  function removeMessage(id) {
+
+    const element = document.getElementById(id);
+
+    if (element) {
+      element.remove();
+    }
+
+  }
+
+
+  /* =======================================================
+     SEND MESSAGE
+  ======================================================= */
+
+  function sendMessage() {
+
+    const text = input.value.trim();
+
+    if (!text) return;
+
+    addMessage(text, 'user');
+
+    input.value = '';
+
+    processQuestion(text);
+
+  }
+
+
+  /* =======================================================
+     SEND BUTTON
+  ======================================================= */
+
+  sendBtn.addEventListener('click', function (event) {
+
+    event.preventDefault();
+
+    sendMessage();
+
+  });
+
+
+  /* =======================================================
+     ENTER KEY
+  ======================================================= */
+
+  input.addEventListener('keydown', function (event) {
+
+    if (event.key === 'Enter') {
+
+      event.preventDefault();
+
+      sendMessage();
+
+    }
+
+  });
+
+
+  /* =======================================================
+     PROCESS QUESTION
+  ======================================================= */
+
+  function processQuestion(question) {
+
+    const thinkingId = 'jay-ai-thinking';
+
+    addMessage(
+      'Thinking...',
+      'bot',
+      thinkingId
+    );
+
+    const delay =
+      650 + Math.floor(Math.random() * 550);
+
+    setTimeout(() => {
+
+      removeMessage(thinkingId);
+
+      const reply = getReply(question);
+
+      addMessage(reply, 'bot');
+
+    }, delay);
+
+  }
+
+
+  /* =======================================================
+     AI RESPONSES
+  ======================================================= */
+
+  function getReply(question) {
+
+    const q = question.toLowerCase().trim();
+
+
+    /* GREETINGS */
 
     if (
-        !toggleBtn ||
-        !chatBox ||
-        !closeBtn ||
-        !messages ||
-        !input ||
-        !sendBtn
+      /^(hi|hello|hey|good\s*(morning|afternoon|evening|day)|greetings|howdy|yo)\b/i.test(q) ||
+      /^(hi|hello|hey)\s+(there|jay|assistant)?[!?.]*$/i.test(q)
     ) {
+
+      return 'Good day! How can I help you?';
+
+    }
+
+
+    /* WHO ARE YOU */
+
+    if (
+      /(who are you|what are you|who'?s this|what is this|are you a bot|are you ai|are you real)/i.test(q)
+    ) {
+
+      return 'I am the official AI assistant for JayWebDev. I can answer questions about Jay’s skills, services, and projects.';
+
+    }
+
+
+    /* WHO IS JAY */
+
+    if (
+      /(who is|who'?s|tell me about|about).*(jay|jaywebdev)/i.test(q) ||
+      /^(who is jay|who'?s jay|about jay)/i.test(q)
+    ) {
+
+      return 'Jay is a professional web, app, and AI developer. He builds websites, web applications, mobile apps, custom software, and AI-powered solutions.';
+
+    }
+
+
+    /* WHAT DOES JAY DO */
+
+    if (
+      /(what does|what is|what do you|tell me what).*(jay|jaywebdev|he do|he does)/i.test(q) ||
+      /what.*(jay|he).*(do|does|offer)/i.test(q)
+    ) {
+
+      return 'Jay works with HTML, CSS, JavaScript, React, Next.js, PHP, MySQL, and Python. He builds websites, web apps, applications, software, and AI-powered solutions.';
+
+    }
+
+
+    /* PROFESSIONAL */
+
+    if (
+      /(is jay|are you).*(developer|programmer|skilled|professional|good|experienced)/i.test(q)
+    ) {
+
+      return 'Yes. Jay is a professional developer who builds modern websites, applications, software, and AI-powered solutions.';
+
+    }
+
+
+    if (
+      /(professional|good|skilled|experienced|expert|reliable)/i.test(q)
+    ) {
+
+      return 'Yes. Jay is a professional developer who builds modern websites, applications, software, and AI-powered solutions.';
+
+    }
+
+
+    /* PROJECTS */
+
+    if (
+      /(how many|number of).*(project|client)/i.test(q)
+    ) {
+
+      return 'Jay has handled a lot of projects, but many of them are not displayed here due to client confidentiality.';
+
+    }
+
+
+    /* WEBSITE */
+
+    if (
+      /(build|make|create|develop).*(website|site|web page)/i.test(q) ||
+      /can.*(you|jay).*(build|make).*(website|site)/i.test(q)
+    ) {
+
+      return 'Yes, Jay can build your website. Please contact him privately with your requirements to discuss the project and pricing.';
+
+    }
+
+
+    /* APP */
+
+    if (
+      /(build|make|create|develop).*(app|application|mobile)/i.test(q) ||
+      /can.*(you|jay).*(build|make).*(app|application)/i.test(q)
+    ) {
+
+      return 'Yes, Jay can build applications. Contact him privately with your requirements to discuss the project and pricing.';
+
+    }
+
+
+    /* AI */
+
+    if (
+      /(ai|artificial intelligence|chatgpt|llm|machine learning).*(build|make|create|integrate|add|system|app|application)/i.test(q) ||
+      /can.*(you|jay).*(build|make|add).*(ai|artificial intelligence)/i.test(q)
+    ) {
+
+      return 'Yes, Jay can build AI-powered applications and integrate AI into existing projects. Contact him privately to discuss your requirements and pricing.';
+
+    }
+
+
+    /* PRICING */
+
+    if (
+      /(how much|price|cost|pricing|quote|budget|charge)/i.test(q)
+    ) {
+
+      return 'Pricing depends on the project requirements. Please contact Jay privately to discuss your project and get a suitable quote.';
+
+    }
+
+
+    /* SKILLS */
+
+    if (
+      /(what can|skills|what.*(jay|he).*(do|build|offer)|capabilities)/i.test(q)
+    ) {
+
+      return 'Jay works with HTML, CSS, JavaScript, React, Next.js, PHP, MySQL, and Python. He builds websites, web apps, applications, software, and AI-powered solutions.';
+
+    }
+
+
+    /* SERVICES */
+
+    if (
+      /(services|what.*(do you|does jay).*(offer|provide)|what services)/i.test(q)
+    ) {
+
+      return 'Jay offers website development, web apps, app development, custom software, AI solutions, frontend, backend, full-stack development, and database integration.';
+
+    }
+
+
+    /* APPOINTMENT */
+
+    if (
+      /(reserve|book|schedule|spot|slot|appointment|available time)/i.test(q)
+    ) {
+
+      return 'I can’t reserve a spot directly, but you can contact Jay on the Contact page with your project details and he will get back to you.';
+
+    }
+
+
+    /* EXISTING PROJECT */
+
+    if (
+      /(existing|current|ongoing).*(project|website|app)/i.test(q) ||
+      /work on.*(existing|my)/i.test(q)
+    ) {
+
+      return 'Yes, Jay can work on existing projects depending on the requirements. Please contact him with the project details.';
+
+    }
+
+
+    /* FIX / DEBUG */
+
+    if (
+      /(fix|debug|improve|update|maintain|bug|error)/i.test(q)
+    ) {
+
+      return 'Yes, Jay can help with fixing and improving existing projects. Please contact him with the details.';
+
+    }
+
+
+    /* PORTFOLIO */
+
+    if (
+      /(see|show|view|look).*(project|portfolio|work)/i.test(q) ||
+      /(projects|portfolio)/i.test(q)
+    ) {
+
+      return 'Please check the projects / portfolio section of the website. Some projects are not displayed due to client confidentiality.';
+
+    }
+
+
+    /* TECHNOLOGIES */
+
+    if (
+      /(technolog|stack|tools|languages|framework|what.*(tech|code|language))/i.test(q)
+    ) {
+
+      return 'Jay works with HTML, CSS, JavaScript, React, Next.js, PHP, MySQL, and Python.';
+
+    }
+
+
+    /* HELP */
+
+    if (
+      /(can.*(you|jay).*(help|assist)|do you help)/i.test(q)
+    ) {
+
+      return 'Yes, Jay can help with websites, web apps, mobile apps, custom software, and AI solutions. Please contact him with your project details.';
+
+    }
+
+
+    /* HIRE */
+
+    if (
+      /(hire|work with|need.*(developer|you|jay)|want.*(to work|you)|i want to hire)/i.test(q)
+    ) {
+
+      return 'Sure. Please go to the Contact page and leave a message with your project details.';
+
+    }
+
+
+    /* CONTACT */
+
+    if (
+      /(contact|reach|email|message|available|availability|free|how.*(contact|reach))/i.test(q)
+    ) {
+
+      return 'Please go to the Contact page and leave a message with your requirements.';
+
+    }
+
+
+    /* BUSINESS */
+
+    if (
+      /(business|company|startup|enterprise)/i.test(q)
+    ) {
+
+      return 'Yes. Jay can build digital solutions for businesses, including websites, apps, software, and AI-powered solutions.';
+
+    }
+
+
+    /* RELATED */
+
+    if (
+      /(jay|webdev|developer|website|app|ai|software|project|code|build)/i.test(q)
+    ) {
+
+      return 'Jay is a web, app, and AI developer who builds modern digital solutions. For specific project details, please go to the Contact page.';
+
+    }
+
+
+    /* DEFAULT */
+
+    return 'Please go to the Contact page and leave a message. Jay will be able to assist you there.';
+
+  }
+
+
+  /* =======================================================
+     VISUAL VIEWPORT
+  ======================================================= */
+
+  if (window.visualViewport) {
+
+    /*
+      Fires when Android keyboard opens/closes.
+    */
+
+    window.visualViewport.addEventListener('resize', () => {
+
+      if (!pageIsLocked) return;
+
+      updateMobileChatPosition();
+
+      /*
+        Keep portfolio frozen.
+      */
+
+      forcePagePosition();
+
+    });
+
+
+    /*
+      Android can change viewport position while keyboard
+      is appearing.
+    */
+
+    window.visualViewport.addEventListener('scroll', () => {
+
+      if (!pageIsLocked) return;
+
+      forcePagePosition();
+
+      updateMobileChatPosition();
+
+    });
+
+  }
+
+
+  /* =======================================================
+     WINDOW RESIZE
+  ======================================================= */
+
+  window.addEventListener('resize', () => {
+
+    if (!pageIsLocked) return;
+
+    updateMobileChatPosition();
+
+    forcePagePosition();
+
+  });
+
+
+  /* =======================================================
+     PREVENT BACKGROUND TOUCH SCROLL
+  ======================================================= */
+
+  document.addEventListener(
+    'touchmove',
+    function (event) {
+
+      if (!pageIsLocked) return;
+
+      /*
+        Allow scrolling inside AI messages.
+      */
+
+      if (
+        event.target.closest('#jay-ai-messages')
+      ) {
         return;
+      }
+
+      /*
+        Prevent portfolio from moving.
+      */
+
+      if (
+        !event.target.closest('#jay-ai-chat')
+      ) {
+
+        event.preventDefault();
+
+      }
+
+    },
+    {
+      passive: false
     }
+  );
 
 
-    /* =======================================================
-       PAGE / MOBILE KEYBOARD LOCK
-    ======================================================= */
+  /* =======================================================
+     PREVENT BACKGROUND WHEEL SCROLL
+  ======================================================= */
 
-    let savedScrollPosition = 0;
-    let pageIsLocked = false;
-    let keyboardIsOpen = false;
+  document.addEventListener(
+    'wheel',
+    function (event) {
 
-    const isMobile = () => {
-        return window.matchMedia('(max-width: 768px)').matches;
-    };
+      if (!pageIsLocked) return;
 
+      /*
+        Allow wheel scrolling inside messages.
+      */
 
-    /* -------------------------------------------------------
-       FORCE PAGE BACK TO ORIGINAL POSITION
-    ------------------------------------------------------- */
+      if (
+        event.target.closest('#jay-ai-messages')
+      ) {
+        return;
+      }
 
-    function keepPageLocked() {
+      if (
+        !event.target.closest('#jay-ai-chat')
+      ) {
 
-        if (!pageIsLocked) return;
+        event.preventDefault();
 
-        document.body.style.top = `-${savedScrollPosition}px`;
+      }
 
-        /*
-         * Mobile browsers can sometimes change the window
-         * position when the keyboard opens.
-         */
-        if (window.scrollY !== 0) {
-            window.scrollTo(0, 0);
-        }
+    },
+    {
+      passive: false
     }
+  );
 
 
-    /* -------------------------------------------------------
-       LOCK PAGE
-    ------------------------------------------------------- */
+  /* =======================================================
+     ESCAPE KEY
+  ======================================================= */
 
-    function lockPage() {
+  document.addEventListener('keydown', function (event) {
 
-        if (pageIsLocked) return;
+    if (event.key === 'Escape') {
 
-        savedScrollPosition = window.scrollY;
-
-        pageIsLocked = true;
-
-        /*
-         * Prevent the main page from scrolling.
-         */
-        document.documentElement.style.overflow = 'hidden';
-        document.documentElement.style.overscrollBehavior = 'none';
-
-        document.body.style.position = 'fixed';
-        document.body.style.top = `-${savedScrollPosition}px`;
-        document.body.style.left = '0';
-        document.body.style.right = '0';
-        document.body.style.width = '100%';
-        document.body.style.overflow = 'hidden';
-        document.body.style.overscrollBehavior = 'none';
-
-        document.body.classList.add('ai-chat-open');
-
-        /*
-         * Immediately force browser back to the locked position.
-         */
-        window.scrollTo(0, 0);
-    }
-
-
-    /* -------------------------------------------------------
-       UNLOCK PAGE
-    ------------------------------------------------------- */
-
-    function unlockPage() {
-
-        if (!pageIsLocked) return;
-
-        pageIsLocked = false;
-        keyboardIsOpen = false;
-
-        document.body.classList.remove('ai-chat-open');
-
-        document.documentElement.style.overflow = '';
-        document.documentElement.style.overscrollBehavior = '';
-
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.style.left = '';
-        document.body.style.right = '';
-        document.body.style.width = '';
-        document.body.style.overflow = '';
-        document.body.style.overscrollBehavior = '';
-
-        /*
-         * Restore the exact position the visitor was at
-         * before opening the AI.
-         */
-        window.scrollTo(0, savedScrollPosition);
-    }
-
-
-    /* =======================================================
-       OPEN CHAT
-    ======================================================= */
-
-    function openChat() {
-
-        /*
-         * Save the page position BEFORE opening the chat.
-         */
-        savedScrollPosition = window.scrollY;
-
-        chatBox.classList.remove('hidden');
-
-        lockPage();
-
-        /*
-         * Do NOT focus the input automatically.
-         * This prevents the keyboard from opening immediately.
-         */
-        input.blur();
-
-        /*
-         * Scroll AI messages to bottom.
-         */
-        requestAnimationFrame(() => {
-            messages.scrollTop = messages.scrollHeight;
-            keepPageLocked();
-        });
-    }
-
-
-    /* =======================================================
-       CLOSE CHAT
-    ======================================================= */
-
-    function closeChat() {
-
-        if (document.activeElement === input) {
-            input.blur();
-        }
-
-        keyboardIsOpen = false;
-
-        chatBox.classList.add('hidden');
-
-        unlockPage();
-    }
-
-
-    /* =======================================================
-       TOGGLE BUTTON
-    ======================================================= */
-
-    toggleBtn.addEventListener('click', () => {
-
-        if (chatBox.classList.contains('hidden')) {
-            openChat();
-        } else {
-            closeChat();
-        }
-
-    });
-
-
-    /* =======================================================
-       CLOSE BUTTON
-    ======================================================= */
-
-    closeBtn.addEventListener('click', () => {
+      if (!chatBox.classList.contains('hidden')) {
         closeChat();
-    });
+      }
 
-
-    /* =======================================================
-       ADD MESSAGE
-    ======================================================= */
-
-    function addMessage(text, type, id) {
-
-        const div = document.createElement('div');
-
-        div.className =
-            type === 'user'
-                ? 'jay-ai-user'
-                : 'jay-ai-bot';
-
-        if (id) {
-            div.id = id;
-        }
-
-        /*
-         * textContent is safer than innerHTML for visitor input.
-         */
-        div.textContent = text;
-
-        messages.appendChild(div);
-
-        requestAnimationFrame(() => {
-            messages.scrollTop = messages.scrollHeight;
-        });
-
-        return div;
     }
 
+  });
 
-    /* =======================================================
-       REMOVE MESSAGE
-    ======================================================= */
 
-    function removeMessage(id) {
+  /* =======================================================
+     INITIAL STATE
+  ======================================================= */
 
-        const element = document.getElementById(id);
-
-        if (element) {
-            element.remove();
-        }
-    }
-
-
-    /* =======================================================
-       SEND MESSAGE
-    ======================================================= */
-
-    function sendMessage() {
-
-        const text = input.value.trim();
-
-        if (!text) return;
-
-        addMessage(text, 'user');
-
-        input.value = '';
-
-        processQuestion(text);
-
-        /*
-         * Make absolutely sure the portfolio page
-         * hasn't moved after sending.
-         */
-        setTimeout(() => {
-            keepPageLocked();
-        }, 50);
-    }
-
-
-    /* =======================================================
-       SEND BUTTON
-    ======================================================= */
-
-    sendBtn.addEventListener('click', () => {
-        sendMessage();
-    });
-
-
-    /* =======================================================
-       ENTER KEY
-    ======================================================= */
-
-    input.addEventListener('keydown', (event) => {
-
-        if (event.key === 'Enter') {
-
-            event.preventDefault();
-
-            sendMessage();
-        }
-
-    });
-
-
-    /* =======================================================
-       INPUT FOCUS
-       MOBILE KEYBOARD PROTECTION
-    ======================================================= */
-
-    input.addEventListener('focus', () => {
-
-        if (!isMobile()) return;
-
-        keyboardIsOpen = true;
-
-        /*
-         * Save the page position again.
-         * The browser may try to scroll to the input.
-         */
-        const lockedPosition = savedScrollPosition;
-
-        /*
-         * Re-apply the body lock immediately.
-         */
-        document.body.style.position = 'fixed';
-        document.body.style.top = `-${lockedPosition}px`;
-        document.body.style.left = '0';
-        document.body.style.right = '0';
-        document.body.style.width = '100%';
-        document.body.style.overflow = 'hidden';
-
-        document.documentElement.style.overflow = 'hidden';
-
-        /*
-         * Stop the browser from moving the main page.
-         */
-        window.scrollTo(0, 0);
-
-        /*
-         * Run several times because mobile Chrome may
-         * reposition the viewport after the keyboard appears.
-         */
-        setTimeout(() => {
-            keepPageLocked();
-        }, 0);
-
-        setTimeout(() => {
-            keepPageLocked();
-        }, 50);
-
-        setTimeout(() => {
-            keepPageLocked();
-        }, 150);
-
-        setTimeout(() => {
-            keepPageLocked();
-        }, 300);
-
-        setTimeout(() => {
-            keepPageLocked();
-        }, 500);
-    });
-
-
-    /* =======================================================
-       INPUT BLUR
-    ======================================================= */
-
-    input.addEventListener('blur', () => {
-
-        keyboardIsOpen = false;
-
-        /*
-         * Restore the locked position after keyboard closes.
-         */
-        setTimeout(() => {
-
-            if (pageIsLocked) {
-                keepPageLocked();
-            }
-
-        }, 100);
-    });
-
-
-    /* =======================================================
-       PROCESS QUESTION
-    ======================================================= */
-
-    function processQuestion(question) {
-
-        const thinkingId = 'jay-ai-thinking';
-
-        addMessage(
-            'Thinking...',
-            'bot',
-            thinkingId
-        );
-
-        const delay =
-            650 + Math.floor(Math.random() * 550);
-
-        setTimeout(() => {
-
-            removeMessage(thinkingId);
-
-            const reply = getReply(question);
-
-            addMessage(reply, 'bot');
-
-        }, delay);
-    }
-
-
-    /* =======================================================
-       AI RESPONSES
-    ======================================================= */
-
-    function getReply(question) {
-
-        const q = question.toLowerCase().trim();
-
-
-        /* -------------------------------------------------------
-           GREETINGS
-        ------------------------------------------------------- */
-
-        if (
-            /^(hi|hello|hey|good\s*(morning|afternoon|evening|day)|greetings|howdy|yo)\b/i.test(q) ||
-            /^(hi|hello|hey)\s+(there|jay|assistant)?[!?.]*$/i.test(q)
-        ) {
-
-            return 'Good day! How can I help you?';
-        }
-
-
-        /* -------------------------------------------------------
-           WHO ARE YOU
-        ------------------------------------------------------- */
-
-        if (
-            /(who are you|what are you|who'?s this|what is this|are you a bot|are you ai|are you real)/i.test(q)
-        ) {
-
-            return 'I am the official AI assistant for JayWebDev. I can answer questions about Jay’s skills, services, and projects.';
-        }
-
-
-        /* -------------------------------------------------------
-           WHO IS JAY
-        ------------------------------------------------------- */
-
-        if (
-            /(who is|who'?s|tell me about|about).*(jay|jaywebdev)/i.test(q) ||
-            /^(who is jay|who'?s jay|about jay)/i.test(q)
-        ) {
-
-            return 'Jay is a professional web, app, and AI developer. He builds websites, web applications, mobile apps, custom software, and AI-powered solutions.';
-        }
-
-
-        /* -------------------------------------------------------
-           WHAT DOES JAY DO
-        ------------------------------------------------------- */
-
-        if (
-            /(what does|what is|what do you|tell me what).*(jay|jaywebdev|he do|he does)/i.test(q) ||
-            /what.*(jay|he).*(do|does|offer)/i.test(q)
-        ) {
-
-            return 'Jay works with HTML, CSS, JavaScript, React, Next.js, PHP, MySQL, and Python. He builds websites, web apps, applications, software, and AI-powered solutions.';
-        }
-
-
-        /* -------------------------------------------------------
-           IS JAY PROFESSIONAL / GOOD
-        ------------------------------------------------------- */
-
-        if (
-            /(is jay|are you).*(developer|programmer|skilled|professional|good|experienced)/i.test(q)
-        ) {
-
-            return 'Yes. Jay is a professional developer who builds modern websites, applications, software, and AI-powered solutions.';
-        }
-
-
-        if (
-            /(professional|good|skilled|experienced|expert|reliable)/i.test(q)
-        ) {
-
-            return 'Yes. Jay is a professional developer who builds modern websites, applications, software, and AI-powered solutions.';
-        }
-
-
-        /* -------------------------------------------------------
-           HOW MANY PROJECTS
-        ------------------------------------------------------- */
-
-        if (
-            /(how many|number of).*(project|client)/i.test(q)
-        ) {
-
-            return 'Jay has handled a lot of projects, but many of them are not displayed here due to client confidentiality.';
-        }
-
-
-        /* -------------------------------------------------------
-           WEBSITE
-        ------------------------------------------------------- */
-
-        if (
-            /(build|make|create|develop).*(website|site|web page)/i.test(q) ||
-            /can.*(you|jay).*(build|make).*(website|site)/i.test(q)
-        ) {
-
-            return 'Yes, Jay can build your website. Please contact him privately with your requirements to discuss the project and pricing.';
-        }
-
-
-        /* -------------------------------------------------------
-           APP / MOBILE
-        ------------------------------------------------------- */
-
-        if (
-            /(build|make|create|develop).*(app|application|mobile)/i.test(q) ||
-            /can.*(you|jay).*(build|make).*(app|application)/i.test(q)
-        ) {
-
-            return 'Yes, Jay can build applications. Contact him privately with your requirements to discuss the project and pricing.';
-        }
-
-
-        /* -------------------------------------------------------
-           AI
-        ------------------------------------------------------- */
-
-        if (
-            /(ai|artificial intelligence|chatgpt|llm|machine learning).*(build|make|create|integrate|add|system|app|application)/i.test(q) ||
-            /can.*(you|jay).*(build|make|add).*(ai|artificial intelligence)/i.test(q)
-        ) {
-
-            return 'Yes, Jay can build AI-powered applications and integrate AI into existing projects. Contact him privately to discuss your requirements and pricing.';
-        }
-
-
-        /* -------------------------------------------------------
-           PRICING
-        ------------------------------------------------------- */
-
-        if (
-            /(how much|price|cost|pricing|quote|budget|charge)/i.test(q)
-        ) {
-
-            return 'Pricing depends on the project requirements. Please contact Jay privately to discuss your project and get a suitable quote.';
-        }
-
-
-        /* -------------------------------------------------------
-           SKILLS
-        ------------------------------------------------------- */
-
-        if (
-            /(what can|skills|what.*(jay|he).*(do|build|offer)|capabilities)/i.test(q)
-        ) {
-
-            return 'Jay works with HTML, CSS, JavaScript, React, Next.js, PHP, MySQL, and Python. He builds websites, web apps, applications, software, and AI-powered solutions.';
-        }
-
-
-        /* -------------------------------------------------------
-           SERVICES
-        ------------------------------------------------------- */
-
-        if (
-            /(services|what.*(do you|does jay).*(offer|provide)|what services)/i.test(q)
-        ) {
-
-            return 'Jay offers website development, web apps, app development, custom software, AI solutions, frontend, backend, full-stack development, and database integration.';
-        }
-
-
-        /* -------------------------------------------------------
-           BOOK / APPOINTMENT
-        ------------------------------------------------------- */
-
-        if (
-            /(reserve|book|schedule|spot|slot|appointment|available time)/i.test(q)
-        ) {
-
-            return 'I can’t reserve a spot directly, but you can contact Jay on the Contact page with your project details and he will get back to you.';
-        }
-
-
-        /* -------------------------------------------------------
-           EXISTING PROJECT
-        ------------------------------------------------------- */
-
-        if (
-            /(existing|current|ongoing).*(project|website|app)/i.test(q) ||
-            /work on.*(existing|my)/i.test(q)
-        ) {
-
-            return 'Yes, Jay can work on existing projects depending on the requirements. Please contact him with the project details.';
-        }
-
-
-        /* -------------------------------------------------------
-           FIX / DEBUG / UPDATE
-        ------------------------------------------------------- */
-
-        if (
-            /(fix|debug|improve|update|maintain|bug|error)/i.test(q)
-        ) {
-
-            return 'Yes, Jay can help with fixing and improving existing projects. Please contact him with the details.';
-        }
-
-
-        /* -------------------------------------------------------
-           PROJECTS / PORTFOLIO
-        ------------------------------------------------------- */
-
-        if (
-            /(see|show|view|look).*(project|portfolio|work)/i.test(q) ||
-            /(projects|portfolio)/i.test(q)
-        ) {
-
-            return 'Please check the projects / portfolio section of the website. Some projects are not displayed due to client confidentiality.';
-        }
-
-
-        /* -------------------------------------------------------
-           TECHNOLOGIES
-        ------------------------------------------------------- */
-
-        if (
-            /(technolog|stack|tools|languages|framework|what.*(tech|code|language))/i.test(q)
-        ) {
-
-            return 'Jay works with HTML, CSS, JavaScript, React, Next.js, PHP, MySQL, and Python.';
-        }
-
-
-        /* -------------------------------------------------------
-           CAN JAY HELP
-        ------------------------------------------------------- */
-
-        if (
-            /(can.*(you|jay).*(help|assist)|do you help)/i.test(q)
-        ) {
-
-            return 'Yes, Jay can help with websites, web apps, mobile apps, custom software, and AI solutions. Please contact him with your project details.';
-        }
-
-
-        /* -------------------------------------------------------
-           HIRE
-        ------------------------------------------------------- */
-
-        if (
-            /(hire|work with|need.*(developer|you|jay)|want.*(to work|you)|i want to hire)/i.test(q)
-        ) {
-
-            return 'Sure. Please go to the Contact page and leave a message with your project details.';
-        }
-
-
-        /* -------------------------------------------------------
-           CONTACT
-        ------------------------------------------------------- */
-
-        if (
-            /(contact|reach|email|message|available|availability|free|how.*(contact|reach))/i.test(q)
-        ) {
-
-            return 'Please go to the Contact page and leave a message with your requirements.';
-        }
-
-
-        /* -------------------------------------------------------
-           BUSINESS
-        ------------------------------------------------------- */
-
-        if (
-            /(business|company|startup|enterprise)/i.test(q)
-        ) {
-
-            return 'Yes. Jay can build digital solutions for businesses, including websites, apps, software, and AI-powered solutions.';
-        }
-
-
-        /* -------------------------------------------------------
-           RELATED QUESTIONS
-        ------------------------------------------------------- */
-
-        if (
-            /(jay|webdev|developer|website|app|ai|software|project|code|build)/i.test(q)
-        ) {
-
-            return 'Jay is a web, app, and AI developer who builds modern digital solutions. For specific project details, please go to the Contact page.';
-        }
-
-
-        /* -------------------------------------------------------
-           UNRELATED QUESTIONS
-        ------------------------------------------------------- */
-
-        return 'Please go to the Contact page and leave a message. Jay will be able to assist you there.';
-    }
-
-
-    /* =======================================================
-       VISUAL VIEWPORT PROTECTION
-       IMPORTANT FOR MOBILE KEYBOARD
-    ======================================================= */
-
-    if (window.visualViewport) {
-
-        /*
-         * Fires when keyboard opens/closes.
-         */
-        window.visualViewport.addEventListener('resize', () => {
-
-            if (!pageIsLocked) return;
-
-            if (isMobile()) {
-                keepPageLocked();
-            }
-        });
-
-
-        /*
-         * Mobile Chrome can actually move the visual viewport,
-         * so also watch its scroll position.
-         */
-        window.visualViewport.addEventListener('scroll', () => {
-
-            if (!pageIsLocked) return;
-
-            if (isMobile()) {
-                keepPageLocked();
-            }
-        });
-    }
-
-
-    /* =======================================================
-       WINDOW SCROLL PROTECTION
-    ======================================================= */
-
-    window.addEventListener('scroll', () => {
-
-        if (!pageIsLocked) return;
-
-        if (isMobile()) {
-            keepPageLocked();
-        }
-
-    }, { passive: true });
-
-
-    /* =======================================================
-       PREVENT BACKGROUND TOUCH SCROLL
-    ======================================================= */
-
-    document.addEventListener(
-        'touchmove',
-        (event) => {
-
-            if (!pageIsLocked) return;
-
-            /*
-             * Allow the AI message area to scroll.
-             */
-            if (event.target.closest('#jay-ai-messages')) {
-                return;
-            }
-
-            /*
-             * Allow interaction with the input itself.
-             */
-            if (event.target.closest('#jay-ai-input')) {
-                return;
-            }
-
-            /*
-             * Allow the send button and other chat controls.
-             */
-            if (event.target.closest('#jay-ai-chat')) {
-                return;
-            }
-
-            /*
-             * Block the portfolio page.
-             */
-            event.preventDefault();
-
-        },
-        { passive: false }
-    );
-
-
-    /* =======================================================
-       PREVENT WHEEL SCROLL ON BACKGROUND
-    ======================================================= */
-
-    document.addEventListener(
-        'wheel',
-        (event) => {
-
-            if (!pageIsLocked) return;
-
-            /*
-             * Allow scrolling inside AI messages.
-             */
-            if (event.target.closest('#jay-ai-messages')) {
-                return;
-            }
-
-            /*
-             * Block background scrolling.
-             */
-            if (!event.target.closest('#jay-ai-chat')) {
-                event.preventDefault();
-            }
-
-        },
-        { passive: false }
-    );
-
-
-    /* =======================================================
-       ESCAPE KEY
-    ======================================================= */
-
-    document.addEventListener('keydown', (event) => {
-
-        if (event.key === 'Escape') {
-
-            if (!chatBox.classList.contains('hidden')) {
-                closeChat();
-            }
-        }
-
-    });
-
+  chatBox.classList.add('hidden');
 
 })();
 </script>
