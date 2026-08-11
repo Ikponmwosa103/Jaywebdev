@@ -760,24 +760,41 @@ nav a {
 /* =========================
    TABLETS / SMALL SCREENS
 ========================= */
+/* =========================
+   MOBILE AI CHAT
+   Adjustable / Movable
+========================= */
+
 @media (max-width: 768px) {
-  .menu-btn {
-    display: block;
+
+  #jay-ai-chat {
+    position: fixed;
+
+    /* Starting position */
+    left: 50%;
+    top: 50%;
+
+    right: auto;
+    bottom: auto;
+
+    transform: translate(-50%, -50%);
+
+    width: 380px;
+    max-width: calc(100vw - 24px);
+
+    height: 440px;
+    max-height: calc(100dvh - 40px);
+
+    border-radius: 16px;
+
+    touch-action: none;
+
+    cursor: grab;
   }
 
-  nav {
-    position: absolute;
-    top: 80px;
-    left: 0;
-    width: 100%;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 25px 0;
+  #jay-ai-chat.dragging {
+    cursor: grabbing;
+    transition: none !important;
   }
 
   nav.active {
@@ -839,23 +856,23 @@ nav a {
     height: 56px;
   }
 
-  #jay-ai-chat {
+  /* #jay-ai-chat {
     position: fixed;
     left: 8px;
-    right: 8px;                 /* equal left + right = centered */
+    right: 8px;           
     width: auto;
     max-width: none;
 
-    /* Stable height – less jump when keyboard opens */
+ 
     height: min(440px, calc(100dvh - 120px));
     max-height: calc(100dvh - 120px);
 
-    bottom: 80px;               /* sits cleanly above the toggle */
+    bottom: 80px;               
     border-radius: 16px;
 
-    /* Prevent any residual movement */
+   
     transform: none;
-  }
+  } */
 
   .jay-ai-header {
     height: 58px;
@@ -1094,7 +1111,166 @@ if (document.readyState === 'loading') {
     const messages = document.getElementById('jay-ai-messages');
     const input = document.getElementById('jay-ai-input');
     const sendBtn = document.getElementById('jay-ai-send');
+/* =========================================================
+   MOVE AI CHAT WINDOW ON MOBILE
+   Drag the chat window anywhere on the screen
+========================================================= */
 
+let chatDragging = false;
+let chatStartX = 0;
+let chatStartY = 0;
+let chatStartLeft = 0;
+let chatStartTop = 0;
+
+function isMobileChat() {
+    return window.innerWidth <= 768;
+}
+
+chatBox.addEventListener('pointerdown', (event) => {
+
+    if (!isMobileChat()) return;
+
+    /*
+     * Don't drag when interacting with:
+     * - input
+     * - send button
+     * - close button
+     * - messages
+     */
+    if (
+        event.target.closest('#jay-ai-input') ||
+        event.target.closest('#jay-ai-send') ||
+        event.target.closest('#jay-ai-close') ||
+        event.target.closest('#jay-ai-messages')
+    ) {
+        return;
+    }
+
+    chatDragging = true;
+
+    chatBox.classList.add('dragging');
+
+    const rect = chatBox.getBoundingClientRect();
+
+    chatStartX = event.clientX;
+    chatStartY = event.clientY;
+
+    chatStartLeft = rect.left;
+    chatStartTop = rect.top;
+
+    /*
+     * Switch from centered positioning
+     * to exact top/left positioning.
+     */
+    chatBox.style.left = `${chatStartLeft}px`;
+    chatBox.style.top = `${chatStartTop}px`;
+
+    chatBox.style.right = 'auto';
+    chatBox.style.bottom = 'auto';
+
+    chatBox.style.transform = 'none';
+
+    chatBox.setPointerCapture(event.pointerId);
+
+    event.preventDefault();
+});
+
+
+chatBox.addEventListener('pointermove', (event) => {
+
+    if (!chatDragging || !isMobileChat()) return;
+
+    const moveX = event.clientX - chatStartX;
+    const moveY = event.clientY - chatStartY;
+
+    let newLeft = chatStartLeft + moveX;
+    let newTop = chatStartTop + moveY;
+
+    const chatWidth = chatBox.offsetWidth;
+    const chatHeight = chatBox.offsetHeight;
+
+    /*
+     * Keep the chat inside the viewport.
+     */
+
+    const maxLeft =
+        window.innerWidth - chatWidth;
+
+    const maxTop =
+        window.innerHeight - chatHeight;
+
+    newLeft = Math.max(
+        0,
+        Math.min(newLeft, maxLeft)
+    );
+
+    newTop = Math.max(
+        0,
+        Math.min(newTop, maxTop)
+    );
+
+    chatBox.style.left = `${newLeft}px`;
+    chatBox.style.top = `${newTop}px`;
+});
+
+
+function stopChatDragging(event) {
+
+    if (!chatDragging) return;
+
+    chatDragging = false;
+
+    chatBox.classList.remove('dragging');
+
+    try {
+        chatBox.releasePointerCapture(event.pointerId);
+    } catch (error) {}
+}
+
+
+chatBox.addEventListener(
+    'pointerup',
+    stopChatDragging
+);
+
+chatBox.addEventListener(
+    'pointercancel',
+    stopChatDragging
+);
+
+
+/*
+ * Keep chat inside screen after rotation/resize.
+ */
+
+window.addEventListener('resize', () => {
+
+    if (!isMobileChat()) return;
+
+    if (chatBox.classList.contains('hidden')) return;
+
+    const rect =
+        chatBox.getBoundingClientRect();
+
+    const maxLeft =
+        window.innerWidth - chatBox.offsetWidth;
+
+    const maxTop =
+        window.innerHeight - chatBox.offsetHeight;
+
+    chatBox.style.left =
+        `${Math.max(
+            0,
+            Math.min(rect.left, maxLeft)
+        )}px`;
+
+    chatBox.style.top =
+        `${Math.max(
+            0,
+            Math.min(rect.top, maxTop)
+        )}px`;
+
+});
     if (
         !toggleBtn ||
         !chatBox ||
