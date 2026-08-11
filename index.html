@@ -566,11 +566,17 @@ nav a:hover {
 
 #jay-ai-chat {
   position: absolute;
-  right: 0;
-  bottom: 5px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  right: auto;
+  bottom: auto;
+
   width: 400px;
   height: 440px;
   max-width: calc(100vw - 32px);
+  max-height: calc(100dvh - 40px);
+
   background: #030303;
   border: 1px solid #2a2a2a;
   border-radius: 16px;
@@ -579,6 +585,7 @@ nav a:hover {
   flex-direction: column;
   overflow: hidden;
   box-sizing: border-box;
+  z-index: 9999;
 }
 
 #jay-ai-chat.hidden {
