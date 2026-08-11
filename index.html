@@ -57,52 +57,17 @@
   <!-- ✅ Schema Markup (Google Rich Results) -->
 
 <style>
-  * {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
 html, body {
-  height: 100%;
-  height: 100dvh;          /* modern mobile viewport */
-  overflow: hidden;         /* ← critical: stop all page scroll */
-  overscroll-behavior: none;
-  -webkit-overflow-scrolling: auto;
-}
-
-body {
-  background-image: url('Asset/Image/download.webp');
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-color: #000000;
-  color: #fff;
-  position: relative;
-  /* keep the rest of your body rules */
-}
-
-.ji {
-  color: #00eaff;
-}
-/* =========================================
-   KEEP PAGE FROM MOVING WHEN AI IS OPEN
-========================================= */
-
-html.ai-lock,
-html.ai-lock body {
-  overflow: hidden !important;
-  overscroll-behavior: none !important;
-}
-
-body.ai-keyboard-open #jay-ai-chat {
-  transform: translateY(50px) !important;
-  transition: transform 0.25s ease;
-}
-
-/* Only the AI messages should be scrollable */
-#jay-ai-messages {
-  overscroll-behavior: contain;
+  height: auto;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -114,6 +79,10 @@ body {
   background-color: #000000;
   color: #fff;
   position: relative;
+}
+
+.ji {
+  color: #00eaff;
 }
 
 body::before {
@@ -152,14 +121,12 @@ header {
   z-index: 1000;
 }
 
-/* Logo */
 .logo {
   font-size: 2rem;
   font-weight: 700;
   color: var(--primary);
 }
 
-/* Nav - Desktop */
 nav {
   display: flex;
   align-items: center;
@@ -177,7 +144,6 @@ nav a:hover {
   color: var(--primary);
 }
 
-/* CTA Button */
 .cta-button {
   padding: 12px 25px;
   border-radius: 50px;
@@ -194,7 +160,6 @@ nav a:hover {
   box-shadow: none;
 }
 
-/* Mobile Menu Button - Hidden on desktop */
 .menu-btn {
   display: none;
   font-size: 1.8rem;
@@ -205,15 +170,12 @@ nav a:hover {
 /* ================= HERO ================= */
 .hero {
   display: flex;
-  height: 100dvh;           /* exact viewport height */
   min-height: 100dvh;
   width: 100%;
-  padding: 120px 20px 20px;
-  padding-bottom: 40px;
+  padding: 120px 20px 40px;
   justify-content: center;
   align-items: center;
   text-align: center;
-  overflow: hidden;         /* prevent internal overflow from pushing the page */
   box-sizing: border-box;
 }
 
@@ -222,7 +184,6 @@ nav a:hover {
   flex-direction: column;
   align-items: center;
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
-  padding: 0 20px;
   width: 100%;
   max-width: 800px;
   background: rgba(255, 255, 255, 0.05);
@@ -326,8 +287,6 @@ nav a:hover {
 }
 
 /* ================= RESPONSIVE ================= */
-
-/* Tablet and smaller - show only selected social icons */
 @media (max-width: 1024px) {
   .socials a {
     display: none;
@@ -342,7 +301,6 @@ nav a:hover {
   }
 }
 
-/* Mobile menu + general tablet/mobile styles */
 @media (max-width: 768px) {
   body {
     background-attachment: scroll;
@@ -360,30 +318,39 @@ nav a:hover {
     display: none;
     flex-direction: column;
     align-items: center;
-    background: rgba(0, 0, 0, 0.664);
+    background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(20px);
     border: 1px solid var(--border);
     border-radius: 20px;
-    padding: 20px;
+    padding: 25px 0;
   }
 
   nav.active {
     display: flex;
   }
 
-nav a {
-  margin: 15px 0;
-  width: 100%;
-  border-radius: 10px;
-  display: block;
-  text-align: center;
-  font-weight: 600;        /* ← change to 600 or 700 */
-  font-size: 1.05rem;      /* optional – slightly bigger */
-  letter-spacing: 0.3px;   /* optional – helps readability */
-}
+  nav a {
+    margin: 15px 0;
+    width: 100%;
+    border-radius: 10px;
+    display: block;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 0.3px;
+  }
+
+  nav a:hover {
+    background: rgba(0, 234, 255, 0.1);
+    color: var(--primary);
+  }
 
   .cta-button {
-    display: none;
+    display: inline-block;
+    margin: 4px auto;
+    width: auto;
+    text-align: center;
+    padding: 12px 32px;
   }
 
   header {
@@ -400,6 +367,7 @@ nav a {
     padding-top: 120px;
     padding-left: 20px;
     padding-right: 20px;
+    padding-bottom: 60px;
   }
 
   .hero-text {
@@ -440,9 +408,13 @@ nav a {
     gap: 18px;
     margin-top: 35px;
   }
+
+  #jay-ai-widget {
+    bottom: 20px;
+    right: 20px;
+  }
 }
 
-/* Small phones */
 @media (max-width: 480px) {
   header {
     top: 12px;
@@ -488,363 +460,6 @@ nav a {
     gap: 15px;
     font-size: 1.1rem;
   }
-}
-/* ===== JayWebDev AI Assistant ===== */
-/* =========================
-   JAYWEBDEV AI ASSISTANT
-========================= */
-
-#jay-ai-widget {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 9999;
-  font-family: inherit;
-}
-
-/* AI BUTTON */
-#jay-ai-toggle {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: #000;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  transition: transform 0.2s, background 0.2s;
-}
-
-#jay-ai-toggle:hover {
-  transform: scale(1.08);
-  background: #000;
-}
-
-
-/* =========================
-   CHAT WINDOW
-========================= */
-
-#jay-ai-chat {
-  position: absolute;
-  right: 0;
-  bottom: 75px;
-
-  width: 400px;
-  height: 440px;
-  max-width: calc(100vw - 32px);
-
-  background: #030303;
-  border: 1px solid #2a2a2a;
-  border-radius: 16px;
-
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
-
-  display: flex;
-  flex-direction: column;
-
-  overflow: hidden;
-  box-sizing: border-box;
-}
-
-#jay-ai-chat.hidden {
-  display: none;
-}
-
-
-/* =========================
-   HEADER
-========================= */
-
-.jay-ai-header {
-  height: 64px;
-  min-height: 64px;
-
-  background: #000;
-  color: white;
-
-  padding: 12px 16px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  flex-shrink: 0;
-  box-sizing: border-box;
-}
-
-.jay-ai-header strong {
-  display: block;
-  font-size: 15px;
-}
-
-.jay-ai-header span {
-  display: block;
-  font-size: 12px;
-  opacity: 0.7;
-  margin-top: 2px;
-}
-
-#jay-ai-close {
-  background: none;
-  border: none;
-
-  color: white;
-
-  font-size: 24px;
-  line-height: 1;
-
-  cursor: pointer;
-  padding: 4px;
-}
-
-
-/* =========================
-   MESSAGES
-========================= */
-
-#jay-ai-messages {
-  flex: 1;
-
-  min-width: 0;
-  min-height: 0;
-
-  padding: 16px;
-
-  overflow-y: auto;
-  overflow-x: hidden;
-
-  background: #0a0a0a;
-
-  display: flex;
-  flex-direction: column;
-
-  gap: 10px;
-
-  -webkit-overflow-scrolling: touch;
-}
-
-.jay-ai-bot,
-.jay-ai-user {
-  max-width: 85%;
-
-  padding: 10px 13px;
-
-  border-radius: 13px;
-
-  font-size: 14px;
-  line-height: 1.45;
-
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-}
-
-.jay-ai-bot {
-  background: #000;
-  color: white;
-
-  align-self: flex-start;
-
-  border-bottom-left-radius: 4px;
-}
-
-.jay-ai-user {
-  background: #313131;
-  color: white;
-
-  align-self: flex-end;
-
-  border-bottom-right-radius: 4px;
-}
-
-
-/* =========================
-   INPUT AREA
-========================= */
-
-.jay-ai-input-area {
-  width: 100%;
-  height: 58px;
-  min-height: 58px;
-
-  padding: 8px;
-
-  display: flex;
-  align-items: center;
-
-  gap: 7px;
-
-  background: #070707;
-  border-top: 1px solid #2a2a2a;
-
-  box-sizing: border-box;
-
-  flex-shrink: 0;
-}
-
-
-/* INPUT */
-
-#jay-ai-input {
-  flex: 1 1 auto;
-
-  width: auto;
-  min-width: 0;
-
-  height: 40px;
-
-  padding: 8px 12px;
-
-  border: 1px solid #3a3a3a;
-  border-radius: 9px;
-
-  background: #111;
-  color: white;
-
-  font-size: 14px;
-
-  outline: none;
-
-  box-sizing: border-box;
-}
-
-#jay-ai-input::placeholder {
-  color: #888;
-}
-
-#jay-ai-input:focus {
-  border-color: #666;
-}
-
-
-/* SEND BUTTON */
-
-#jay-ai-send {
-  flex: 0 0 62px;
-
-  width: 62px;
-  min-width: 62px;
-  max-width: 62px;
-
-  height: 40px;
-
-  padding: 0;
-
-  border: none;
-  border-radius: 9px;
-
-  background: #f8f7f7;
-  color: #000;
-
-  font-size: 13px;
-  font-weight: 600;
-
-  cursor: pointer;
-
-  box-sizing: border-box;
-
-  transition: background 0.2s;
-}
-
-#jay-ai-send:hover {
-  background: #dcdcdc;
-}
-
-
-/* =========================
-   TABLETS / SMALL SCREENS
-========================= */
-/* =========================
-   MOBILE AI CHAT
-   Adjustable / Movable
-========================= */
-
-@media (max-width: 768px) {
-
-  #jay-ai-chat {
-    position: fixed;
-
-    /* Starting position */
-    left: 50%;
-    top: 50%;
-
-    right: auto;
-    bottom: auto;
-
-    transform: translate(-50%, -50%);
-
-    width: 380px;
-    max-width: calc(100vw - 24px);
-
-    height: 440px;
-    max-height: calc(100dvh - 40px);
-
-    border-radius: 16px;
-
-    touch-action: none;
-
-    cursor: grab;
-  }
-
-  #jay-ai-chat.dragging {
-    cursor: grabbing;
-    transition: none !important;
-  }
-
-  nav.active {
-    display: flex;
-  } 
-
-  nav a {
-    margin: 15px 0;
-    width: 100%;
-    border-radius: 10px;
-    display: block;
-    text-align: center;
-  }
-
-  nav a:hover {
-    background: rgba(0, 234, 255, 0.1);
-    color: var(--primary);
-  }
-
-  /* CTA now appears inside the dropdown */
-  .cta-button {
-    display: inline-block;
-    margin: 4px auto 4px;
-    width: auto;
-    text-align: center;
-    padding: 12px 32px;
-  }
-
-  #jay-ai-widget {
-    bottom: 20px;
-    right: 20px;
-  }
-
-  #jay-ai-chat {
-    width: 380px;
-    max-width: calc(100vw - 24px);
-
- height: 240px;
-    max-height: calc(20dvh - 20px);
-
-    right: 0;
-    bottom: 75px;
-  }
-}
-
-
-/* =========================
-   PHONES
-========================= */
-@media (max-width: 480px) {
 
   #jay-ai-widget {
     bottom: 16px;
@@ -855,24 +470,6 @@ nav a {
     width: 56px;
     height: 56px;
   }
-
-  /* #jay-ai-chat {
-    position: fixed;
-    left: 8px;
-    right: 8px;           
-    width: auto;
-    max-width: none;
-
- 
-    height: min(440px, calc(100dvh - 120px));
-    max-height: calc(100dvh - 120px);
-
-    bottom: 80px;               
-    border-radius: 16px;
-
-   
-    transform: none;
-  } */
 
   .jay-ai-header {
     height: 58px;
@@ -910,31 +507,7 @@ nav a {
   }
 }
 
-/* When keyboard is open → shift everything down 50px */
-body.keyboard-open #jay-ai-chat {
-  transform: translateY(50px) !important;
-  transition: transform 0.25s ease;
-}
-
-/* Smooth transition when keyboard closes */
-#jay-ai-chat {
-  transition: transform 0.25s ease;
-}
-/* =========================
-   VERY SMALL PHONES
-========================= */
 @media (max-width: 360px) {
-
-  #jay-ai-chat {
-    left: 6px;
-    right: 6px;
-    width: auto;
-
- height: 270px;
-    max-height: calc(40dvh - 40px);
-    bottom: 72px;
-  }
-
   .jay-ai-header {
     height: 54px;
     min-height: 54px;
@@ -959,6 +532,217 @@ body.keyboard-open #jay-ai-chat {
     min-width: 54px;
     max-width: 54px;
     height: 38px;
+  }
+}
+
+/* ===== AI ASSISTANT ===== */
+#jay-ai-widget {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  font-family: inherit;
+}
+
+#jay-ai-toggle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, background 0.2s;
+}
+
+#jay-ai-toggle:hover {
+  transform: scale(1.08);
+  background: #000;
+}
+
+#jay-ai-chat {
+  position: absolute;
+  right: 0;
+  bottom: 75px;
+  width: 400px;
+  height: 440px;
+  max-width: calc(100vw - 32px);
+  background: #030303;
+  border: 1px solid #2a2a2a;
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+#jay-ai-chat.hidden {
+  display: none;
+}
+
+.jay-ai-header {
+  height: 64px;
+  min-height: 64px;
+  background: #000;
+  color: white;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.jay-ai-header strong {
+  display: block;
+  font-size: 15px;
+}
+
+.jay-ai-header span {
+  display: block;
+  font-size: 12px;
+  opacity: 0.7;
+  margin-top: 2px;
+}
+
+#jay-ai-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px;
+}
+
+#jay-ai-messages {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  padding: 16px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #0a0a0a;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.jay-ai-bot,
+.jay-ai-user {
+  max-width: 85%;
+  padding: 10px 13px;
+  border-radius: 13px;
+  font-size: 14px;
+  line-height: 1.45;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.jay-ai-bot {
+  background: #000;
+  color: white;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+
+.jay-ai-user {
+  background: #313131;
+  color: white;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+
+.jay-ai-input-area {
+  width: 100%;
+  height: 58px;
+  min-height: 58px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: #070707;
+  border-top: 1px solid #2a2a2a;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+#jay-ai-input {
+  flex: 1 1 auto;
+  width: auto;
+  min-width: 0;
+  height: 40px;
+  padding: 8px 12px;
+  border: 1px solid #3a3a3a;
+  border-radius: 9px;
+  background: #111;
+  color: white;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+#jay-ai-input::placeholder {
+  color: #888;
+}
+
+#jay-ai-input:focus {
+  border-color: #666;
+}
+
+#jay-ai-send {
+  flex: 0 0 62px;
+  width: 62px;
+  min-width: 62px;
+  max-width: 62px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  border-radius: 9px;
+  background: #f8f7f7;
+  color: #000;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: background 0.2s;
+}
+
+#jay-ai-send:hover {
+  background: #dcdcdc;
+}
+
+/* Mobile AI chat positioning */
+@media (max-width: 768px) {
+  #jay-ai-chat {
+    position: fixed;
+    right: 12px;
+    bottom: 80px;
+    left: auto;
+    top: auto;
+    transform: none;
+    width: calc(100vw - 24px);
+    max-width: 380px;
+    height: 420px;
+    max-height: calc(100dvh - 100px);
+  }
+}
+
+@media (max-width: 480px) {
+  #jay-ai-chat {
+    left: 8px;
+    right: 8px;
+    width: auto;
+    max-width: none;
+    bottom: 80px;
+    height: min(440px, calc(100dvh - 120px));
+    max-height: calc(100dvh - 120px);
   }
 }
 </style>
@@ -1046,7 +830,6 @@ body.keyboard-open #jay-ai-chat {
 /* =========================================================
    MOBILE MENU
 ========================================================= */
-
 const menuBtn = document.querySelector('.menu-btn');
 const nav = document.querySelector('nav');
 
@@ -1056,1187 +839,421 @@ if (menuBtn && nav) {
     });
 }
 
-
 /* =========================================================
    TYPING EFFECT
 ========================================================= */
-
 const typingText = "Web developer/app developer and Ai intern";
 let typingIndex = 0;
 
 function typeEffect() {
-
     const target = document.querySelector('.hero-text p');
-
     if (!target) return;
 
     target.textContent = '';
 
     const interval = setInterval(() => {
-
         if (typingIndex < typingText.length) {
-
             target.textContent += typingText.charAt(typingIndex);
             typingIndex++;
-
         } else {
-
             clearInterval(interval);
-
         }
-
     }, 100);
 }
 
 if (document.readyState === 'loading') {
-
     document.addEventListener('DOMContentLoaded', typeEffect);
-
 } else {
-
     typeEffect();
-
 }
-
 
 /* =========================================================
    JAYWEBDEV AI ASSISTANT
 ========================================================= */
-
 (function () {
-
     const toggleBtn = document.getElementById('jay-ai-toggle');
     const chatBox = document.getElementById('jay-ai-chat');
     const closeBtn = document.getElementById('jay-ai-close');
     const messages = document.getElementById('jay-ai-messages');
     const input = document.getElementById('jay-ai-input');
     const sendBtn = document.getElementById('jay-ai-send');
-/* =========================================================
-   MOVE AI CHAT WINDOW ON MOBILE
-   Drag the chat window anywhere on the screen
-========================================================= */
 
-let chatDragging = false;
-let chatStartX = 0;
-let chatStartY = 0;
-let chatStartLeft = 0;
-let chatStartTop = 0;
-
-function isMobileChat() {
-    return window.innerWidth <= 768;
-}
-
-chatBox.addEventListener('pointerdown', (event) => {
-
-    if (!isMobileChat()) return;
-
-    /*
-     * Don't drag when interacting with:
-     * - input
-     * - send button
-     * - close button
-     * - messages
-     */
-    if (
-        event.target.closest('#jay-ai-input') ||
-        event.target.closest('#jay-ai-send') ||
-        event.target.closest('#jay-ai-close') ||
-        event.target.closest('#jay-ai-messages')
-    ) {
+    if (!toggleBtn || !chatBox || !closeBtn || !messages || !input || !sendBtn) {
         return;
     }
 
-    chatDragging = true;
+    /* =========================================================
+       MOVE AI CHAT WINDOW ON MOBILE
+    ========================================================= */
+    let chatDragging = false;
+    let chatStartX = 0;
+    let chatStartY = 0;
+    let chatStartLeft = 0;
+    let chatStartTop = 0;
 
-    chatBox.classList.add('dragging');
-
-    const rect = chatBox.getBoundingClientRect();
-
-    chatStartX = event.clientX;
-    chatStartY = event.clientY;
-
-    chatStartLeft = rect.left;
-    chatStartTop = rect.top;
-
-    /*
-     * Switch from centered positioning
-     * to exact top/left positioning.
-     */
-    chatBox.style.left = `${chatStartLeft}px`;
-    chatBox.style.top = `${chatStartTop}px`;
-
-    chatBox.style.right = 'auto';
-    chatBox.style.bottom = 'auto';
-
-    chatBox.style.transform = 'none';
-
-    chatBox.setPointerCapture(event.pointerId);
-
-    event.preventDefault();
-});
-
-
-chatBox.addEventListener('pointermove', (event) => {
-
-    if (!chatDragging || !isMobileChat()) return;
-
-    const moveX = event.clientX - chatStartX;
-    const moveY = event.clientY - chatStartY;
-
-    let newLeft = chatStartLeft + moveX;
-    let newTop = chatStartTop + moveY;
-
-    const chatWidth = chatBox.offsetWidth;
-    const chatHeight = chatBox.offsetHeight;
-
-    /*
-     * Keep the chat inside the viewport.
-     */
-
-    const maxLeft =
-        window.innerWidth - chatWidth;
-
-    const maxTop =
-        window.innerHeight - chatHeight;
-
-    newLeft = Math.max(
-        0,
-        Math.min(newLeft, maxLeft)
-    );
-
-    newTop = Math.max(
-        0,
-        Math.min(newTop, maxTop)
-    );
-
-    chatBox.style.left = `${newLeft}px`;
-    chatBox.style.top = `${newTop}px`;
-});
-
-
-function stopChatDragging(event) {
-
-    if (!chatDragging) return;
-
-    chatDragging = false;
-
-    chatBox.classList.remove('dragging');
-
-    try {
-        chatBox.releasePointerCapture(event.pointerId);
-    } catch (error) {}
-}
-
-
-chatBox.addEventListener(
-    'pointerup',
-    stopChatDragging
-);
-
-chatBox.addEventListener(
-    'pointercancel',
-    stopChatDragging
-);
-
-
-/*
- * Keep chat inside screen after rotation/resize.
- */
-
-window.addEventListener('resize', () => {
-
-    if (!isMobileChat()) return;
-
-    if (chatBox.classList.contains('hidden')) return;
-
-    const rect =
-        chatBox.getBoundingClientRect();
-
-    const maxLeft =
-        window.innerWidth - chatBox.offsetWidth;
-
-    const maxTop =
-        window.innerHeight - chatBox.offsetHeight;
-
-    chatBox.style.left =
-        `${Math.max(
-            0,
-            Math.min(rect.left, maxLeft)
-        )}px`;
-
-    chatBox.style.top =
-        `${Math.max(
-            0,
-            Math.min(rect.top, maxTop)
-        )}px`;
-
-});
-    if (
-        !toggleBtn ||
-        !chatBox ||
-        !closeBtn ||
-        !messages ||
-        !input ||
-        !sendBtn
-    ) {
-        return;
+    function isMobileChat() {
+        return window.innerWidth <= 768;
     }
 
+    chatBox.addEventListener('pointerdown', (event) => {
+        if (!isMobileChat()) return;
 
-    /* =======================================================
-       PAGE LOCK / MOBILE VIEWPORT CONTROL
-    ======================================================= */
-
-    let savedScrollPosition = 0;
-    let pageIsLocked = false;
-    let keyboardIsOpen = false;
-
-    let originalBodyHeight = '';
-    let originalBodyMinHeight = '';
-    let originalBodyMaxHeight = '';
-
-    let originalHtmlHeight = '';
-    let originalHtmlMinHeight = '';
-    let originalHtmlMaxHeight = '';
-
-
-    function getViewportHeight() {
-
-        if (window.visualViewport) {
-            return window.visualViewport.height;
+        if (
+            event.target.closest('#jay-ai-input') ||
+            event.target.closest('#jay-ai-send') ||
+            event.target.closest('#jay-ai-close') ||
+            event.target.closest('#jay-ai-messages')
+        ) {
+            return;
         }
 
-        return window.innerHeight;
+        chatDragging = true;
+        chatBox.classList.add('dragging');
+
+        const rect = chatBox.getBoundingClientRect();
+        chatStartX = event.clientX;
+        chatStartY = event.clientY;
+        chatStartLeft = rect.left;
+        chatStartTop = rect.top;
+
+        chatBox.style.left = `${chatStartLeft}px`;
+        chatBox.style.top = `${chatStartTop}px`;
+        chatBox.style.right = 'auto';
+        chatBox.style.bottom = 'auto';
+        chatBox.style.transform = 'none';
+
+        chatBox.setPointerCapture(event.pointerId);
+        event.preventDefault();
+    });
+
+    chatBox.addEventListener('pointermove', (event) => {
+        if (!chatDragging || !isMobileChat()) return;
+
+        const moveX = event.clientX - chatStartX;
+        const moveY = event.clientY - chatStartY;
+
+        let newLeft = chatStartLeft + moveX;
+        let newTop = chatStartTop + moveY;
+
+        const chatWidth = chatBox.offsetWidth;
+        const chatHeight = chatBox.offsetHeight;
+
+        const maxLeft = window.innerWidth - chatWidth;
+        const maxTop = window.innerHeight - chatHeight;
+
+        newLeft = Math.max(0, Math.min(newLeft, maxLeft));
+        newTop = Math.max(0, Math.min(newTop, maxTop));
+
+        chatBox.style.left = `${newLeft}px`;
+        chatBox.style.top = `${newTop}px`;
+    });
+
+    function stopChatDragging(event) {
+        if (!chatDragging) return;
+
+        chatDragging = false;
+        chatBox.classList.remove('dragging');
+
+        try {
+            chatBox.releasePointerCapture(event.pointerId);
+        } catch (error) {}
     }
 
+    chatBox.addEventListener('pointerup', stopChatDragging);
+    chatBox.addEventListener('pointercancel', stopChatDragging);
+
+    window.addEventListener('resize', () => {
+        if (!isMobileChat()) return;
+        if (chatBox.classList.contains('hidden')) return;
+
+        const rect = chatBox.getBoundingClientRect();
+        const maxLeft = window.innerWidth - chatBox.offsetWidth;
+        const maxTop = window.innerHeight - chatBox.offsetHeight;
+
+        chatBox.style.left = `${Math.max(0, Math.min(rect.left, maxLeft))}px`;
+        chatBox.style.top = `${Math.max(0, Math.min(rect.top, maxTop))}px`;
+    });
 
     /* =======================================================
-       LOCK PAGE
+       OPEN / CLOSE CHAT  (NO PAGE LOCK)
     ======================================================= */
-
-    function lockPage() {
-
-        if (pageIsLocked) return;
-
-        savedScrollPosition = window.scrollY;
-
-        originalBodyHeight = document.body.style.height;
-        originalBodyMinHeight = document.body.style.minHeight;
-        originalBodyMaxHeight = document.body.style.maxHeight;
-
-        originalHtmlHeight = document.documentElement.style.height;
-        originalHtmlMinHeight = document.documentElement.style.minHeight;
-        originalHtmlMaxHeight = document.documentElement.style.maxHeight;
-
-
-        document.body.style.position = 'fixed';
-
-        document.body.style.top =
-            `-${savedScrollPosition}px`;
-
-        document.body.style.left = '0';
-        document.body.style.right = '0';
-        document.body.style.width = '100%';
-
-        document.body.style.overflow = 'hidden';
-
-        document.documentElement.style.overflow = 'hidden';
-
-
-        document.body.classList.add('ai-chat-open');
-
-        pageIsLocked = true;
-    }
-
-
-    /* =======================================================
-       REDUCE PAGE HEIGHT WHEN KEYBOARD OPENS
-    ======================================================= */
-
-    function reducePageToViewport() {
-
-        if (!pageIsLocked) return;
-
-        const viewportHeight = getViewportHeight();
-
-        /*
-         * IMPORTANT:
-         * Make the actual page no taller than the visible
-         * viewport while the keyboard is open.
-         */
-
-        document.documentElement.style.height =
-            `${viewportHeight}px`;
-
-        document.documentElement.style.minHeight =
-            `${viewportHeight}px`;
-
-        document.documentElement.style.maxHeight =
-            `${viewportHeight}px`;
-
-
-        document.body.style.height =
-            `${viewportHeight}px`;
-
-        document.body.style.minHeight =
-            `${viewportHeight}px`;
-
-        document.body.style.maxHeight =
-            `${viewportHeight}px`;
-
-        document.body.style.overflow = 'hidden';
-
-
-        /*
-         * Tell the page that the keyboard is active.
-         */
-
-        document.body.classList.add('ai-keyboard-open');
-
-        keyboardIsOpen = true;
-    }
-
-
-    /* =======================================================
-       RESTORE PAGE HEIGHT
-    ======================================================= */
-
-    function restorePageHeight() {
-
-        document.body.classList.remove('ai-keyboard-open');
-
-        document.documentElement.style.height =
-            originalHtmlHeight;
-
-        document.documentElement.style.minHeight =
-            originalHtmlMinHeight;
-
-        document.documentElement.style.maxHeight =
-            originalHtmlMaxHeight;
-
-
-        document.body.style.height =
-            originalBodyHeight;
-
-        document.body.style.minHeight =
-            originalBodyMinHeight;
-
-        document.body.style.maxHeight =
-            originalBodyMaxHeight;
-
-        keyboardIsOpen = false;
-    }
-
-
-    /* =======================================================
-       UNLOCK PAGE
-    ======================================================= */
-
-    function unlockPage() {
-
-        if (!pageIsLocked) return;
-
-        document.body.classList.remove('ai-chat-open');
-        document.body.classList.remove('ai-keyboard-open');
-
-
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.style.left = '';
-        document.body.style.right = '';
-        document.body.style.width = '';
-        document.body.style.overflow = '';
-
-
-        restorePageHeight();
-
-
-        document.documentElement.style.overflow = '';
-
-
-        window.scrollTo(
-            0,
-            savedScrollPosition
-        );
-
-
-        pageIsLocked = false;
-    }
-
-
-    /* =======================================================
-       OPEN CHAT
-    ======================================================= */
-
     function openChat() {
-
         chatBox.classList.remove('hidden');
-
-        lockPage();
-
-        messages.scrollTop =
-            messages.scrollHeight;
+        messages.scrollTop = messages.scrollHeight;
     }
-
-
-    /* =======================================================
-       CLOSE CHAT
-    ======================================================= */
 
     function closeChat() {
-
         if (document.activeElement === input) {
-
             input.blur();
-
         }
-
         chatBox.classList.add('hidden');
-
-        unlockPage();
     }
-
-
-    /* =======================================================
-       OPEN / CLOSE TOGGLE
-    ======================================================= */
 
     toggleBtn.addEventListener('click', () => {
-
         if (chatBox.classList.contains('hidden')) {
-
             openChat();
-
         } else {
-
             closeChat();
-
         }
-
     });
-
-
-    /* =======================================================
-       CLOSE BUTTON
-    ======================================================= */
 
     closeBtn.addEventListener('click', () => {
-
         closeChat();
-
     });
 
-
     /* =======================================================
-       INPUT FOCUS
-       
-       THIS IS THE IMPORTANT PART
+       ADD / REMOVE MESSAGE
     ======================================================= */
-
-    input.addEventListener('focus', () => {
-
-        /*
-         * Only apply this behavior on phones/tablets.
-         */
-
-        if (window.innerWidth > 768) {
-            return;
-        }
-
-
-        /*
-         * Wait for Android Chrome to resize the
-         * visual viewport after the keyboard appears.
-         */
-
-        setTimeout(() => {
-
-            reducePageToViewport();
-
-        }, 100);
-
-
-        setTimeout(() => {
-
-            reducePageToViewport();
-
-        }, 300);
-
-
-        setTimeout(() => {
-
-            reducePageToViewport();
-
-        }, 600);
-
-    });
-
-
-    /* =======================================================
-       INPUT BLUR
-    ======================================================= */
-
-    input.addEventListener('blur', () => {
-
-        if (window.innerWidth > 768) {
-            return;
-        }
-
-
-        setTimeout(() => {
-
-            /*
-             * Only restore if keyboard has actually closed.
-             */
-
-            const viewportHeight =
-                getViewportHeight();
-
-            const screenHeight =
-                window.screen.height;
-
-
-            /*
-             * If viewport is close to the normal
-             * screen height, keyboard is gone.
-             */
-
-            if (
-                viewportHeight >
-                screenHeight * 0.75
-            ) {
-
-                restorePageHeight();
-
-            }
-
-        }, 300);
-
-    });
-
-
-    /* =======================================================
-       VISUAL VIEWPORT
-       
-       Detect Android keyboard resizing
-    ======================================================= */
-
-    if (window.visualViewport) {
-
-        window.visualViewport.addEventListener(
-            'resize',
-            () => {
-
-                if (!pageIsLocked) {
-                    return;
-                }
-
-
-                /*
-                 * NEVER allow the background page
-                 * to move.
-                 */
-
-                document.body.style.top =
-                    `-${savedScrollPosition}px`;
-
-
-                /*
-                 * When keyboard is active,
-                 * reduce page height to exactly
-                 * the visible viewport.
-                 */
-
-                if (
-                    document.activeElement === input &&
-                    window.innerWidth <= 768
-                ) {
-
-                    reducePageToViewport();
-
-                }
-
-            }
-        );
-
-
-        window.visualViewport.addEventListener(
-            'scroll',
-            () => {
-
-                if (!pageIsLocked) {
-                    return;
-                }
-
-
-                /*
-                 * Prevent visual viewport movement
-                 * from moving the portfolio.
-                 */
-
-                document.body.style.top =
-                    `-${savedScrollPosition}px`;
-
-            }
-        );
-
-    }
-
-
-    /* =======================================================
-       ADD MESSAGE
-    ======================================================= */
-
     function addMessage(text, type, id) {
-
-        const div =
-            document.createElement('div');
-
-
-        div.className =
-            type === 'user'
-                ? 'jay-ai-user'
-                : 'jay-ai-bot';
-
+        const div = document.createElement('div');
+        div.className = type === 'user' ? 'jay-ai-user' : 'jay-ai-bot';
 
         if (id) {
-
             div.id = id;
-
         }
 
-
         div.innerHTML = text;
-
         messages.appendChild(div);
 
-
         requestAnimationFrame(() => {
-
-            messages.scrollTop =
-                messages.scrollHeight;
-
+            messages.scrollTop = messages.scrollHeight;
         });
-
 
         return div;
     }
 
-
-    /* =======================================================
-       REMOVE MESSAGE
-    ======================================================= */
-
     function removeMessage(id) {
-
-        const element =
-            document.getElementById(id);
-
-
+        const element = document.getElementById(id);
         if (element) {
-
             element.remove();
-
         }
-
     }
-
 
     /* =======================================================
        SEND MESSAGE
     ======================================================= */
-
     function sendMessage() {
-
-        const text =
-            input.value.trim();
-
-
+        const text = input.value.trim();
         if (!text) return;
 
-
-        addMessage(
-            text,
-            'user'
-        );
-
-
+        addMessage(text, 'user');
         input.value = '';
-
-
         processQuestion(text);
     }
 
+    sendBtn.addEventListener('click', () => {
+        sendMessage();
+    });
 
-    /* =======================================================
-       SEND BUTTON
-    ======================================================= */
-
-    sendBtn.addEventListener(
-        'click',
-        () => {
-
+    input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
             sendMessage();
-
         }
-    );
-
-
-    /* =======================================================
-       ENTER KEY
-    ======================================================= */
-
-    input.addEventListener(
-        'keydown',
-        (event) => {
-
-            if (event.key === 'Enter') {
-
-                event.preventDefault();
-
-                sendMessage();
-
-            }
-
-        }
-    );
-
+    });
 
     /* =======================================================
        PROCESS QUESTION
     ======================================================= */
-
     function processQuestion(question) {
+        const thinkingId = 'jay-ai-thinking';
 
-        const thinkingId =
-            'jay-ai-thinking';
+        addMessage('Thinking...', 'bot', thinkingId);
 
-
-        addMessage(
-            'Thinking...',
-            'bot',
-            thinkingId
-        );
-
-
-        const delay =
-            650 +
-            Math.floor(
-                Math.random() * 550
-            );
-
+        const delay = 650 + Math.floor(Math.random() * 550);
 
         setTimeout(() => {
-
-            removeMessage(
-                thinkingId
-            );
-
-
-            const reply =
-                getReply(question);
-
-
-            addMessage(
-                reply,
-                'bot'
-            );
-
+            removeMessage(thinkingId);
+            const reply = getReply(question);
+            addMessage(reply, 'bot');
         }, delay);
     }
-
 
     /* =======================================================
        AI RESPONSES
     ======================================================= */
-
     function getReply(question) {
-
-        const q =
-            question
-                .toLowerCase()
-                .trim();
-
+        const q = question.toLowerCase().trim();
 
         /* GREETINGS */
-
         if (
             /^(hi|hello|hey|good\s*(morning|afternoon|evening|day)|greetings|howdy|yo)\b/i.test(q) ||
             /^(hi|hello|hey)\s+(there|jay|assistant)?[!?.]*$/i.test(q)
         ) {
-
             return 'Good day! How can I help you?';
-
         }
-
 
         /* WHO ARE YOU */
-
-        if (
-            /(who are you|what are you|who'?s this|what is this|are you a bot|are you ai|are you real)/i.test(q)
-        ) {
-
+        if (/(who are you|what are you|who'?s this|what is this|are you a bot|are you ai|are you real)/i.test(q)) {
             return 'I am the official AI assistant for JayWebDev. I can answer questions about Jay’s skills, services, and projects.';
-
         }
 
-
         /* WHO IS JAY */
-
         if (
             /(who is|who'?s|tell me about|about).*(jay|jaywebdev)/i.test(q) ||
             /^(who is jay|who'?s jay|about jay)/i.test(q)
         ) {
-
             return 'Jay is a professional web, app, and AI developer. He builds websites, web applications, mobile apps, custom software, and AI-powered solutions.';
-
         }
 
-
         /* WHAT DOES JAY DO */
-
         if (
             /(what does|what is|what do you|tell me what).*(jay|jaywebdev|he do|he does)/i.test(q) ||
             /what.*(jay|he).*(do|does|offer)/i.test(q)
         ) {
-
             return 'Jay works with HTML, CSS, JavaScript, React, Next.js, PHP, MySQL, and Python. He builds websites, web apps, applications, software, and AI-powered solutions.';
-
         }
-
 
         /* PROFESSIONAL */
-
-        if (
-            /(is jay|are you).*(developer|programmer|skilled|professional|good|experienced)/i.test(q)
-        ) {
-
+        if (/(is jay|are you).*(developer|programmer|skilled|professional|good|experienced)/i.test(q)) {
             return 'Yes. Jay is a professional developer who builds modern websites, applications, software, and AI-powered solutions.';
-
         }
 
-
-        if (
-            /(professional|good|skilled|experienced|expert|reliable)/i.test(q)
-        ) {
-
+        if (/(professional|good|skilled|experienced|expert|reliable)/i.test(q)) {
             return 'Yes. Jay is a professional developer who builds modern websites, applications, software, and AI-powered solutions.';
-
         }
 
-
-/* =========================================================
-   PROJECTS / PORTFOLIO
-========================================================= */
-
-if (
-    /(project|projects|portfolio|work|works|built|builds|website.*built|app.*built|what.*built|what.*made|show.*work|show.*project|see.*work|see.*project|previous.*work|past.*work)/i.test(q)
-) {
-
-    return `
-        <div>
-            <strong>Jay's Projects</strong><br><br>
-
-            You can explore Jay's projects, previous work, and development experience on the About page.<br><br>
-
-            <a href="services.html"
-               style="
-                   display:inline-block;
-                   padding:9px 14px;
-                   background:#00eaff;
-                   color:#000;
-                   border-radius:8px;
-                   text-decoration:none;
-                   font-weight:600;
-               ">
-                View Projects →
-            </a>
-        </div>
-    `;
-
-}
-
+        /* PROJECTS / PORTFOLIO */
+        if (
+            /(project|projects|portfolio|work|works|built|builds|website.*built|app.*built|what.*built|what.*made|show.*work|show.*project|see.*work|see.*project|previous.*work|past.*work)/i.test(q)
+        ) {
+            return `
+                <div>
+                    <strong>Jay's Projects</strong><br><br>
+                    You can explore Jay's projects, previous work, and development experience on the About page.<br><br>
+                    <a href="services.html"
+                       style="
+                           display:inline-block;
+                           padding:9px 14px;
+                           background:#00eaff;
+                           color:#000;
+                           border-radius:8px;
+                           text-decoration:none;
+                           font-weight:600;
+                       ">
+                        View Projects →
+                    </a>
+                </div>
+            `;
+        }
 
         /* WEBSITE */
-
         if (
             /(build|make|create|develop).*(website|site|web page)/i.test(q) ||
             /can.*(you|jay).*(build|make).*(website|site)/i.test(q)
         ) {
-
             return 'Yes, Jay can build your website. Please contact him privately with your requirements to discuss the project and pricing.';
-
         }
 
-
         /* APP */
-
         if (
             /(build|make|create|develop).*(app|application|mobile)/i.test(q) ||
             /can.*(you|jay).*(build|make).*(app|application)/i.test(q)
         ) {
-
             return 'Yes, Jay can build applications. Contact him privately with your requirements to discuss the project and pricing.';
-
         }
 
-
         /* AI */
-
         if (
             /(ai|artificial intelligence|chatgpt|llm|machine learning).*(build|make|create|integrate|add|system|app|application)/i.test(q) ||
             /can.*(you|jay).*(build|make|add).*(ai|artificial intelligence)/i.test(q)
         ) {
-
             return 'Yes, Jay can build AI-powered applications and integrate AI into existing projects. Contact him privately to discuss your requirements and pricing.';
-
         }
-
 
         /* PRICING */
-
-        if (
-            /(how much|price|cost|pricing|quote|budget|charge)/i.test(q)
-        ) {
-
+        if (/(how much|price|cost|pricing|quote|budget|charge)/i.test(q)) {
             return 'Pricing depends on the project requirements. Please contact Jay privately to discuss your project and get a suitable quote.';
-
         }
-
 
         /* SKILLS */
-
-        if (
-            /(what can|skills|what.*(jay|he).*(do|build|offer)|capabilities)/i.test(q)
-        ) {
-
+        if (/(what can|skills|what.*(jay|he).*(do|build|offer)|capabilities)/i.test(q)) {
             return 'Jay works with HTML, CSS, JavaScript, React, Next.js, PHP, MySQL, and Python. He builds websites, web apps, applications, software, and AI-powered solutions.';
-
         }
-
 
         /* SERVICES */
-
-        if (
-            /(services|what.*(do you|does jay).*(offer|provide)|what services)/i.test(q)
-        ) {
-
+        if (/(services|what.*(do you|does jay).*(offer|provide)|what services)/i.test(q)) {
             return 'Jay offers website development, web apps, app development, custom software, AI solutions, frontend, backend, full-stack development, and database integration.';
-
         }
-
 
         /* APPOINTMENT */
-
-        if (
-            /(reserve|book|schedule|spot|slot|appointment|available time)/i.test(q)
-        ) {
-
+        if (/(reserve|book|schedule|spot|slot|appointment|available time)/i.test(q)) {
             return 'I can’t reserve a spot directly, but you can contact Jay on the Contact page with your project details and he will get back to you.';
-
         }
 
-
         /* EXISTING PROJECT */
-
         if (
             /(existing|current|ongoing).*(project|website|app)/i.test(q) ||
             /work on.*(existing|my)/i.test(q)
         ) {
-
             return 'Yes, Jay can work on existing projects depending on the requirements. Please contact him with the project details.';
-
         }
-
 
         /* FIX / DEBUG */
-
-        if (
-            /(fix|debug|improve|update|maintain|bug|error)/i.test(q)
-        ) {
-
+        if (/(fix|debug|improve|update|maintain|bug|error)/i.test(q)) {
             return 'Yes, Jay can help with fixing and improving existing projects. Please contact him with the details.';
-
         }
-
-
-        /* PROJECTS */
-
-        if (
-            /(see|show|view|look).*(project|portfolio|work)/i.test(q) ||
-            /(projects|portfolio)/i.test(q)
-        ) {
-
-            return 'Please check the projects / portfolio section of the website. Some projects are not displayed due to client confidentiality.';
-
-        }
-
 
         /* TECHNOLOGIES */
-
-        if (
-            /(technolog|stack|tools|languages|framework|what.*(tech|code|language))/i.test(q)
-        ) {
-
+        if (/(technolog|stack|tools|languages|framework|what.*(tech|code|language))/i.test(q)) {
             return 'Jay works with HTML, CSS, JavaScript, React, Next.js, PHP, MySQL, and Python.';
-
         }
-
 
         /* HELP */
-
-        if (
-            /(can.*(you|jay).*(help|assist)|do you help)/i.test(q)
-        ) {
-
+        if (/(can.*(you|jay).*(help|assist)|do you help)/i.test(q)) {
             return 'Yes, Jay can help with websites, web apps, mobile apps, custom software, and AI solutions. Please contact him with your project details.';
-
         }
-
 
         /* HIRE */
-
-        if (
-            /(hire|work with|need.*(developer|you|jay)|want.*(to work|you)|i want to hire)/i.test(q)
-        ) {
-
+        if (/(hire|work with|need.*(developer|you|jay)|want.*(to work|you)|i want to hire)/i.test(q)) {
             return 'Sure. Please go to the Contact page and leave a message with your project details.';
-
         }
-
 
         /* CONTACT */
-
-if (
-    /(contact|reach|email|message|available|availability|free|how.*(contact|reach))/i.test(q)
-) {
-
-    return `
-        <div>
-            Please go to the Contact page and leave a message with your requirements.<br><br>
-
-            <a href="contact.html"
-               style="
-                   display:inline-block;
-                   padding:9px 14px;
-                   background:#00eaff;
-                   color:#000;
-                   border-radius:8px;
-                   text-decoration:none;
-                   font-weight:600;
-               ">
-                Contact Jay →
-            </a>
-        </div>
-    `;
-
-}
-
+        if (/(contact|reach|email|message|available|availability|free|how.*(contact|reach))/i.test(q)) {
+            return `
+                <div>
+                    Please go to the Contact page and leave a message with your requirements.<br><br>
+                    <a href="contact.html"
+                       style="
+                           display:inline-block;
+                           padding:9px 14px;
+                           background:#00eaff;
+                           color:#000;
+                           border-radius:8px;
+                           text-decoration:none;
+                           font-weight:600;
+                       ">
+                        Contact Jay →
+                    </a>
+                </div>
+            `;
+        }
 
         /* BUSINESS */
-
-        if (
-            /(business|company|startup|enterprise)/i.test(q)
-        ) {
-
+        if (/(business|company|startup|enterprise)/i.test(q)) {
             return 'Yes. Jay can build digital solutions for businesses, including websites, apps, software, and AI-powered solutions.';
-
         }
-
 
         /* RELATED */
-
-        if (
-            /(jay|webdev|developer|website|app|ai|software|project|code|build)/i.test(q)
-        ) {
-
+        if (/(jay|webdev|developer|website|app|ai|software|project|code|build)/i.test(q)) {
             return 'Jay is a web, app, and AI developer who builds modern digital solutions. For specific project details, please go to the Contact page.';
-
         }
-
 
         /* DEFAULT */
-
         return 'Please go to the Contact page and leave a message. Jay will be able to assist you there.';
-
     }
-
-
-    /* =======================================================
-       PREVENT BACKGROUND TOUCH SCROLL
-    ======================================================= */
-
-    document.addEventListener(
-        'touchmove',
-        (event) => {
-
-            if (!pageIsLocked) {
-                return;
-            }
-
-
-            /*
-             * Allow the AI message area to scroll.
-             */
-
-            if (
-                event.target.closest(
-                    '#jay-ai-messages'
-                )
-            ) {
-
-                return;
-
-            }
-
-
-            /*
-             * Don't allow the portfolio
-             * background to scroll.
-             */
-
-            if (
-                !event.target.closest(
-                    '#jay-ai-chat'
-                )
-            ) {
-
-                event.preventDefault();
-
-            }
-
-        },
-        {
-            passive: false
-        }
-    );
-
 
     /* =======================================================
        ESCAPE KEY
     ======================================================= */
-
-    document.addEventListener(
-        'keydown',
-        (event) => {
-
-            if (event.key === 'Escape') {
-
-                if (
-                    !chatBox.classList.contains(
-                        'hidden'
-                    )
-                ) {
-
-                    closeChat();
-
-                }
-
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            if (!chatBox.classList.contains('hidden')) {
+                closeChat();
             }
-
         }
-    );
-
+    });
 
 })();
 </script>
