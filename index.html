@@ -726,31 +726,47 @@ nav a:hover {
 }
 
 /* Mobile AI chat positioning */
+/* ================= MOBILE AI CHAT ================= */
+
 @media (max-width: 768px) {
-#jay-ai-chat {
-    left: 50%;
-    top: 50%;
-    /* transform: translate(-50%, -50%); */
-    right: auto;
-    /* bottom: auto; */
-    width: calc(100vw - 24px);
-    max-width: 380px;
-    height: 420px;
-    max-height: calc(100dvh - 40px);
-  }
+    #jay-ai-chat {
+        position: fixed;
+
+        left: 50%;
+        top: 50%;
+
+        right: auto;
+        bottom: auto;
+
+        transform: translate(-50%, -50%);
+
+        width: calc(100vw - 24px);
+        max-width: 380px;
+
+        height: 420px;
+        max-height: calc(100dvh - 40px);
+
+        margin: 0;
+    }
 }
 
 @media (max-width: 480px) {
-  #jay-ai-chat {
-    left: 8px;
-    right: 8px;
-    width: auto;
-    max-width: none;
-    /* bottom: 80px; */
-    height: min(440px, calc(100dvh - 120px));
-    max-height: calc(100dvh - 120px);
-  }
-}
+    #jay-ai-chat {
+        left: 50%;
+        top: 50%;
+
+        right: auto;
+        bottom: auto;
+
+        transform: translate(-50%, -50%);
+
+        width: calc(100vw - 24px);
+        max-width: none;
+
+        height: min(340px, calc(50dvh - 70px));
+        max-height: calc(50dvh - 70px);
+    }
+}  
 </style>
 </head>
 
@@ -891,94 +907,7 @@ if (document.readyState === 'loading') {
     /* =========================================================
        MOVE AI CHAT WINDOW ON MOBILE
     ========================================================= */
-    let chatDragging = false;
-    let chatStartX = 0;
-    let chatStartY = 0;
-    let chatStartLeft = 0;
-    let chatStartTop = 0;
 
-    function isMobileChat() {
-        return window.innerWidth <= 768;
-    }
-
-    chatBox.addEventListener('pointerdown', (event) => {
-        if (!isMobileChat()) return;
-
-        if (
-            event.target.closest('#jay-ai-input') ||
-            event.target.closest('#jay-ai-send') ||
-            event.target.closest('#jay-ai-close') ||
-            event.target.closest('#jay-ai-messages')
-        ) {
-            return;
-        }
-
-        chatDragging = true;
-        chatBox.classList.add('dragging');
-
-        const rect = chatBox.getBoundingClientRect();
-        chatStartX = event.clientX;
-        chatStartY = event.clientY;
-        chatStartLeft = rect.left;
-        chatStartTop = rect.top;
-
-        chatBox.style.left = `${chatStartLeft}px`;
-        chatBox.style.top = `${chatStartTop}px`;
-        chatBox.style.right = 'auto';
-        chatBox.style.bottom = 'auto';
-        chatBox.style.transform = 'none';
-
-        chatBox.setPointerCapture(event.pointerId);
-        event.preventDefault();
-    });
-
-    chatBox.addEventListener('pointermove', (event) => {
-        if (!chatDragging || !isMobileChat()) return;
-
-        const moveX = event.clientX - chatStartX;
-        const moveY = event.clientY - chatStartY;
-
-        let newLeft = chatStartLeft + moveX;
-        let newTop = chatStartTop + moveY;
-
-        const chatWidth = chatBox.offsetWidth;
-        const chatHeight = chatBox.offsetHeight;
-
-        const maxLeft = window.innerWidth - chatWidth;
-        const maxTop = window.innerHeight - chatHeight;
-
-        newLeft = Math.max(0, Math.min(newLeft, maxLeft));
-        newTop = Math.max(0, Math.min(newTop, maxTop));
-
-        chatBox.style.left = `${newLeft}px`;
-        chatBox.style.top = `${newTop}px`;
-    });
-
-    function stopChatDragging(event) {
-        if (!chatDragging) return;
-
-        chatDragging = false;
-        chatBox.classList.remove('dragging');
-
-        try {
-            chatBox.releasePointerCapture(event.pointerId);
-        } catch (error) {}
-    }
-
-    chatBox.addEventListener('pointerup', stopChatDragging);
-    chatBox.addEventListener('pointercancel', stopChatDragging);
-
-    window.addEventListener('resize', () => {
-        if (!isMobileChat()) return;
-        if (chatBox.classList.contains('hidden')) return;
-
-        const rect = chatBox.getBoundingClientRect();
-        const maxLeft = window.innerWidth - chatBox.offsetWidth;
-        const maxTop = window.innerHeight - chatBox.offsetHeight;
-
-        chatBox.style.left = `${Math.max(0, Math.min(rect.left, maxLeft))}px`;
-        chatBox.style.top = `${Math.max(0, Math.min(rect.top, maxTop))}px`;
-    });
 
     /* =======================================================
        OPEN / CLOSE CHAT  (NO PAGE LOCK)
