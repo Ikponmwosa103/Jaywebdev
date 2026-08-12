@@ -727,17 +727,16 @@ nav a:hover {
 
 /* Mobile AI chat positioning */
 @media (max-width: 768px) {
-  #jay-ai-chat {
-    position: fixed;
-    right: 12px;
-    bottom: 80px;
-    left: auto;
-    top: auto;
-    transform: none;
+#jay-ai-chat {
+    left: 50%;
+    top: 50%;
+    /* transform: translate(-50%, -50%); */
+    right: auto;
+    /* bottom: auto; */
     width: calc(100vw - 24px);
     max-width: 380px;
     height: 420px;
-    max-height: calc(100dvh - 100px);
+    max-height: calc(100dvh - 40px);
   }
 }
 
@@ -747,7 +746,7 @@ nav a:hover {
     right: 8px;
     width: auto;
     max-width: none;
-    bottom: 80px;
+    /* bottom: 80px; */
     height: min(440px, calc(100dvh - 120px));
     max-height: calc(100dvh - 120px);
   }
